@@ -12,7 +12,7 @@
 <meta name="author" content="Haider Inam" />
 
 
-<title>alkati_subsampling_simulations</title>
+<title>Subsampling Simulations for ALKATI</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -412,7 +412,7 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">alkati_subsampling_simulations</h1>
+<h1 class="title toc-ignore">Subsampling Simulations for ALKATI</h1>
 <h4 class="author"><em>Haider Inam</em></h4>
 <h4 class="date"><em>1/31/2019</em></h4>
 
@@ -423,8 +423,7 @@ div.section {
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p><details> <summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </details>
 </li>
 <li>
@@ -443,12 +442,11 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/4c89be38f2e2edfe2dc709562929b98b1d9cec08" target="_blank">4c89be3</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/5d432fbdea919055a9b7e22d43fc513adc784679" target="_blank">5d432fb</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rproj.user/
-    Ignored:    docs/figure/
 
 Untracked files:
     Untracked:  code/alldata_compiler.R
@@ -459,6 +457,9 @@ Untracked files:
     Untracked:  code/simresults_generator.R
     Untracked:  data/All_Data_V2.csv
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
+
+Unstaged changes:
+    Modified:   analysis/alkati_subsampling_simulations.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -489,6 +490,23 @@ Message
 <tbody>
 <tr>
 <td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/5d432fbdea919055a9b7e22d43fc513adc784679/docs/alkati_subsampling_simulations.html" target="_blank">5d432fb</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-11
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Rmd
 </td>
 <td style="text-align:left;">
@@ -509,7 +527,8 @@ Publish the initial files for myproject
 </ul>
 <p></details></p>
 <hr />
-<p>Just want to make quick P-value distribution plots for Figure 1C. This is a tiny bit more tricky than previously because right now, my simresults_generator does not look at a bunch of subsample sizes</p>
+<div id="p-value-distribution-plots-for-figure-1c" class="section level3">
+<h3>P-value distribution plots for Figure 1C:</h3>
 <pre class="r"><code>nsubsamples=12 # maybe this can be removed and instead calculated later.
   nsims&lt;-100 #
   #Positive control 1
@@ -533,16 +552,16 @@ simresults_comb=data.frame()
 for(subsample_number in c(1:12)){
   nsubsamples=subsample_number
   simresults=simresults_generator(alldata_comp,7)
-  simresults_comb=rbind(simresults_comb,simresults) ##ik this is not a good way to do this but whatever
+  simresults_comb=rbind(simresults_comb,simresults) ##iterative rbind this is not the most efficient way to do this
 }</code></pre>
 <pre class="r"><code>simresults_concat=simresults_comb%&gt;%
   filter(exp_num%in%c(4))
 # simresults_concat=simresults_comb
-ggplot(simresults_concat,aes(x=factor(subsample_size),y=-log10(p_val)))+
+ggplot(simresults_concat,aes(x=factor(subsample_size),y=log10(p_val)))+
   geom_boxplot(aes(fill=factor(exp_num)))+
   cleanup+
   guides(fill=F)+
-  scale_y_continuous(name=&quot;-log(P-Value)&quot;)+
+  scale_y_continuous(name=&quot;log(P-Value)&quot;)+
   scale_x_discrete(name=&quot;Subsample size&quot;)+
   # scale_color_manual(values=&quot;#E78AC3&quot;)+
   theme(plot.title = element_text(hjust=.5),
@@ -550,8 +569,40 @@ ggplot(simresults_concat,aes(x=factor(subsample_size),y=-log10(p_val)))+
       axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;black&quot;),
       axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;,color=&quot;black&quot;))</code></pre>
 <p><img src="figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># ggsave(&quot;alkati_subsamplesize_pval_fig1c.pdf&quot;,width = 10,height = 10,units = &quot;in&quot;,useDingbats=F)</code></pre>
-<p>Doing simulations with mutations</p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-2-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/5d432fbdea919055a9b7e22d43fc513adc784679/docs/figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-2-1.png" target="_blank">5d432fb</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-11
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
+<pre class="r"><code># ggsave(&quot;output/ alkati_subsamplesize_pval_fig1c.pdf&quot;,width = 10,height = 10,units = &quot;in&quot;,useDingbats=F)</code></pre>
+</div>
+<div id="adding-simulations-for-comparisons-with-mutations" class="section level3">
+<h3>Adding simulations for comparisons with mutations:</h3>
 <pre class="r"><code>nsubsamples=12 # maybe this can be removed and instead calculated later.
   nsims&lt;-100 #
   #Positive control 1
@@ -583,7 +634,9 @@ genex_replication_prop=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namege
 simresults_nomtn$mtn=&#39;N&#39;
 
 simresults=rbind(simresults,simresults_nomtn)</code></pre>
-<p>Now doing the p-values for Figure 2b. Will show ati vs braf, ati vs nras, and mutations</p>
+</div>
+<div id="generating-the-p-value-plots-for-figure-2.-will-show-ati-vs-braf-ati-vs-nras-for-with-muts-and-without-muts" class="section level3">
+<h3>Generating the P-value plots for Figure 2. Will show ati vs braf, ati vs nras, for with-muts and without-muts</h3>
 <pre class="r"><code>simresults[simresults$exp_num==1,]$exp_name=&quot;BRAF &amp; ALKATI&quot;
 simresults[simresults$exp_num==3,]$exp_name=&quot;NRAS &amp; ALKATI&quot;
 simresults[simresults$exp_num==4,]$exp_name=&quot;BRAF &amp; NRAS&quot;
@@ -597,12 +650,12 @@ simresults_concat=simresults%&gt;%
   filter(exp_num==c(1,3,4))</code></pre>
 <pre><code>Warning in exp_num == c(1, 3, 4): longer object length is not a multiple of
 shorter object length</code></pre>
-<pre class="r"><code>ggplot(simresults_concat,aes(x=factor(exp_name),y=-log10(p_val)))+
+<pre class="r"><code>ggplot(simresults_concat,aes(x=factor(exp_name),y=log10(p_val)))+
   geom_boxplot(aes(fill=factor(exp_name)))+
   facet_wrap(~factor(mtn_tag))+
   cleanup+
   guides(fill=F)+
-  scale_y_continuous(name=&quot;-log(P-Value)&quot;)+
+  scale_y_continuous(name=&quot;log(P-Value)&quot;)+
   scale_x_discrete(name=&quot;Gene Pair&quot;)+
   scale_fill_brewer(palette = &quot;Set2&quot;,name=&quot;Gene Pair&quot;)+
   theme(plot.title = element_text(hjust=.5),
@@ -610,7 +663,38 @@ shorter object length</code></pre>
       axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;black&quot;),
       axis.text=element_text(face=&quot;bold&quot;,size=&quot;20&quot;,color=&quot;black&quot;))</code></pre>
 <p><img src="figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-4-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/5d432fbdea919055a9b7e22d43fc513adc784679/docs/figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-4-1.png" target="_blank">5d432fb</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-11
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code>ggsave(&quot;output/alkati_mtn_pval_fig2B.pdf&quot;,width = 16,height = 10,units = &quot;in&quot;,useDingbats=F)</code></pre>
+</div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
