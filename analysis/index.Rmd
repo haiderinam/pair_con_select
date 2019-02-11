@@ -7,3 +7,5 @@ output:
 ---
 
 Welcome to my research website.
+Click on this [link](alkati_subsampling_simulations.html) to see my results.
+

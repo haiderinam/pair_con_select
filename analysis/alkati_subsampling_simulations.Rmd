@@ -1,0 +1,159 @@
+---
+title: "alkati_subsampling_simulations"
+author: "Haider Inam"
+date: "1/31/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "..")
+library(knitr)
+library(tictoc)
+library(workflowr)
+library(VennDiagram)
+library(dplyr)
+library(foreach)
+library(doParallel)
+library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+library(devtools)
+library(ggsignif)
+
+source("code/contab_maker.R")
+source("code/alldata_compiler.R")
+source("code/quadratic_solver.R")
+source("code/mut_excl_genes_generator.R")
+source("code/mut_excl_genes_datapoints.R")
+source("code/simresults_generator.R")
+
+######################Cleanup for GGPlot2#########################################
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = "black"))
+
+```
+
+Just want to make quick P-value distribution plots for Figure 1C.
+This is a tiny bit more tricky than previously because right now, my simresults_generator does not look at a bunch of subsample sizes
+
+```{r}
+nsubsamples=12 # maybe this can be removed and instead calculated later.
+  nsims<-100 #
+  #Positive control 1
+  nameposctrl1<-'BRAF'
+  #Positive control 1
+  nameposctrl2<-'NRAS'
+  #Oncogene in Question
+  namegene<-'ATI'
+  #Mutation Boolean (Y or N)
+  mtn<-'N'
+  #Name Mutation for Positive Ctrl 1
+  nameposctrl1mt<-'V600E'
+  #Name of Mutation for Positive Ctrl 2
+  nameposctrl2mt<-'Q61L'
+  
+  alldata=read.csv("data/All_Data_V2.csv",sep=",",header=T,stringsAsFactors=F)
+  nexperiments=7
+alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[2]]
+genex_replication_prop=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[1]]
+simresults_comb=data.frame()
+for(subsample_number in c(1:12)){
+  nsubsamples=subsample_number
+  simresults=simresults_generator(alldata_comp,7)
+  simresults_comb=rbind(simresults_comb,simresults) ##ik this is not a good way to do this but whatever
+}
+```
+
+```{r}
+
+simresults_concat=simresults_comb%>%
+  filter(exp_num%in%c(4))
+# simresults_concat=simresults_comb
+ggplot(simresults_concat,aes(x=factor(subsample_size),y=-log10(p_val)))+
+  geom_boxplot(aes(fill=factor(exp_num)))+
+  cleanup+
+  guides(fill=F)+
+  scale_y_continuous(name="-log(P-Value)")+
+  scale_x_discrete(name="Subsample size")+
+  # scale_color_manual(values="#E78AC3")+
+  theme(plot.title = element_text(hjust=.5),
+      text = element_text(size=26,face="bold"),
+      axis.title = element_text(face="bold",size="26",color="black"),
+      axis.text=element_text(face="bold",size="24",color="black"))
+# ggsave("alkati_subsamplesize_pval_fig1c.pdf",width = 10,height = 10,units = "in",useDingbats=F)
+
+```
+
+Doing simulations with mutations
+```{r}
+nsubsamples=12 # maybe this can be removed and instead calculated later.
+  nsims<-100 #
+  #Positive control 1
+  nameposctrl1<-'BRAF'
+  #Positive control 1
+  nameposctrl2<-'NRAS'
+  #Oncogene in Question
+  namegene<-'ATI'
+  #Mutation Boolean (Y or N)
+  mtn<-'Y'
+  #Name Mutation for Positive Ctrl 1
+  nameposctrl1mt<-'V600E'
+  #Name of Mutation for Positive Ctrl 2
+  nameposctrl2mt<-'Q61L'
+  
+  alldata=read.csv("data/All_Data_V2.csv",sep=",",header=T,stringsAsFactors=F)
+  nexperiments=7
+###For mutation
+alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,nameposctrl1mt,nameposctrl2mt)[[2]]
+genex_replication_prop=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,nameposctrl1mt,nameposctrl2mt)[[1]]
+  simresults=simresults_generator(alldata_comp,7)
+simresults$mtn='Y'
+
+####For no mutation
+mtn='N'
+alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[2]]
+genex_replication_prop=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[1]]
+  simresults_nomtn=simresults_generator(alldata_comp,7)
+simresults_nomtn$mtn='N'
+
+simresults=rbind(simresults,simresults_nomtn)
+
+```
+
+
+Now doing the p-values for Figure 2b. Will show ati vs braf, ati vs nras, and mutations
+```{r}
+simresults[simresults$exp_num==1,]$exp_name="BRAF & ALKATI"
+simresults[simresults$exp_num==3,]$exp_name="NRAS & ALKATI"
+simresults[simresults$exp_num==4,]$exp_name="BRAF & NRAS"
+simresults$exp_name=factor(simresults$exp_name,levels=c("1","5","6","7","BRAF & ALKATI","NRAS & ALKATI","BRAF & NRAS"))
+simresults$mtn_tag='N'
+simresults[simresults$mtn=='Y',]$mtn_tag="Mutation-specific"
+simresults[simresults$mtn=='N',]$mtn_tag="Non mutation-specific"
+
+simresults$mtn_tag=factor(simresults$mtn_tag,levels=c("Non mutation-specific","Mutation-specific"))
+simresults_concat=simresults%>%
+  filter(exp_num==c(1,3,4))
+
+ggplot(simresults_concat,aes(x=factor(exp_name),y=-log10(p_val)))+
+  geom_boxplot(aes(fill=factor(exp_name)))+
+  facet_wrap(~factor(mtn_tag))+
+  cleanup+
+  guides(fill=F)+
+  scale_y_continuous(name="-log(P-Value)")+
+  scale_x_discrete(name="Gene Pair")+
+  scale_fill_brewer(palette = "Set2",name="Gene Pair")+
+  theme(plot.title = element_text(hjust=.5),
+      text = element_text(size=26,face="bold"),
+      axis.title = element_text(face="bold",size="26",color="black"),
+      axis.text=element_text(face="bold",size="20",color="black"))
+
+ggsave("output/alkati_mtn_pval_fig2B.pdf",width = 16,height = 10,units = "in",useDingbats=F)
+
+```
+
