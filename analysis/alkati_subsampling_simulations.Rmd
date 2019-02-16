@@ -8,6 +8,10 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = "..")
+getwd()
+```
+
+```{r}
 library(knitr)
 library(tictoc)
 library(workflowr)
@@ -20,13 +24,20 @@ library(reshape2)
 library(RColorBrewer)
 library(devtools)
 library(ggsignif)
-
+getwd()
 source("code/contab_maker.R")
 source("code/alldata_compiler.R")
 source("code/quadratic_solver.R")
 source("code/mut_excl_genes_generator.R")
 source("code/mut_excl_genes_datapoints.R")
 source("code/simresults_generator.R")
+
+# source("../code/contab_maker.R")
+# source("../code/alldata_compiler.R")
+# source("../code/quadratic_solver.R")
+# source("../code/mut_excl_genes_generator.R")
+# source("../code/mut_excl_genes_datapoints.R")
+# source("../code/simresults_generator.R")
 
 ######################Cleanup for GGPlot2#########################################
 cleanup=theme_bw() +
@@ -35,6 +46,7 @@ cleanup=theme_bw() +
         panel.grid.major.y = element_blank(),
         panel.background = element_blank(),
         axis.line = element_line(color = "black"))
+
 
 ```
 
@@ -55,6 +67,7 @@ nsubsamples=12 # maybe this can be removed and instead calculated later.
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt<-'Q61L'
   
+  # alldata=read.csv("../data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
   alldata=read.csv("data/All_Data_V2.csv",sep=",",header=T,stringsAsFactors=F)
   nexperiments=7
 alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[2]]
@@ -105,7 +118,8 @@ nsubsamples=12 # maybe this can be removed and instead calculated later.
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt<-'Q61L'
   
-  alldata=read.csv("data/All_Data_V2.csv",sep=",",header=T,stringsAsFactors=F)
+  # alldata=read.csv("../data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
+  alldata=read.csv("data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
   nexperiments=7
 ###For mutation
 alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,nameposctrl1mt,nameposctrl2mt)[[2]]
@@ -152,7 +166,7 @@ ggplot(simresults_concat,aes(x=factor(exp_name),y=log10(p_val)))+
       axis.title = element_text(face="bold",size="26",color="black"),
       axis.text=element_text(face="bold",size="20",color="black"))
 
-ggsave("output/alkati_mtn_pval_fig2B.pdf",width = 16,height = 10,units = "in",useDingbats=F)
+# ggsave("output/alkati_mtn_pval_fig2B.pdf",width = 16,height = 10,units = "in",useDingbats=F)
 
 ```
 

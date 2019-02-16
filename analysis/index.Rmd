@@ -8,4 +8,10 @@ output:
 
 Welcome to my research website.
 Click on this [link](alkati_subsampling_simulations.html) to see my results.
+Click on this [link](tcga_skcm_data_parser.html) to see my results on ALK-expression.
 
+What’s in each directory:
+Data: contains data downloaded from internet
+Output: contains data that your code makes
+Analysis: contains your Rmarkdown files that are converted to PDFs
+Code: contains .R files that are functions that your Rmd files in the analysis folder goes off of
