@@ -12,7 +12,7 @@
 <meta name="author" content="Haider Inam" />
 
 
-<title>practice</title>
+<title>ALK_ExonImbalance_SKCM_Analysis</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -412,9 +412,9 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">practice</h1>
+<h1 class="title toc-ignore">ALK_ExonImbalance_SKCM_Analysis</h1>
 <h4 class="author"><em>Haider Inam</em></h4>
-<h4 class="date"><em>2/11/2019</em></h4>
+<h4 class="date"><em>2/16/2019</em></h4>
 
 </div>
 
@@ -462,7 +462,6 @@ Untracked files:
     Untracked:  data/All_Data_V2.csv
     Untracked:  data/all_data.csv
     Untracked:  data/tcga_alk_expression/
-    Untracked:  docs/figure/ALK_ExonImbalance_SKCM_Analysis.Rmd/
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
     Untracked:  output/alkati_skcm_exonimbalance.pdf
     Untracked:  output/skcm_alk_exon_expression.csv
@@ -496,53 +495,19 @@ Message
 <tbody>
 <tr>
 <td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/0cad4ec8c38e13644373ae06a92059d2d2fd43f1/docs/practice.html" target="_blank">0cad4ec</a>
-</td>
-<td style="text-align:left;">
-haiderinam
-</td>
-<td style="text-align:left;">
-2019-02-16
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/5d432fbdea919055a9b7e22d43fc513adc784679/docs/practice.html" target="_blank">5d432fb</a>
-</td>
-<td style="text-align:left;">
-haiderinam
-</td>
-<td style="text-align:left;">
-2019-02-11
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 Rmd
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/haiderinam/pair_con_select/blob/4c89be38f2e2edfe2dc709562929b98b1d9cec08/analysis/practice.Rmd" target="_blank">4c89be3</a>
+<a href="https://github.com/haiderinam/pair_con_select/blob/f8e2d5ee223a57b39e5ad0e08f27948a9559ede3/analysis/ALK_ExonImbalance_SKCM_Analysis.Rmd" target="_blank">f8e2d5e</a>
 </td>
 <td style="text-align:left;">
 haiderinam
 </td>
 <td style="text-align:left;">
-2019-02-11
+2019-02-17
 </td>
 <td style="text-align:left;">
-Publish the initial files for myproject
+Published Analysis on ALK expression levels #2
 </td>
 </tr>
 </tbody>
@@ -550,6 +515,83 @@ Publish the initial files for myproject
 </ul>
 <p></details></p>
 <hr />
+<pre class="r"><code>library(knitr)
+library(tictoc)
+library(workflowr)</code></pre>
+<pre><code>This is workflowr version 1.1.1
+Run ?workflowr for help getting started</code></pre>
+<pre class="r"><code>library(VennDiagram)</code></pre>
+<pre><code>Loading required package: grid</code></pre>
+<pre><code>Loading required package: futile.logger</code></pre>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(foreach)
+library(doParallel)</code></pre>
+<pre><code>Loading required package: iterators</code></pre>
+<pre><code>Loading required package: parallel</code></pre>
+<pre class="r"><code>library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+library(devtools)
+library(ggsignif)
+source(&quot;code/contab_maker.R&quot;)
+source(&quot;code/alldata_compiler.R&quot;)
+source(&quot;code/quadratic_solver.R&quot;)
+source(&quot;code/mut_excl_genes_generator.R&quot;)
+source(&quot;code/mut_excl_genes_datapoints.R&quot;)
+source(&quot;code/simresults_generator.R&quot;)
+
+######################Cleanup for GGPlot2#########################################
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = &quot;black&quot;))</code></pre>
+<p>Making ALK Expression the plots:</p>
+<pre class="r"><code>alkati_merged_data=read.csv(&quot;data/all_data.csv&quot;)
+alkati_merged_data$alkati=0
+alkati_merged_data$alkati[alkati_merged_data$Ratio&gt;=10&amp;alkati_merged_data$mRNA_count&gt;=500&amp;alkati_merged_data$RSEM_normalized&gt;=100]=1
+alkati_merged_data$alkati=factor(alkati_merged_data$alkati,levels=c(&quot;1&quot;,&quot;0&quot;))
+
+  ggplot(alkati_merged_data,aes(x=mean_RPKM_1.19, y=mean_RPKM_20.29,color=factor(alkati)))+
+    geom_abline(size=1)+
+    geom_point(size=4)+
+    ####Had to add this line to not overplot the alkati datapoint- Haider 1/31/19
+    geom_point(data=alkati_merged_data[alkati_merged_data$alkati==1,],aes(x=mean_RPKM_1.19, y=mean_RPKM_20.29,color=factor(alkati)),size=4)+
+    scale_x_continuous(trans = &quot;log10&quot;,name=&quot;Exon 1:19 RPKM&quot;,breaks=c(1e-2,1e0,1e2),labels = parse(text = c(&quot;10^-2&quot;,&quot;10^0&quot;,&quot;10^2&quot;)),limits = c(1e-3,1e3))+
+    scale_y_continuous(trans = &quot;log10&quot;,name=&quot;Exon 20:29 RPKM&quot;,breaks=c(1e-2,1e0,1e2),labels = parse(text = c(&quot;10^-2&quot;,&quot;10^0&quot;,&quot;10^2&quot;)),limits = c(1e-3,1e3))+
+    scale_color_brewer(palette=&quot;Set1&quot;,name=&quot;ALKATI&quot;,labels=c(&quot;Yes&quot;, &quot;No&quot;))+
+    cleanup+
+    theme(plot.title = element_text(hjust=.5),
+          text = element_text(size=24,face = &quot;bold&quot;),
+          axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
+          axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;,colour = &quot;black&quot;))+
+    theme(legend.key.size = unit(30,&quot;pt&quot;))</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/ALK_ExonImbalance_SKCM_Analysis.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;output/alkati_skcm_exonimbalance.pdf&quot;,width =12 ,height =10 ,units = &quot;in&quot;,useDingbats=F)
+
+#Testing if both kinase and ALK expression are different
+ks.test(alkati_merged_data$mean_RPKM_1.19,alkati_merged_data$mean_RPKM_20.29)</code></pre>
+<pre><code>Warning in ks.test(alkati_merged_data$mean_RPKM_1.19,
+alkati_merged_data$mean_RPKM_20.29): p-value will be approximate in the
+presence of ties</code></pre>
+<pre><code>
+    Two-sample Kolmogorov-Smirnov test
+
+data:  alkati_merged_data$mean_RPKM_1.19 and alkati_merged_data$mean_RPKM_20.29
+D = 0.40456, p-value &lt; 2.2e-16
+alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>###We observed a significant difference between the distribution for the 20-29 exons and the 1-19 exons The reported p-value was 2-16.</code></pre>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
@@ -565,16 +607,36 @@ locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
+[1] parallel  grid      stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] ggsignif_0.4.0      usethis_1.4.0       devtools_2.0.1     
+ [4] RColorBrewer_1.1-2  reshape2_1.4.3      ggplot2_3.1.0      
+ [7] doParallel_1.0.14   iterators_1.0.10    foreach_1.4.4      
+[10] dplyr_0.7.8         VennDiagram_1.6.20  futile.logger_1.4.3
+[13] workflowr_1.1.1     tictoc_1.0          knitr_1.21         
 
 loaded via a namespace (and not attached):
- [1] workflowr_1.1.1   Rcpp_1.0.0        rprojroot_1.3-2  
- [4] digest_0.6.18     R.methodsS3_1.7.1 backports_1.1.3  
- [7] git2r_0.24.0      magrittr_1.5      evaluate_0.12    
-[10] stringi_1.2.4     whisker_0.3-2     R.oo_1.22.0      
-[13] R.utils_2.7.0     rmarkdown_1.11    tools_3.5.2      
-[16] stringr_1.3.1     xfun_0.4          yaml_2.2.0       
-[19] compiler_3.5.2    htmltools_0.3.6   knitr_1.21       </code></pre>
+ [1] tidyselect_0.2.5     xfun_0.4             remotes_2.0.2       
+ [4] purrr_0.3.0          colorspace_1.4-0     htmltools_0.3.6     
+ [7] yaml_2.2.0           rlang_0.3.1          pkgbuild_1.0.2      
+[10] R.oo_1.22.0          pillar_1.3.1         glue_1.3.0          
+[13] withr_2.1.2          R.utils_2.7.0        sessioninfo_1.1.1   
+[16] lambda.r_1.2.3       bindrcpp_0.2.2       bindr_0.1.1         
+[19] plyr_1.8.4           stringr_1.3.1        munsell_0.5.0       
+[22] gtable_0.2.0         R.methodsS3_1.7.1    codetools_0.2-16    
+[25] evaluate_0.12        memoise_1.1.0        callr_3.1.1         
+[28] ps_1.3.0             Rcpp_1.0.0           backports_1.1.3     
+[31] scales_1.0.0         formatR_1.5          desc_1.2.0          
+[34] pkgload_1.0.2        fs_1.2.6             digest_0.6.18       
+[37] stringi_1.2.4        processx_3.2.1       rprojroot_1.3-2     
+[40] cli_1.0.1            tools_3.5.2          magrittr_1.5        
+[43] lazyeval_0.2.1       tibble_2.0.1         futile.options_1.0.1
+[46] crayon_1.3.4         whisker_0.3-2        pkgconfig_2.0.2     
+[49] prettyunits_1.0.2    assertthat_0.2.0     rmarkdown_1.11      
+[52] rstudioapi_0.9.0     R6_2.3.0             git2r_0.24.0        
+[55] compiler_3.5.2      </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using

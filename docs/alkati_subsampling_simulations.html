@@ -419,7 +419,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2019-02-16</p>
+<p><strong>Last updated:</strong> 2019-02-17</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -443,7 +443,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/257ca7e1ea61db3bb075f33c8ced3e20ac9754ea" target="_blank">257ca7e</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/f8e2d5ee223a57b39e5ad0e08f27948a9559ede3" target="_blank">f8e2d5e</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -462,7 +462,9 @@ Untracked files:
     Untracked:  data/All_Data_V2.csv
     Untracked:  data/all_data.csv
     Untracked:  data/tcga_alk_expression/
+    Untracked:  docs/figure/ALK_ExonImbalance_SKCM_Analysis.Rmd/
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
+    Untracked:  output/alkati_skcm_exonimbalance.pdf
     Untracked:  output/skcm_alk_exon_expression.csv
 
 </code></pre>
@@ -492,6 +494,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/f8e2d5ee223a57b39e5ad0e08f27948a9559ede3/analysis/alkati_subsampling_simulations.Rmd" target="_blank">f8e2d5e</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-17
+</td>
+<td style="text-align:left;">
+Published Analysis on ALK expression levels #2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/0cad4ec8c38e13644373ae06a92059d2d2fd43f1/docs/alkati_subsampling_simulations.html" target="_blank">0cad4ec</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-16
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -625,21 +661,12 @@ library(reshape2)
 library(RColorBrewer)
 library(devtools)
 library(ggsignif)
-getwd()</code></pre>
-<pre><code>[1] &quot;/Users/haiderinam/Box/RProjects/pair_con_select&quot;</code></pre>
-<pre class="r"><code>source(&quot;code/contab_maker.R&quot;)
+source(&quot;code/contab_maker.R&quot;)
 source(&quot;code/alldata_compiler.R&quot;)
 source(&quot;code/quadratic_solver.R&quot;)
 source(&quot;code/mut_excl_genes_generator.R&quot;)
 source(&quot;code/mut_excl_genes_datapoints.R&quot;)
 source(&quot;code/simresults_generator.R&quot;)
-
-# source(&quot;../code/contab_maker.R&quot;)
-# source(&quot;../code/alldata_compiler.R&quot;)
-# source(&quot;../code/quadratic_solver.R&quot;)
-# source(&quot;../code/mut_excl_genes_generator.R&quot;)
-# source(&quot;../code/mut_excl_genes_datapoints.R&quot;)
-# source(&quot;../code/simresults_generator.R&quot;)
 
 ######################Cleanup for GGPlot2#########################################
 cleanup=theme_bw() +
@@ -691,6 +718,36 @@ ggplot(simresults_concat,aes(x=factor(subsample_size),y=log10(p_val)))+
       axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;black&quot;),
       axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;,color=&quot;black&quot;))</code></pre>
 <p><img src="figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-3-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/0cad4ec8c38e13644373ae06a92059d2d2fd43f1/docs/figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-3-1.png" target="_blank">0cad4ec</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-16
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code># ggsave(&quot;output/ alkati_subsamplesize_pval_fig1c.pdf&quot;,width = 10,height = 10,units = &quot;in&quot;,useDingbats=F)</code></pre>
 </div>
 <div id="adding-simulations-for-comparisons-with-mutations" class="section level3">
@@ -756,6 +813,36 @@ shorter object length</code></pre>
       axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;black&quot;),
       axis.text=element_text(face=&quot;bold&quot;,size=&quot;20&quot;,color=&quot;black&quot;))</code></pre>
 <p><img src="figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-5-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/0cad4ec8c38e13644373ae06a92059d2d2fd43f1/docs/figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-5-1.png" target="_blank">0cad4ec</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-16
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code># ggsave(&quot;output/alkati_mtn_pval_fig2B.pdf&quot;,width = 16,height = 10,units = &quot;in&quot;,useDingbats=F)</code></pre>
 </div>
 <div id="session-information" class="section level2">
