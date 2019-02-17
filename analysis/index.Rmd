@@ -8,7 +8,7 @@ output:
 
 Welcome to my research website.
 Click on this [link](alkati_subsampling_simulations.html) to see my results.
-Click on this [link](tcga_skcm_data_parser.html) to see my results on ALK-expression.
+Click on this [link](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression.
 
 What’s in each directory:
 Data: contains data downloaded from internet
