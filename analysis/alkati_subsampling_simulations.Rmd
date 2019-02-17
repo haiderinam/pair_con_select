@@ -8,7 +8,6 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = "..")
-getwd()
 ```
 
 ```{r}
@@ -24,20 +23,12 @@ library(reshape2)
 library(RColorBrewer)
 library(devtools)
 library(ggsignif)
-getwd()
 source("code/contab_maker.R")
 source("code/alldata_compiler.R")
 source("code/quadratic_solver.R")
 source("code/mut_excl_genes_generator.R")
 source("code/mut_excl_genes_datapoints.R")
 source("code/simresults_generator.R")
-
-# source("../code/contab_maker.R")
-# source("../code/alldata_compiler.R")
-# source("../code/quadratic_solver.R")
-# source("../code/mut_excl_genes_generator.R")
-# source("../code/mut_excl_genes_datapoints.R")
-# source("../code/simresults_generator.R")
 
 ######################Cleanup for GGPlot2#########################################
 cleanup=theme_bw() +
@@ -46,8 +37,6 @@ cleanup=theme_bw() +
         panel.grid.major.y = element_blank(),
         panel.background = element_blank(),
         axis.line = element_line(color = "black"))
-
-
 ```
 
 ###P-value distribution plots for Figure 1C:
