@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = "..")
 ```
 
-```{r}
+```{r,include=F}
 library(knitr)
 library(tictoc)
 library(workflowr)
@@ -38,6 +38,50 @@ cleanup=theme_bw() +
         panel.background = element_blank(),
         axis.line = element_line(color = "black"))
 ```
+###Mutual Exclusivity for ALKATI data without down sampling
+```{r}
+  nameposctrl1<-'BRAF'
+  #Positive control 1
+  nameposctrl2<-'NRAS'
+  #Oncogene in Question
+  namegene<-'ATI'
+  #Mutation Boolean (Y or N)
+  mtn<-'N'
+  #Name Mutation for Positive Ctrl 1
+  nameposctrl1mt<-'V600E'
+  #Name of Mutation for Positive Ctrl 2
+  nameposctrl2mt<-'Q61L'
+
+alldata=read.csv("data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
+head(alldata)
+###Not mutation specific
+alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,'N',"N/A","N/A")[[2]]
+head(alldata_comp)
+BRAF_NRAS=fisher.test(contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$Positive_Ctrl2,alldata_comp))$p.value
+BRAF_NRAS_odds=fisher.test(contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$Positive_Ctrl2,alldata_comp))$estimate
+BRAF_ATI=fisher.test(contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp))$p.value
+BRAF_ATI_odds=fisher.test(contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp))$estimate
+NRAS_ATI=fisher.test(contab_maker(alldata_comp$Positive_Ctrl2,alldata_comp$genex,alldata_comp))$p.value
+NRAS_ATI_odds=fisher.test(contab_maker(alldata_comp$Positive_Ctrl2,alldata_comp$genex,alldata_comp))$estimate
+Rndm_ATI=fisher.test(contab_maker(alldata_comp$rndmarray,alldata_comp$genex,alldata_comp))$p.value
+Rndm_ATI_odds=fisher.test(contab_maker(alldata_comp$rndmarray,alldata_comp$genex,alldata_comp))$estimate
+###Mutation specific
+alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,'Y',"V600E","Q61L")[[2]]
+head(alldata_comp)
+BRAF_NRAS_mtn=fisher.test(contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$Positive_Ctrl2,alldata_comp))$p.value
+BRAF_NRAS_mtn_odds=fisher.test(contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$Positive_Ctrl2,alldata_comp))$estimate
+BRAF_ATI_mtn=fisher.test(contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp))$p.value
+BRAF_ATI_mtn_odds=fisher.test(contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp))$estimate
+NRAS_ATI_mtn=fisher.test(contab_maker(alldata_comp$Positive_Ctrl2,alldata_comp$genex,alldata_comp))$p.value
+NRAS_ATI_mtn_odds=fisher.test(contab_maker(alldata_comp$Positive_Ctrl2,alldata_comp$genex,alldata_comp))$estimate
+Rndm_ATI_mtn=fisher.test(contab_maker(alldata_comp$rndmarray,alldata_comp$genex,alldata_comp))$p.value
+Rndm_ATI_mtn_odds=fisher.test(contab_maker(alldata_comp$rndmarray,alldata_comp$genex,alldata_comp))$estimate
+
+###Summarizing ME data in a table:
+alkati_me_summary=data.frame(cbind(rbind(BRAF_ATI,BRAF_ATI_mtn,NRAS_ATI,NRAS_ATI_mtn,BRAF_NRAS,BRAF_NRAS_mtn,Rndm_ATI,Rndm_ATI_mtn),rbind(BRAF_ATI_odds,BRAF_ATI_mtn_odds,NRAS_ATI_odds,NRAS_ATI_mtn_odds,BRAF_NRAS_odds,BRAF_NRAS_mtn_odds,Rndm_ATI_odds,Rndm_ATI_mtn_odds)))
+colnames(alkati_me_summary)=c("P.value","Odds.Ratio")
+alkati_me_summary
+```
 
 ###P-value distribution plots for Figure 1C:
 ```{r}
@@ -57,7 +101,7 @@ nsubsamples=12 # maybe this can be removed and instead calculated later.
   nameposctrl2mt<-'Q61L'
   
   # alldata=read.csv("../data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
-  alldata=read.csv("data/All_Data_V2.csv",sep=",",header=T,stringsAsFactors=F)
+  alldata=read.csv("data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
   nexperiments=7
 alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[2]]
 genex_replication_prop=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[1]]

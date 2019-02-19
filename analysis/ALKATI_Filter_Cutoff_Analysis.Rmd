@@ -1,0 +1,319 @@
+  ---
+title: "ALKATI Filter Cutoff Analysis"
+author: "Haider Inam"
+date: "2/18/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "..") #To change the root directory from Analysis to medsproject
+```
+
+
+```{r}
+library(ggplot2)
+library(knitr)
+library(dplyr)
+library(tictoc)
+library(foreach)
+library(doParallel)
+source("code/alldata_compiler.R")
+source("code/contab_maker.R")
+######################Cleanup for GGPlot2#########################################
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = "black"))
+```
+
+####**Varying Filter for mean RPKM from 1:100**
+####**Note that by mean RPKM, I mean ratio of 20-29 RPKM/1-19 RPKM**
+```{r}
+#Run Filter Analysis
+ct=1
+simresults<-matrix(nrow=100,ncol=2)
+alldata=read.csv("data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
+for (meanRPKM in 1:100){
+  alldata_filtered=alldata%>%
+    group_by(Patid,mean_RPKM_1.19,mean_RPKM_20.29,Ratio20.29, mRNA_count,BRAF,NRAS,RSEM_normalized)%>%
+    summarize(ATI=as.numeric(mRNA_count>=500&Ratio20.29>meanRPKM&RSEM_normalized>=100)[1])
+  
+  alldata_comp=alldata_compiler(alldata_filtered,'BRAF','NRAS','ATI','N',"N/A","N/A")[[2]]
+
+  contab_pc1_genex=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp)
+  simresults[ct,1]=ct #Total Count
+  simresults[ct,2]=fisher.test(contab_pc1_genex)$p.value #p.value
+  ct=ct+1
+}
+count=simresults[c(1:100),1]
+pval=simresults[c(1:100),2]
+colnames(simresults)=c("totCt","p_val")
+cols=c("totCt","p_val")
+
+simresults=as.data.frame(simresults, stringsAsFactors = F, )
+simresults[colnames(simresults)] <- lapply(simresults[colnames(simresults)],as.character)
+simresults[colnames(simresults)] <- lapply(simresults[colnames(simresults)],as.numeric)
+
+#Plot Results
+ggplot(simresults,aes(x=totCt,y=p_val))+geom_line(size=3)+ggtitle("Varying RPKM Filter")+xlab("Exon20:29/Exon1:19")+ylab("P-value")+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",size="26"))
+  
+# ggsave("filteranalysis_RPKM.pdf",width = 9,height = 6,units = "in",useDingbats=F)
+```
+####**Varying Filter for mean RSEM from 1 to 1000**
+####**Note that these are the sum of RSEM across all ALK-exons**
+```{r}
+#Run Filter Analysis
+ct=1
+simresults<-matrix(nrow=1000,ncol=2)
+alldata=read.csv("data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
+for (rsem in 1:1000){
+  alldata_filtered=alldata%>%
+    group_by(Patid,mean_RPKM_1.19,mean_RPKM_20.29,Ratio20.29, mRNA_count,BRAF,NRAS,RSEM_normalized)%>%
+    summarize(ATI=as.numeric(mRNA_count>=500&Ratio20.29>10&RSEM_normalized>=rsem)[1])   
+  alldata_comp=alldata_compiler(alldata_filtered,'BRAF','NRAS','ATI','N',"N/A","N/A")[[2]]
+  
+  contab_pc1_genex=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp)
+  simresults[ct,1]=ct #Total Count
+  simresults[ct,2]=fisher.test(contab_pc1_genex)$p.value #p.value
+  ct=ct+1
+}
+count=simresults[c(1:100),1]
+pval=simresults[c(1:100),2]
+colnames(simresults)=c("totCt","p_val")
+cols=c("totCt","p_val")
+
+simresults=as.data.frame(simresults, stringsAsFactors = F, )
+simresults[colnames(simresults)] <- lapply(simresults[colnames(simresults)],as.character)
+simresults[colnames(simresults)] <- lapply(simresults[colnames(simresults)],as.numeric)
+
+#Plot Results
+ggplot(simresults,aes(x=totCt,y=p_val))+geom_line(size=3)+ggtitle("Varying RSEM Filter")+xlab("RSEM")+ylab("P-Value")+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",size="26"))
+  
+# ggsave("filteranalysis_RSEM.pdf",width = 9,height = 6,units = "in",useDingbats=F)
+```
+####**Varying Filter for ALK raw read count from 1 to 10,000**
+####**Note that these are the sum of mRNA counts across all ALK-exons**
+```{r}
+#Run Filter Analysis
+ct=1
+simresults<-matrix(nrow=1000,ncol=2)
+alldata=read.csv("data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
+for (rawreadcount in 1:1000){
+  alldata_filtered=alldata%>%
+    group_by(Patid,mean_RPKM_1.19,mean_RPKM_20.29,Ratio20.29, mRNA_count,BRAF,NRAS,RSEM_normalized)%>%
+    summarize(ATI=as.numeric(mRNA_count>=rawreadcount&Ratio20.29>10&RSEM_normalized>=100)[1])
+  alldata_comp=alldata_compiler(alldata_filtered,'BRAF','NRAS','ATI','N',"N/A","N/A")[[2]]
+  
+  contab_pc1_genex=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp)
+  
+  simresults[ct,1]=ct #Total Count
+  simresults[ct,2]=fisher.test(contab_pc1_genex)$p.value #p.value
+  ct=ct+1
+  }
+count=simresults[c(1:100),1]
+pval=simresults[c(1:100),2]
+colnames(simresults)=c("totCt","p_val")
+
+simresults=as.data.frame(simresults, stringsAsFactors = F, )
+simresults[colnames(simresults)] <- lapply(simresults[colnames(simresults)],as.character)
+simresults[colnames(simresults)] <- lapply(simresults[colnames(simresults)],as.numeric)
+
+#Plot results
+ggplot(simresults,aes(x=totCt,y=p_val))+geom_line(size=3)+ggtitle("Varying ALK Raw Read Count")+xlab("Count")+ylab("P-value")+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",size="26"))
+  
+# ggsave("filteranalysis_Count.pdf",width = 9,height = 6,units = "in",useDingbats=F)
+```
+####**Varying all Filters. This runs on parallel for-loops to improve computation time.**
+Since the filter cutoffs code take a long time, it is only run once. This code generates alkati_filtercutoff_allfilters.csv
+```{r,eval=F}
+#This chunk utilizes parallel for-loops to omptimize computational efficiency
+#Run Filter Analysis using combination of filters
+tic()
+filename="data/all_data.csv"
+alldata=read.csv(filename,sep=",",header=T,stringsAsFactors=F)
+
+cores=detectCores()
+cl= makeCluster(cores[1]-1)
+registerDoParallel(cl)
+
+#RPKM read count 1 to 100
+simresults<-foreach(rawreadcount=seq(from=1,to=1500,by=10),.combine = rbind) %dopar% {
+ct=1
+simresults=matrix(nrow=100000,ncol=7)
+library(dplyr)
+#RSEM read count 1 to 1000
+  for (rsem in seq(from=1,to=1000,by=10)){
+    #Raw  read count 1 to 10,000
+    for (rpkm in seq(from=2,to=30,by=2)) {
+      
+      alldata_filtered=alldata%>%
+        group_by(Patid,mean_RPKM_1.19,mean_RPKM_20.29,Ratio20.29, mRNA_count,BRAF,NRAS,RSEM_normalized)%>%
+        summarize(ATI=as.numeric(mRNA_count>=rawreadcount&Ratio20.29>=rpkm&RSEM_normalized>=rsem)[1])
+      alldata_comp=alldata_compiler(alldata_filtered,'BRAF','NRAS','ATI','N',"N/A","N/A")[[2]]
+      
+      contab_pc1_genex=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp)
+      contab_pc2_genex=contab_maker(alldata_comp$Positive_Ctrl2,alldata_comp$genex,alldata_comp)
+      tot_alkati=sum(alldata_comp$genex)
+      simresults[ct,1]=ct #Totalcount
+      simresults[ct,2]=rpkm #RPKM
+      simresults[ct,3]=rsem #RSEM
+      simresults[ct,4]=rawreadcount #Alkreads
+      simresults[ct,5]=fisher.test(contab_pc1_genex)$p.value #p.value
+      simresults[ct,6]=fisher.test(contab_pc2_genex)$p.value #p.value
+      simresults[ct,7]=tot_alkati #Total count of ALKATI patients
+      ct=ct+1
+    }
+  }
+simresults
+}
+stopCluster(cl)
+toc()
+  colnames(simresults)=c("totCt","rpkm","rsem","alkreads","p_val_pc1","p_val_pc2","tot_alk")
+    
+  #making simresults a dataframe
+  simresults=as.data.frame(simresults, stringsAsFactors = F)
+  #making everything a numeric
+simresults[colnames(simresults)] <- lapply(simresults[colnames(simresults)],as.character)
+simresults[colnames(simresults)] <- lapply(simresults[colnames(simresults)],as.numeric)
+  
+write.csv(simresults,"output/alkati_filtercutoff_allfilters.csv")
+```
+
+```{r}
+simresults=read.csv("output/alkati_filtercutoff_allfilters.csv")
+```
+
+###**Figure 3a**
+###**NRAS vs ALKATI**
+Heat map for NRAS vs ALKATI
+P-values are only shown if there were at least 20 patients that met those filters
+```{r}
+datapoints=simresults %>%
+  filter(rsem<=500,alkreads<=1500)%>%
+  group_by(rsem,alkreads,tot_alk) %>%
+  summarise(min_p_val_pc2=min(p_val_pc2),rpkm_atpval=rpkm[min(p_val_pc2)][1])
+datapoints[datapoints$tot_alk<20,]$min_p_val_pc2=""
+datapoints$min_p_val_pc2=as.numeric(datapoints$min_p_val_pc2)
+
+  ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+
+      scale_fill_gradient2(low ="red" ,mid ="white" ,high ="blue",midpoint = .3 ,name="P-Value", na.value = "gray")+
+      # scale_x_log10()+
+      # scale_fill_gradient2()+
+      # scale_fill_gradient(low = "red",high = "blue",name = "P-Value")+
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            axis.line = element_line(colour = "black"))+
+      xlab("Number of ALK Reads")+ylab("RSEM")+
+      # ggtitle("Varying Combinations of Filters Does Not Create \nMutual Exclusivity Between ALK-ATI & BRAF")+
+      theme_bw()+
+      theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",color="black",size="26"))
+  
+# ggsave("filteranalysisheatmap.pdf",width = 16,height = 14,units = "in",useDingbats=F)
+
+```
+
+####**Heat map for NRAS vs ALKATI with count data**
+```{r}
+datapoints=simresults %>%
+  filter(rsem<=500,alkreads<=1000)%>%
+  group_by(rsem,alkreads,tot_alk) %>%
+  summarise(min_p_val_pc2=min(p_val_pc2),rpkm_atpval=rpkm[min(p_val_pc2)][1])
+
+  ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+
+    scale_fill_gradient2(low ="red" ,mid ="white" ,midpoint = 40,high ="blue",name="ALKATI Count")
+
+#Trying different tiles for RPKM  
+datapoints=simresults %>%
+filter(rsem<=500,alkreads<=2000,rpkm%in%c(6,12,18,30))%>%
+group_by(rsem,alkreads,tot_alk,rpkm) %>%
+summarise(min_p_val_pc2=min(p_val_pc2))
+
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+facet_wrap(~rpkm)+
+  scale_fill_gradient2(low ="red" ,mid ="white" ,midpoint = 40,high ="blue",name="ALKATI Count")
+
+###Distribution of the number of ALKATI patients across different conditions  
+###Remember: ALKATI patients had exon ratio of 10, rsem >100, and counts >500. i.e. green region
+###The takeaway from this plot is that we can try most filters without having to worry about patient numbers. Will look at the p-values for these orange filters next
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+facet_grid(~rpkm)+
+  scale_fill_gradientn(colours = rainbow(5),values=c(.1,.2,.3,.4,1),limits=c(0,100),breaks = c(9,10,20,30,40,100),name="# ALKATI \n Patients",guide = "legend")+
+  ggtitle("Total ALKATI patients across exon20-29/ex1-19 ratios")+
+  cleanup
+
+###Taking a look at whether there are any statistically significant regions.
+###There is only one region. We don't see mutual exclusivity at this region in the p-value plot
+###only p-values between 0 and 0.1 are shown
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+facet_grid(~rpkm)+
+  scale_fill_gradient2(low ="red" ,mid ="white" ,high ="blue",midpoint = .05 ,name="P-Value",guide = "legend",limits=c(0,.1))+
+  cleanup
+
+###If there are <20 patients for a set of filters, take that data out.
+
+datapoints[datapoints$tot_alk<20,]$min_p_val_pc2=""
+datapoints$min_p_val_pc2=as.numeric(datapoints$min_p_val_pc2)
+
+###Regions with less than 20 patients are shaded gray.
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+facet_grid(~rpkm)+
+  scale_fill_gradient2(low ="red" ,mid ="white" ,high ="blue",midpoint = .2 ,name="P-Value",guide = "legend",limits=c(0,1),na.value = "gray")+
+  cleanup
+```
+##**ALKATI vs BRAF**  
+###**ALKATI is not mutually exclusive with BRAF across a range of filters**
+Heatmaps code continued
+P-values reported are the minimum p-values across RPKM filters
+Single heat map
+```{r}
+datapoints=simresults %>%
+  filter(rsem<=500,alkreads<=1000)%>%
+  group_by(rsem,alkreads,tot_alk) %>%
+  summarise(min_p_val_pc1=min(p_val_pc1),rpkm_atpval=rpkm[min(p_val_pc1)][1])
+datapoints[datapoints$tot_alk<20,]$min_p_val_pc1=""
+datapoints$min_p_val_pc1=as.numeric(datapoints$min_p_val_pc1)
+
+  ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc1))+
+      scale_fill_gradient2(low ="red" ,mid ="white" ,high ="blue",midpoint = .3 ,name="P-Value",na.value = "gray")+
+      # scale_x_log10()+
+      # scale_fill_gradient2()+
+      # scale_fill_gradient(low = "red",high = "blue",name = "P-Value")+
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            axis.line = element_line(colour = "black"))+
+      xlab("Number of ALK Reads")+ylab("RSEM")+
+      # ggtitle("Varying Combinations of Filters Does Not Create \nMutual Exclusivity Between ALK-ATI & BRAF")+
+      theme_bw()+
+      theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",color="black",size="26"))
+  
+# ggsave("filteranalysisheatmap.pdf",width = 16,height = 14,units = "in",useDingbats=F)
+```
+
+
+Facets of heat maps across a range of ex20-29/1-19 ratios
+```{r}
+datapoints=simresults %>%
+filter(rsem<=1000,alkreads<=2000,rpkm%in%c(6,12,18,30))%>%
+group_by(rsem,alkreads,tot_alk,rpkm) %>%
+summarise(min_p_val_pc1=min(p_val_pc1))
+
+###Distribution of the number of ALKATI patients across different conditions  
+###Remember: ALKATI patients had exon ratio of 10, rsem >100, and counts >500. i.e. in the green region
+###The takeaway from this plot is that we can try filters in the yellow region region. Will look at the p-values for these orange filters next
+
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+facet_grid(~rpkm)+
+  scale_fill_gradientn(colours = rainbow(5),values=c(.1,.2,.3,.4,1),limits=c(0,100),breaks = c(9,10,20,30,40,100),name="# ALKATI \n Patients",guide = "legend")+
+  ggtitle("Total ALKATI patients across exon20-29/ex1-19 ratios")+
+  cleanup
+
+# P-Values Heat map
+# Data is only plotted if number of ALKATI patients was >25
+datapoints[datapoints$tot_alk<20,]$min_p_val_pc1=""
+datapoints$min_p_val_pc1=as.numeric(datapoints$min_p_val_pc1)
+
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc1))+facet_grid(~rpkm)+
+  scale_fill_gradient2(low ="red" ,mid ="white" ,high ="blue",midpoint = .4 ,name="P-Value",guide = "legend",limits=c(0,1),na.value = "gray")+
+  cleanup
+```
+

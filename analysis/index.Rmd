@@ -7,9 +7,9 @@ output:
 ---
 
 Welcome to my research website.
-Click on this [link](alkati_subsampling_simulations.html) to see my results.
-Click on this [link](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression.
-
+Click on this [link](alkati_subsampling_simulations.html) to see my results.  
+Click on this [link](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression.  
+Click on this [link](ALKATI_Filter_Cutoff_Analysis.html) to see my results on ALKATI filter cutoffs.
 What’s in each directory:
 Data: contains data downloaded from internet
 Output: contains data that your code makes
