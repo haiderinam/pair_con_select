@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>ALKATI_Filter_Cutoff_Analysis.utf8.md</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">pair_con_select</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jdblischak/workflowr">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<p><strong>Last updated:</strong> 2019-02-19</p>
+<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
+<ul>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20190211)</code> </summary></p>
+<p>The command <code>set.seed(20190211)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/ba899cb1e0a6383072728b4446698356632aec42" target="_blank">ba899cb</a> </summary></p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
+
+Untracked files:
+    Untracked:  code/alldata_compiler.R
+    Untracked:  code/contab_maker.R
+    Untracked:  code/mut_excl_genes_datapoints.R
+    Untracked:  code/mut_excl_genes_generator.R
+    Untracked:  code/quadratic_solver.R
+    Untracked:  code/simresults_generator.R
+    Untracked:  code/tcga_skcm_data_parser.Rmd
+    Untracked:  data/All_Data_V2.csv
+    Untracked:  data/all_data.csv
+    Untracked:  data/tcga_alk_expression/
+    Untracked:  docs/figure/Filteranalysis.Rmd/
+    Untracked:  filteranalysisheatmap.pdf
+    Untracked:  output/alkati_filtercutoff_allfilters.csv
+    Untracked:  output/alkati_mtn_pval_fig2B.pdf
+    Untracked:  output/alkati_skcm_exonimbalance.pdf
+    Untracked:  output/skcm_alk_exon_expression.csv
+
+</code></pre>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
+</li>
+</ul>
+<hr />
+<table>
+<tbody>
+<tr class="odd">
+<td>tle: “ALKATI Filter Cutoff Analysis”</td>
+</tr>
+<tr class="even">
+<td>thor: “Haider Inam”</td>
+</tr>
+<tr class="odd">
+<td>te: “2/18/2019”</td>
+</tr>
+<tr class="even">
+<td>tput: html_document</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>library(ggplot2)
+library(knitr)
+library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tictoc)
+library(foreach)
+library(doParallel)</code></pre>
+<pre><code>Loading required package: iterators</code></pre>
+<pre><code>Loading required package: parallel</code></pre>
+<pre class="r"><code>source(&quot;code/alldata_compiler.R&quot;)
+source(&quot;code/contab_maker.R&quot;)
+######################Cleanup for GGPlot2#########################################
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = &quot;black&quot;))</code></pre>
+<div id="varying-filter-for-mean-rpkm-from-1100" class="section level4">
+<h4><strong>Varying Filter for mean RPKM from 1:100</strong></h4>
+</div>
+<div id="note-that-by-mean-rpkm-i-mean-ratio-of-20-29-rpkm1-19-rpkm" class="section level4">
+<h4><strong>Note that by mean RPKM, I mean ratio of 20-29 RPKM/1-19 RPKM</strong></h4>
+<pre class="r"><code>#Run Filter Analysis
+ct=1
+simresults&lt;-matrix(nrow=100,ncol=2)
+alldata=read.csv(&quot;data/all_data.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
+for (meanRPKM in 1:100){
+  alldata_filtered=alldata%&gt;%
+    group_by(Patid,mean_RPKM_1.19,mean_RPKM_20.29,Ratio20.29, mRNA_count,BRAF,NRAS,RSEM_normalized)%&gt;%
+    summarize(ATI=as.numeric(mRNA_count&gt;=500&amp;Ratio20.29&gt;meanRPKM&amp;RSEM_normalized&gt;=100)[1])
+  
+  alldata_comp=alldata_compiler(alldata_filtered,&#39;BRAF&#39;,&#39;NRAS&#39;,&#39;ATI&#39;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[2]]
+
+  contab_pc1_genex=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp)
+  simresults[ct,1]=ct #Total Count
+  simresults[ct,2]=fisher.test(contab_pc1_genex)$p.value #p.value
+  ct=ct+1
+}
+count=simresults[c(1:100),1]
+pval=simresults[c(1:100),2]
+colnames(simresults)=c(&quot;totCt&quot;,&quot;p_val&quot;)
+cols=c(&quot;totCt&quot;,&quot;p_val&quot;)
+
+simresults=as.data.frame(simresults, stringsAsFactors = F, )
+simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],as.character)
+simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],as.numeric)
+
+#Plot Results
+ggplot(simresults,aes(x=totCt,y=p_val))+geom_line(size=3)+ggtitle(&quot;Varying RPKM Filter&quot;)+xlab(&quot;Exon20:29/Exon1:19&quot;)+ylab(&quot;P-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;26&quot;))</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;filteranalysis_RPKM.pdf&quot;,width = 9,height = 6,units = &quot;in&quot;,useDingbats=F)</code></pre>
+</div>
+<div id="varying-filter-for-mean-rsem-from-1-to-1000" class="section level4">
+<h4><strong>Varying Filter for mean RSEM from 1 to 1000</strong></h4>
+</div>
+<div id="note-that-these-are-the-sum-of-rsem-across-all-alk-exons" class="section level4">
+<h4><strong>Note that these are the sum of RSEM across all ALK-exons</strong></h4>
+<pre class="r"><code>#Run Filter Analysis
+ct=1
+simresults&lt;-matrix(nrow=1000,ncol=2)
+alldata=read.csv(&quot;data/all_data.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
+for (rsem in 1:1000){
+  alldata_filtered=alldata%&gt;%
+    group_by(Patid,mean_RPKM_1.19,mean_RPKM_20.29,Ratio20.29, mRNA_count,BRAF,NRAS,RSEM_normalized)%&gt;%
+    summarize(ATI=as.numeric(mRNA_count&gt;=500&amp;Ratio20.29&gt;10&amp;RSEM_normalized&gt;=rsem)[1])   
+  alldata_comp=alldata_compiler(alldata_filtered,&#39;BRAF&#39;,&#39;NRAS&#39;,&#39;ATI&#39;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[2]]
+  
+  contab_pc1_genex=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp)
+  simresults[ct,1]=ct #Total Count
+  simresults[ct,2]=fisher.test(contab_pc1_genex)$p.value #p.value
+  ct=ct+1
+}
+count=simresults[c(1:100),1]
+pval=simresults[c(1:100),2]
+colnames(simresults)=c(&quot;totCt&quot;,&quot;p_val&quot;)
+cols=c(&quot;totCt&quot;,&quot;p_val&quot;)
+
+simresults=as.data.frame(simresults, stringsAsFactors = F, )
+simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],as.character)
+simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],as.numeric)
+
+#Plot Results
+ggplot(simresults,aes(x=totCt,y=p_val))+geom_line(size=3)+ggtitle(&quot;Varying RSEM Filter&quot;)+xlab(&quot;RSEM&quot;)+ylab(&quot;P-Value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;26&quot;))</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;filteranalysis_RSEM.pdf&quot;,width = 9,height = 6,units = &quot;in&quot;,useDingbats=F)</code></pre>
+</div>
+<div id="varying-filter-for-alk-raw-read-count-from-1-to-10000" class="section level4">
+<h4><strong>Varying Filter for ALK raw read count from 1 to 10,000</strong></h4>
+</div>
+<div id="note-that-these-are-the-sum-of-mrna-counts-across-all-alk-exons" class="section level4">
+<h4><strong>Note that these are the sum of mRNA counts across all ALK-exons</strong></h4>
+<pre class="r"><code>#Run Filter Analysis
+ct=1
+simresults&lt;-matrix(nrow=1000,ncol=2)
+alldata=read.csv(&quot;data/all_data.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
+for (rawreadcount in 1:1000){
+  alldata_filtered=alldata%&gt;%
+    group_by(Patid,mean_RPKM_1.19,mean_RPKM_20.29,Ratio20.29, mRNA_count,BRAF,NRAS,RSEM_normalized)%&gt;%
+    summarize(ATI=as.numeric(mRNA_count&gt;=rawreadcount&amp;Ratio20.29&gt;10&amp;RSEM_normalized&gt;=100)[1])
+  alldata_comp=alldata_compiler(alldata_filtered,&#39;BRAF&#39;,&#39;NRAS&#39;,&#39;ATI&#39;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[2]]
+  
+  contab_pc1_genex=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp)
+  
+  simresults[ct,1]=ct #Total Count
+  simresults[ct,2]=fisher.test(contab_pc1_genex)$p.value #p.value
+  ct=ct+1
+  }
+count=simresults[c(1:100),1]
+pval=simresults[c(1:100),2]
+colnames(simresults)=c(&quot;totCt&quot;,&quot;p_val&quot;)
+
+simresults=as.data.frame(simresults, stringsAsFactors = F, )
+simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],as.character)
+simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],as.numeric)
+
+#Plot results
+ggplot(simresults,aes(x=totCt,y=p_val))+geom_line(size=3)+ggtitle(&quot;Varying ALK Raw Read Count&quot;)+xlab(&quot;Count&quot;)+ylab(&quot;P-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;26&quot;))</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;filteranalysis_Count.pdf&quot;,width = 9,height = 6,units = &quot;in&quot;,useDingbats=F)</code></pre>
+</div>
+<div id="varying-all-filters.-this-runs-on-parallel-for-loops-to-improve-computation-time." class="section level4">
+<h4><strong>Varying all Filters. This runs on parallel for-loops to improve computation time.</strong></h4>
+<p>Since the filter cutoffs code take a long time, it is only run once. This code generates alkati_filtercutoff_allfilters.csv</p>
+<pre class="r"><code>#This chunk utilizes parallel for-loops to omptimize computational efficiency
+#Run Filter Analysis using combination of filters
+tic()
+filename=&quot;data/all_data.csv&quot;
+alldata=read.csv(filename,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
+
+cores=detectCores()
+cl= makeCluster(cores[1]-1)
+registerDoParallel(cl)
+
+#RPKM read count 1 to 100
+simresults&lt;-foreach(rawreadcount=seq(from=1,to=1500,by=10),.combine = rbind) %dopar% {
+ct=1
+simresults=matrix(nrow=100000,ncol=7)
+library(dplyr)
+#RSEM read count 1 to 1000
+  for (rsem in seq(from=1,to=1000,by=10)){
+    #Raw  read count 1 to 10,000
+    for (rpkm in seq(from=2,to=30,by=2)) {
+      
+      alldata_filtered=alldata%&gt;%
+        group_by(Patid,mean_RPKM_1.19,mean_RPKM_20.29,Ratio20.29, mRNA_count,BRAF,NRAS,RSEM_normalized)%&gt;%
+        summarize(ATI=as.numeric(mRNA_count&gt;=rawreadcount&amp;Ratio20.29&gt;=rpkm&amp;RSEM_normalized&gt;=rsem)[1])
+      alldata_comp=alldata_compiler(alldata_filtered,&#39;BRAF&#39;,&#39;NRAS&#39;,&#39;ATI&#39;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[2]]
+      
+      contab_pc1_genex=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp)
+      contab_pc2_genex=contab_maker(alldata_comp$Positive_Ctrl2,alldata_comp$genex,alldata_comp)
+      tot_alkati=sum(alldata_comp$genex)
+      simresults[ct,1]=ct #Totalcount
+      simresults[ct,2]=rpkm #RPKM
+      simresults[ct,3]=rsem #RSEM
+      simresults[ct,4]=rawreadcount #Alkreads
+      simresults[ct,5]=fisher.test(contab_pc1_genex)$p.value #p.value
+      simresults[ct,6]=fisher.test(contab_pc2_genex)$p.value #p.value
+      simresults[ct,7]=tot_alkati #Total count of ALKATI patients
+      ct=ct+1
+    }
+  }
+simresults
+}
+stopCluster(cl)
+toc()
+  colnames(simresults)=c(&quot;totCt&quot;,&quot;rpkm&quot;,&quot;rsem&quot;,&quot;alkreads&quot;,&quot;p_val_pc1&quot;,&quot;p_val_pc2&quot;,&quot;tot_alk&quot;)
+    
+  #making simresults a dataframe
+  simresults=as.data.frame(simresults, stringsAsFactors = F)
+  #making everything a numeric
+simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],as.character)
+simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],as.numeric)
+  
+write.csv(simresults,&quot;output/alkati_filtercutoff_allfilters.csv&quot;)</code></pre>
+<pre class="r"><code>simresults=read.csv(&quot;output/alkati_filtercutoff_allfilters.csv&quot;)</code></pre>
+</div>
+<div id="figure-3a" class="section level3">
+<h3><strong>Figure 3a</strong></h3>
+</div>
+<div id="nras-vs-alkati" class="section level3">
+<h3><strong>NRAS vs ALKATI</strong></h3>
+<p>Heat map for NRAS vs ALKATI P-values are only shown if there were at least 20 patients that met those filters</p>
+<pre class="r"><code>datapoints=simresults %&gt;%
+  filter(rsem&lt;=500,alkreads&lt;=1500)%&gt;%
+  group_by(rsem,alkreads,tot_alk) %&gt;%
+  summarise(min_p_val_pc2=min(p_val_pc2),rpkm_atpval=rpkm[min(p_val_pc2)][1])
+datapoints[datapoints$tot_alk&lt;20,]$min_p_val_pc2=&quot;&quot;
+datapoints$min_p_val_pc2=as.numeric(datapoints$min_p_val_pc2)
+
+  ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+
+      scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .3 ,name=&quot;P-Value&quot;, na.value = &quot;gray&quot;)+
+      # scale_x_log10()+
+      # scale_fill_gradient2()+
+      # scale_fill_gradient(low = &quot;red&quot;,high = &quot;blue&quot;,name = &quot;P-Value&quot;)+
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            axis.line = element_line(colour = &quot;black&quot;))+
+      xlab(&quot;Number of ALK Reads&quot;)+ylab(&quot;RSEM&quot;)+
+      # ggtitle(&quot;Varying Combinations of Filters Does Not Create \nMutual Exclusivity Between ALK-ATI &amp; BRAF&quot;)+
+      theme_bw()+
+      theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,color=&quot;black&quot;,size=&quot;26&quot;))</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;filteranalysisheatmap.pdf&quot;,width = 16,height = 14,units = &quot;in&quot;,useDingbats=F)</code></pre>
+<div id="heat-map-for-nras-vs-alkati-with-count-data" class="section level4">
+<h4><strong>Heat map for NRAS vs ALKATI with count data</strong></h4>
+<pre class="r"><code>datapoints=simresults %&gt;%
+  filter(rsem&lt;=500,alkreads&lt;=1000)%&gt;%
+  group_by(rsem,alkreads,tot_alk) %&gt;%
+  summarise(min_p_val_pc2=min(p_val_pc2),rpkm_atpval=rpkm[min(p_val_pc2)][1])
+
+  ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+
+    scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,midpoint = 40,high =&quot;blue&quot;,name=&quot;ALKATI Count&quot;)</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Trying different tiles for RPKM  
+datapoints=simresults %&gt;%
+filter(rsem&lt;=500,alkreads&lt;=2000,rpkm%in%c(6,12,18,30))%&gt;%
+group_by(rsem,alkreads,tot_alk,rpkm) %&gt;%
+summarise(min_p_val_pc2=min(p_val_pc2))
+
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+facet_wrap(~rpkm)+
+  scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,midpoint = 40,high =&quot;blue&quot;,name=&quot;ALKATI Count&quot;)</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>###Distribution of the number of ALKATI patients across different conditions  
+###Remember: ALKATI patients had exon ratio of 10, rsem &gt;100, and counts &gt;500. i.e. green region
+###The takeaway from this plot is that we can try most filters without having to worry about patient numbers. Will look at the p-values for these orange filters next
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+facet_grid(~rpkm)+
+  scale_fill_gradientn(colours = rainbow(5),values=c(.1,.2,.3,.4,1),limits=c(0,100),breaks = c(9,10,20,30,40,100),name=&quot;# ALKATI \n Patients&quot;,guide = &quot;legend&quot;)+
+  ggtitle(&quot;Total ALKATI patients across exon20-29/ex1-19 ratios&quot;)+
+  cleanup</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>###Taking a look at whether there are any statistically significant regions.
+###There is only one region. We don&#39;t see mutual exclusivity at this region in the p-value plot
+###only p-values between 0 and 0.1 are shown
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+facet_grid(~rpkm)+
+  scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .05 ,name=&quot;P-Value&quot;,guide = &quot;legend&quot;,limits=c(0,.1))+
+  cleanup</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>###If there are &lt;20 patients for a set of filters, take that data out.
+
+datapoints[datapoints$tot_alk&lt;20,]$min_p_val_pc2=&quot;&quot;
+datapoints$min_p_val_pc2=as.numeric(datapoints$min_p_val_pc2)
+
+###Regions with less than 20 patients are shaded gray.
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+facet_grid(~rpkm)+
+  scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .2 ,name=&quot;P-Value&quot;,guide = &quot;legend&quot;,limits=c(0,1),na.value = &quot;gray&quot;)+
+  cleanup</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-5.png" width="672" style="display: block; margin: auto;" /> ##<strong>ALKATI vs BRAF</strong><br />
+###<strong>ALKATI is not mutually exclusive with BRAF across a range of filters</strong> Heatmaps code continued P-values reported are the minimum p-values across RPKM filters Single heat map</p>
+<pre class="r"><code>datapoints=simresults %&gt;%
+  filter(rsem&lt;=500,alkreads&lt;=1000)%&gt;%
+  group_by(rsem,alkreads,tot_alk) %&gt;%
+  summarise(min_p_val_pc1=min(p_val_pc1),rpkm_atpval=rpkm[min(p_val_pc1)][1])
+datapoints[datapoints$tot_alk&lt;20,]$min_p_val_pc1=&quot;&quot;
+datapoints$min_p_val_pc1=as.numeric(datapoints$min_p_val_pc1)
+
+  ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc1))+
+      scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .3 ,name=&quot;P-Value&quot;,na.value = &quot;gray&quot;)+
+      # scale_x_log10()+
+      # scale_fill_gradient2()+
+      # scale_fill_gradient(low = &quot;red&quot;,high = &quot;blue&quot;,name = &quot;P-Value&quot;)+
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            axis.line = element_line(colour = &quot;black&quot;))+
+      xlab(&quot;Number of ALK Reads&quot;)+ylab(&quot;RSEM&quot;)+
+      # ggtitle(&quot;Varying Combinations of Filters Does Not Create \nMutual Exclusivity Between ALK-ATI &amp; BRAF&quot;)+
+      theme_bw()+
+      theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,color=&quot;black&quot;,size=&quot;26&quot;))</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;filteranalysisheatmap.pdf&quot;,width = 16,height = 14,units = &quot;in&quot;,useDingbats=F)</code></pre>
+<p>Facets of heat maps across a range of ex20-29/1-19 ratios</p>
+<pre class="r"><code>datapoints=simresults %&gt;%
+filter(rsem&lt;=1000,alkreads&lt;=2000,rpkm%in%c(6,12,18,30))%&gt;%
+group_by(rsem,alkreads,tot_alk,rpkm) %&gt;%
+summarise(min_p_val_pc1=min(p_val_pc1))
+
+###Distribution of the number of ALKATI patients across different conditions  
+###Remember: ALKATI patients had exon ratio of 10, rsem &gt;100, and counts &gt;500. i.e. in the green region
+###The takeaway from this plot is that we can try filters in the yellow region region. Will look at the p-values for these orange filters next
+
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+facet_grid(~rpkm)+
+  scale_fill_gradientn(colours = rainbow(5),values=c(.1,.2,.3,.4,1),limits=c(0,100),breaks = c(9,10,20,30,40,100),name=&quot;# ALKATI \n Patients&quot;,guide = &quot;legend&quot;)+
+  ggtitle(&quot;Total ALKATI patients across exon20-29/ex1-19 ratios&quot;)+
+  cleanup</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># P-Values Heat map
+# Data is only plotted if number of ALKATI patients was &gt;25
+datapoints[datapoints$tot_alk&lt;20,]$min_p_val_pc1=&quot;&quot;
+datapoints$min_p_val_pc1=as.numeric(datapoints$min_p_val_pc1)
+
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc1))+facet_grid(~rpkm)+
+  scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .4 ,name=&quot;P-Value&quot;,guide = &quot;legend&quot;,limits=c(0,1),na.value = &quot;gray&quot;)+
+  cleanup</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-10-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="session-information" class="section level2">
+<h2>Session information</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.2 (2018-12-20)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS Mojave 10.14.3
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] parallel  stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+[1] bindrcpp_0.2.2    doParallel_1.0.14 iterators_1.0.10  foreach_1.4.4    
+[5] tictoc_1.0        dplyr_0.7.8       knitr_1.21        ggplot2_3.1.0    
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.0        compiler_3.5.2    pillar_1.3.1     
+ [4] git2r_0.24.0      plyr_1.8.4        workflowr_1.1.1  
+ [7] bindr_0.1.1       R.methodsS3_1.7.1 R.utils_2.7.0    
+[10] tools_3.5.2       digest_0.6.18     evaluate_0.12    
+[13] tibble_2.0.1      gtable_0.2.0      pkgconfig_2.0.2  
+[16] rlang_0.3.1       rstudioapi_0.9.0  yaml_2.2.0       
+[19] xfun_0.4          withr_2.1.2       stringr_1.3.1    
+[22] rprojroot_1.3-2   grid_3.5.2        tidyselect_0.2.5 
+[25] glue_1.3.0        R6_2.3.0          rmarkdown_1.11   
+[28] reshape2_1.4.3    purrr_0.3.0       magrittr_1.5     
+[31] whisker_0.3-2     codetools_0.2-16  backports_1.1.3  
+[34] scales_1.0.0      htmltools_0.3.6   assertthat_0.2.0 
+[37] colorspace_1.4-0  labeling_0.3      stringi_1.2.4    
+[40] lazyeval_0.2.1    munsell_0.5.0     crayon_1.3.4     
+[43] R.oo_1.22.0      </code></pre>
+</div>
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<hr>
+<p>
+  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
+  analysis was created with
+  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
+</p>
+<hr>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
