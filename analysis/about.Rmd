@@ -5,4 +5,22 @@ output:
     toc: false
 ---
 
-Describe your project.
+#Made by Haider Inam  
+####PhD student at Penn State University  
+####[Justin Pritchard Lab](https://sites.psu.edu/pritchardlab/)
+
+
+## Members of the Prichard lab {.tabset .tabset-fade .tabset-pills}
+
+### Haider Inam
+![](https://sites.psu.edu/pritchardlab/files/2018/01/haider_pritchard_lab-wdakch.png)
+
+### Justin Prichard
+![](https://sites.psu.edu/pritchardlab/files/2018/01/justin_pritchard_phd-1xdw07z.png)  
+
+### Scott Leighow  
+![](https://sites.psu.edu/pritchardlab/files/2018/01/scott-v2-22793tk.png)  
+
+### Chuan Liu
+![](https://sites.psu.edu/pritchardlab/files/2018/01/Chuan-v2-25r7fkc.png)
+
