@@ -443,7 +443,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/ba899cb1e0a6383072728b4446698356632aec42" target="_blank">ba899cb</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/f3edec6a1af73b881e4b47ec148843460b08ae2e" target="_blank">f3edec6</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -460,13 +460,21 @@ Untracked files:
     Untracked:  code/tcga_skcm_data_parser.Rmd
     Untracked:  data/All_Data_V2.csv
     Untracked:  data/all_data.csv
-    Untracked:  data/tcga_alk_expression/
-    Untracked:  docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/
+    Untracked:  data/tcga_luad_expression/
+    Untracked:  data/tcga_skcm_expression/
     Untracked:  docs/figure/Filteranalysis.Rmd/
+    Untracked:  docs/figure/TCGA_luad_data_parser.Rmd/
     Untracked:  filteranalysisheatmap.pdf
     Untracked:  output/alkati_filtercutoff_allfilters.csv
+    Untracked:  output/alkati_luad_exonimbalance.pdf
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
     Untracked:  output/alkati_skcm_exonimbalance.pdf
+    Untracked:  output/all_data_luad.csv
+    Untracked:  output/all_data_skcm.csv
+    Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
+    Untracked:  output/fig2b_filtercutoff_atibraf.pdf
+    Untracked:  output/fig2b_filtercutoff_atinras.pdf
+    Untracked:  output/luad_alk_exon_expression.csv
     Untracked:  output/skcm_alk_exon_expression.csv
 
 </code></pre>
@@ -496,6 +504,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/alkati_subsampling_simulations.html" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 html
@@ -685,7 +710,7 @@ Publish the initial files for myproject
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt&lt;-&#39;Q61L&#39;
 
-alldata=read.csv(&quot;data/all_data.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
+alldata=read.csv(&quot;output/all_data_skcm.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
 head(alldata)</code></pre>
 <pre><code>  X        Patid mean_RPKM_1.19 mean_RPKM_20.29 Ratio20.29 mRNA_count
 1 1 TCGA-BF-A1PU     0.62445977      1.24042009   1.986389        948
@@ -769,8 +794,7 @@ Rndm_ATI_mtn  4.610659e-02 2.38723915</code></pre>
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt&lt;-&#39;Q61L&#39;
   
-  # alldata=read.csv(&quot;../data/all_data.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
-  alldata=read.csv(&quot;data/all_data.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
+  alldata=read.csv(&quot;output/all_data_skcm.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
   nexperiments=7
 alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,&quot;N/A&quot;,&quot;N/A&quot;)[[2]]
 genex_replication_prop=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,&quot;N/A&quot;,&quot;N/A&quot;)[[1]]
@@ -811,6 +835,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-4-1.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 <a href="https://github.com/haiderinam/pair_con_select/blob/3b773bf3f8014abf4c8042f76e8268259478114e/docs/figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-4-1.png" target="_blank">3b773bf</a>
@@ -855,8 +890,8 @@ haiderinam
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt&lt;-&#39;Q61L&#39;
   
-  # alldata=read.csv(&quot;../data/all_data.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
-  alldata=read.csv(&quot;data/all_data.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
+
+  alldata=read.csv(&quot;output/all_data_skcm.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
   nexperiments=7
 ###For mutation
 alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,nameposctrl1mt,nameposctrl2mt)[[2]]
@@ -901,6 +936,36 @@ shorter object length</code></pre>
       axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;black&quot;),
       axis.text=element_text(face=&quot;bold&quot;,size=&quot;20&quot;,color=&quot;black&quot;))</code></pre>
 <p><img src="figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-6-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/alkati_subsampling_simulations.Rmd/unnamed-chunk-6-1.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code># ggsave(&quot;output/alkati_mtn_pval_fig2B.pdf&quot;,width = 16,height = 10,units = &quot;in&quot;,useDingbats=F)</code></pre>
 </div>
 <div id="session-information" class="section level2">
@@ -947,8 +1012,7 @@ loaded via a namespace (and not attached):
 [43] lazyeval_0.2.1       tibble_2.0.1         futile.options_1.0.1
 [46] crayon_1.3.4         whisker_0.3-2        pkgconfig_2.0.2     
 [49] prettyunits_1.0.2    assertthat_0.2.0     rmarkdown_1.11      
-[52] rstudioapi_0.9.0     R6_2.3.0             git2r_0.24.0        
-[55] compiler_3.5.2      </code></pre>
+[52] R6_2.3.0             git2r_0.24.0         compiler_3.5.2      </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using

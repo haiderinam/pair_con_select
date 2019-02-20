@@ -439,13 +439,12 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/ba899cb1e0a6383072728b4446698356632aec42" target="_blank">ba899cb</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/f3edec6a1af73b881e4b47ec148843460b08ae2e" target="_blank">f3edec6</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
 
 Untracked files:
     Untracked:  code/alldata_compiler.R
@@ -457,18 +456,71 @@ Untracked files:
     Untracked:  code/tcga_skcm_data_parser.Rmd
     Untracked:  data/All_Data_V2.csv
     Untracked:  data/all_data.csv
-    Untracked:  data/tcga_alk_expression/
+    Untracked:  data/tcga_luad_expression/
+    Untracked:  data/tcga_skcm_expression/
     Untracked:  docs/figure/Filteranalysis.Rmd/
+    Untracked:  docs/figure/TCGA_luad_data_parser.Rmd/
     Untracked:  filteranalysisheatmap.pdf
     Untracked:  output/alkati_filtercutoff_allfilters.csv
+    Untracked:  output/alkati_luad_exonimbalance.pdf
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
     Untracked:  output/alkati_skcm_exonimbalance.pdf
+    Untracked:  output/all_data_luad.csv
+    Untracked:  output/all_data_skcm.csv
+    Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
+    Untracked:  output/fig2b_filtercutoff_atibraf.pdf
+    Untracked:  output/fig2b_filtercutoff_atinras.pdf
+    Untracked:  output/luad_alk_exon_expression.csv
     Untracked:  output/skcm_alk_exon_expression.csv
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
 </li>
 </ul>
+<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
+<ul>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+File
+</th>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/ALKATI_Filter_Cutoff_Analysis.html" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<p></details></p>
 <hr />
 <table>
 <tbody>
@@ -544,6 +596,36 @@ simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],a
 #Plot Results
 ggplot(simresults,aes(x=totCt,y=p_val))+geom_line(size=3)+ggtitle(&quot;Varying RPKM Filter&quot;)+xlab(&quot;Exon20:29/Exon1:19&quot;)+ylab(&quot;P-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;26&quot;))</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-2-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-2-1.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code># ggsave(&quot;filteranalysis_RPKM.pdf&quot;,width = 9,height = 6,units = &quot;in&quot;,useDingbats=F)</code></pre>
 </div>
 <div id="varying-filter-for-mean-rsem-from-1-to-1000" class="section level4">
@@ -578,6 +660,36 @@ simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],a
 #Plot Results
 ggplot(simresults,aes(x=totCt,y=p_val))+geom_line(size=3)+ggtitle(&quot;Varying RSEM Filter&quot;)+xlab(&quot;RSEM&quot;)+ylab(&quot;P-Value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;26&quot;))</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-3-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-3-1.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code># ggsave(&quot;filteranalysis_RSEM.pdf&quot;,width = 9,height = 6,units = &quot;in&quot;,useDingbats=F)</code></pre>
 </div>
 <div id="varying-filter-for-alk-raw-read-count-from-1-to-10000" class="section level4">
@@ -612,6 +724,36 @@ simresults[colnames(simresults)] &lt;- lapply(simresults[colnames(simresults)],a
 #Plot results
 ggplot(simresults,aes(x=totCt,y=p_val))+geom_line(size=3)+ggtitle(&quot;Varying ALK Raw Read Count&quot;)+xlab(&quot;Count&quot;)+ylab(&quot;P-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;26&quot;))</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-4-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-4-1.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code># ggsave(&quot;filteranalysis_Count.pdf&quot;,width = 9,height = 6,units = &quot;in&quot;,useDingbats=F)</code></pre>
 </div>
 <div id="varying-all-filters.-this-runs-on-parallel-for-loops-to-improve-computation-time." class="section level4">
@@ -683,11 +825,8 @@ write.csv(simresults,&quot;output/alkati_filtercutoff_allfilters.csv&quot;)</cod
 datapoints[datapoints$tot_alk&lt;20,]$min_p_val_pc2=&quot;&quot;
 datapoints$min_p_val_pc2=as.numeric(datapoints$min_p_val_pc2)
 
-  ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+
-      scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .3 ,name=&quot;P-Value&quot;, na.value = &quot;gray&quot;)+
-      # scale_x_log10()+
-      # scale_fill_gradient2()+
-      # scale_fill_gradient(low = &quot;red&quot;,high = &quot;blue&quot;,name = &quot;P-Value&quot;)+
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+
+      scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .4 ,name=&quot;P-Value&quot;, na.value = &quot;gray&quot;,guide = &quot;legend&quot;,breaks=c(.1,.2,.4,.6,.8,1))+
       theme(panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
             panel.background = element_blank(),
@@ -697,7 +836,51 @@ datapoints$min_p_val_pc2=as.numeric(datapoints$min_p_val_pc2)
       theme_bw()+
       theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,color=&quot;black&quot;,size=&quot;26&quot;))</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># ggsave(&quot;filteranalysisheatmap.pdf&quot;,width = 16,height = 14,units = &quot;in&quot;,useDingbats=F)</code></pre>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-7-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-7-1.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
+<pre class="r"><code>ggsave(&quot;output/fig2b_filtercutoff_atinras.pdf&quot;,width = 16,height = 14,units = &quot;in&quot;,useDingbats=F)
+###Regions with less than 20 patients are shaded gray.
+
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+
+  scale_fill_gradient(,low=&quot;white&quot;,high=&quot;red&quot;,breaks = c(0,5,10,25,50,75,100),limits=c(0,100),name=&quot;ALKATI \nPatients \ndetected&quot;,guide = &quot;legend&quot;,na.value = &quot;red&quot;)+
+  cleanup+
+  theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            axis.line = element_line(colour = &quot;black&quot;))+
+      xlab(&quot;Number of ALK Reads&quot;)+ylab(&quot;RSEM&quot;)+
+      theme_bw()+
+      theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,color=&quot;black&quot;,size=&quot;26&quot;))</code></pre>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-7-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>  ggsave(&quot;output/fig2b2_filtercutoff_atinras_totalalk.pdf&quot;,width = 16,height = 14,units = &quot;in&quot;,useDingbats=F)</code></pre>
 <div id="heat-map-for-nras-vs-alkati-with-count-data" class="section level4">
 <h4><strong>Heat map for NRAS vs ALKATI with count data</strong></h4>
 <pre class="r"><code>datapoints=simresults %&gt;%
@@ -708,6 +891,36 @@ datapoints$min_p_val_pc2=as.numeric(datapoints$min_p_val_pc2)
   ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+
     scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,midpoint = 40,high =&quot;blue&quot;,name=&quot;ALKATI Count&quot;)</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-8-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-1.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code>#Trying different tiles for RPKM  
 datapoints=simresults %&gt;%
 filter(rsem&lt;=500,alkreads&lt;=2000,rpkm%in%c(6,12,18,30))%&gt;%
@@ -717,6 +930,36 @@ summarise(min_p_val_pc2=min(p_val_pc2))
 ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+facet_wrap(~rpkm)+
   scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,midpoint = 40,high =&quot;blue&quot;,name=&quot;ALKATI Count&quot;)</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-8-2.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-2.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code>###Distribution of the number of ALKATI patients across different conditions  
 ###Remember: ALKATI patients had exon ratio of 10, rsem &gt;100, and counts &gt;500. i.e. green region
 ###The takeaway from this plot is that we can try most filters without having to worry about patient numbers. Will look at the p-values for these orange filters next
@@ -725,6 +968,36 @@ ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+facet_gri
   ggtitle(&quot;Total ALKATI patients across exon20-29/ex1-19 ratios&quot;)+
   cleanup</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-3.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-8-3.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-3.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code>###Taking a look at whether there are any statistically significant regions.
 ###There is only one region. We don&#39;t see mutual exclusivity at this region in the p-value plot
 ###only p-values between 0 and 0.1 are shown
@@ -732,6 +1005,36 @@ ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+fac
   scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .05 ,name=&quot;P-Value&quot;,guide = &quot;legend&quot;,limits=c(0,.1))+
   cleanup</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-4.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-8-4.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-4.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code>###If there are &lt;20 patients for a set of filters, take that data out.
 
 datapoints[datapoints$tot_alk&lt;20,]$min_p_val_pc2=&quot;&quot;
@@ -741,20 +1044,54 @@ datapoints$min_p_val_pc2=as.numeric(datapoints$min_p_val_pc2)
 ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+facet_grid(~rpkm)+
   scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .2 ,name=&quot;P-Value&quot;,guide = &quot;legend&quot;,limits=c(0,1),na.value = &quot;gray&quot;)+
   cleanup</code></pre>
-<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-5.png" width="672" style="display: block; margin: auto;" /> ##<strong>ALKATI vs BRAF</strong><br />
-###<strong>ALKATI is not mutually exclusive with BRAF across a range of filters</strong> Heatmaps code continued P-values reported are the minimum p-values across RPKM filters Single heat map</p>
+<p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-5.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-8-5.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-8-5.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
+</div>
+</div>
+<div id="alkati-vs-braf" class="section level2">
+<h2><strong>ALKATI vs BRAF</strong></h2>
+<div id="alkati-is-not-mutually-exclusive-with-braf-across-a-range-of-filters" class="section level3">
+<h3><strong>ALKATI is not mutually exclusive with BRAF across a range of filters</strong></h3>
+<p>Heatmaps code continued P-values reported are the minimum p-values across RPKM filters Single heat map</p>
 <pre class="r"><code>datapoints=simresults %&gt;%
-  filter(rsem&lt;=500,alkreads&lt;=1000)%&gt;%
+  filter(rsem&lt;=500,alkreads&lt;=1500)%&gt;%
   group_by(rsem,alkreads,tot_alk) %&gt;%
   summarise(min_p_val_pc1=min(p_val_pc1),rpkm_atpval=rpkm[min(p_val_pc1)][1])
 datapoints[datapoints$tot_alk&lt;20,]$min_p_val_pc1=&quot;&quot;
 datapoints$min_p_val_pc1=as.numeric(datapoints$min_p_val_pc1)
 
   ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc1))+
-      scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .3 ,name=&quot;P-Value&quot;,na.value = &quot;gray&quot;)+
-      # scale_x_log10()+
-      # scale_fill_gradient2()+
-      # scale_fill_gradient(low = &quot;red&quot;,high = &quot;blue&quot;,name = &quot;P-Value&quot;)+
+      scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .4 ,name=&quot;P-Value&quot;,na.value = &quot;gray90&quot;,guide = &quot;legend&quot;,breaks=c(.1,.2,.4,.6,.8,1))+
+    # scale_fill_gradientn(colours =c(&quot;red&quot;, &quot;white&quot;,&quot;blue&quot;),values=c(0,.05,1),breaks=c(0,.05,.2,1),name=&quot;P-Value&quot;,na.value = &quot;gray&quot;,guide = &quot;legend&quot;)+
       theme(panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
             panel.background = element_blank(),
@@ -764,7 +1101,37 @@ datapoints$min_p_val_pc1=as.numeric(datapoints$min_p_val_pc1)
       theme_bw()+
       theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,color=&quot;black&quot;,size=&quot;26&quot;))</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># ggsave(&quot;filteranalysisheatmap.pdf&quot;,width = 16,height = 14,units = &quot;in&quot;,useDingbats=F)</code></pre>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-9-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-9-1.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
+<pre class="r"><code>ggsave(&quot;output/fig2b_filtercutoff_atibraf.pdf&quot;,width = 16,height = 14,units = &quot;in&quot;,useDingbats=F)</code></pre>
 <p>Facets of heat maps across a range of ex20-29/1-19 ratios</p>
 <pre class="r"><code>datapoints=simresults %&gt;%
 filter(rsem&lt;=1000,alkreads&lt;=2000,rpkm%in%c(6,12,18,30))%&gt;%
@@ -780,6 +1147,36 @@ ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+facet_gri
   ggtitle(&quot;Total ALKATI patients across exon20-29/ex1-19 ratios&quot;)+
   cleanup</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-10-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-10-1.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code># P-Values Heat map
 # Data is only plotted if number of ALKATI patients was &gt;25
 datapoints[datapoints$tot_alk&lt;20,]$min_p_val_pc1=&quot;&quot;
@@ -789,6 +1186,36 @@ ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc1))+fac
   scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot; ,high =&quot;blue&quot;,midpoint = .4 ,name=&quot;P-Value&quot;,guide = &quot;legend&quot;,limits=c(0,1),na.value = &quot;gray&quot;)+
   cleanup</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-10-2.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-10-2.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-10-2.png" target="_blank">4b082e4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 </div>
 </div>
 <div id="session-information" class="section level2">
@@ -819,16 +1246,15 @@ loaded via a namespace (and not attached):
  [7] bindr_0.1.1       R.methodsS3_1.7.1 R.utils_2.7.0    
 [10] tools_3.5.2       digest_0.6.18     evaluate_0.12    
 [13] tibble_2.0.1      gtable_0.2.0      pkgconfig_2.0.2  
-[16] rlang_0.3.1       rstudioapi_0.9.0  yaml_2.2.0       
-[19] xfun_0.4          withr_2.1.2       stringr_1.3.1    
-[22] rprojroot_1.3-2   grid_3.5.2        tidyselect_0.2.5 
-[25] glue_1.3.0        R6_2.3.0          rmarkdown_1.11   
-[28] reshape2_1.4.3    purrr_0.3.0       magrittr_1.5     
-[31] whisker_0.3-2     codetools_0.2-16  backports_1.1.3  
-[34] scales_1.0.0      htmltools_0.3.6   assertthat_0.2.0 
-[37] colorspace_1.4-0  labeling_0.3      stringi_1.2.4    
-[40] lazyeval_0.2.1    munsell_0.5.0     crayon_1.3.4     
-[43] R.oo_1.22.0      </code></pre>
+[16] rlang_0.3.1       yaml_2.2.0        xfun_0.4         
+[19] withr_2.1.2       stringr_1.3.1     rprojroot_1.3-2  
+[22] grid_3.5.2        tidyselect_0.2.5  glue_1.3.0       
+[25] R6_2.3.0          rmarkdown_1.11    reshape2_1.4.3   
+[28] purrr_0.3.0       magrittr_1.5      whisker_0.3-2    
+[31] codetools_0.2-16  backports_1.1.3   scales_1.0.0     
+[34] htmltools_0.3.6   assertthat_0.2.0  colorspace_1.4-0 
+[37] labeling_0.3      stringi_1.2.4     lazyeval_0.2.1   
+[40] munsell_0.5.0     crayon_1.3.4      R.oo_1.22.0      </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
