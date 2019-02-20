@@ -198,11 +198,8 @@ datapoints=simresults %>%
 datapoints[datapoints$tot_alk<20,]$min_p_val_pc2=""
 datapoints$min_p_val_pc2=as.numeric(datapoints$min_p_val_pc2)
 
-  ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+
-      scale_fill_gradient2(low ="red" ,mid ="white" ,high ="blue",midpoint = .3 ,name="P-Value", na.value = "gray")+
-      # scale_x_log10()+
-      # scale_fill_gradient2()+
-      # scale_fill_gradient(low = "red",high = "blue",name = "P-Value")+
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+
+      scale_fill_gradient2(low ="red" ,mid ="white" ,high ="blue",midpoint = .4 ,name="P-Value", na.value = "gray",guide = "legend",breaks=c(.1,.2,.4,.6,.8,1))+
       theme(panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
             panel.background = element_blank(),
@@ -212,8 +209,21 @@ datapoints$min_p_val_pc2=as.numeric(datapoints$min_p_val_pc2)
       theme_bw()+
       theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",color="black",size="26"))
   
-# ggsave("filteranalysisheatmap.pdf",width = 16,height = 14,units = "in",useDingbats=F)
+ggsave("output/fig2b_filtercutoff_atinras.pdf",width = 16,height = 14,units = "in",useDingbats=F)
+###Regions with less than 20 patients are shaded gray.
 
+ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+
+  scale_fill_gradient(,low="white",high="red",breaks = c(0,5,10,25,50,75,100),limits=c(0,100),name="ALKATI \nPatients \ndetected",guide = "legend",na.value = "red")+
+  cleanup+
+  theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            axis.line = element_line(colour = "black"))+
+      xlab("Number of ALK Reads")+ylab("RSEM")+
+      theme_bw()+
+      theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",color="black",size="26"))
+
+  ggsave("output/fig2b2_filtercutoff_atinras_totalalk.pdf",width = 16,height = 14,units = "in",useDingbats=F)
 ```
 
 ####**Heat map for NRAS vs ALKATI with count data**
@@ -267,17 +277,15 @@ P-values reported are the minimum p-values across RPKM filters
 Single heat map
 ```{r}
 datapoints=simresults %>%
-  filter(rsem<=500,alkreads<=1000)%>%
+  filter(rsem<=500,alkreads<=1500)%>%
   group_by(rsem,alkreads,tot_alk) %>%
   summarise(min_p_val_pc1=min(p_val_pc1),rpkm_atpval=rpkm[min(p_val_pc1)][1])
 datapoints[datapoints$tot_alk<20,]$min_p_val_pc1=""
 datapoints$min_p_val_pc1=as.numeric(datapoints$min_p_val_pc1)
 
   ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc1))+
-      scale_fill_gradient2(low ="red" ,mid ="white" ,high ="blue",midpoint = .3 ,name="P-Value",na.value = "gray")+
-      # scale_x_log10()+
-      # scale_fill_gradient2()+
-      # scale_fill_gradient(low = "red",high = "blue",name = "P-Value")+
+      scale_fill_gradient2(low ="red" ,mid ="white" ,high ="blue",midpoint = .4 ,name="P-Value",na.value = "gray90",guide = "legend",breaks=c(.1,.2,.4,.6,.8,1))+
+    # scale_fill_gradientn(colours =c("red", "white","blue"),values=c(0,.05,1),breaks=c(0,.05,.2,1),name="P-Value",na.value = "gray",guide = "legend")+
       theme(panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
             panel.background = element_blank(),
@@ -287,7 +295,7 @@ datapoints$min_p_val_pc1=as.numeric(datapoints$min_p_val_pc1)
       theme_bw()+
       theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",color="black",size="26"))
   
-# ggsave("filteranalysisheatmap.pdf",width = 16,height = 14,units = "in",useDingbats=F)
+ggsave("output/fig2b_filtercutoff_atibraf.pdf",width = 16,height = 14,units = "in",useDingbats=F)
 ```
 
 

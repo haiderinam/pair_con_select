@@ -52,7 +52,7 @@ cleanup=theme_bw() +
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt<-'Q61L'
 
-alldata=read.csv("data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
+alldata=read.csv("output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
 head(alldata)
 ###Not mutation specific
 alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,'N',"N/A","N/A")[[2]]
@@ -100,8 +100,7 @@ nsubsamples=12 # maybe this can be removed and instead calculated later.
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt<-'Q61L'
   
-  # alldata=read.csv("../data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
-  alldata=read.csv("data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
+  alldata=read.csv("output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
   nexperiments=7
 alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[2]]
 genex_replication_prop=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[1]]
@@ -151,8 +150,8 @@ nsubsamples=12 # maybe this can be removed and instead calculated later.
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt<-'Q61L'
   
-  # alldata=read.csv("../data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
-  alldata=read.csv("data/all_data.csv",sep=",",header=T,stringsAsFactors=F)
+
+  alldata=read.csv("output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
   nexperiments=7
 ###For mutation
 alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,nameposctrl1mt,nameposctrl2mt)[[2]]

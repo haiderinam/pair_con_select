@@ -41,7 +41,7 @@ cleanup=theme_bw() +
 
 Making ALK Expression the plots:
 ```{r}
-alkati_merged_data=read.csv("data/all_data.csv")
+alkati_merged_data=read.csv("output/all_data_skcm.csv")
 alkati_merged_data$alkati=0
 alkati_merged_data$alkati[alkati_merged_data$Ratio>=10&alkati_merged_data$mRNA_count>=500&alkati_merged_data$RSEM_normalized>=100]=1
 alkati_merged_data$alkati=factor(alkati_merged_data$alkati,levels=c("1","0"))
