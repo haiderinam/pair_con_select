@@ -3,33 +3,33 @@ title: "Home"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
+    theme: journal
     toc: false
 ---
 
 # **Pairwise Comparisons of Conditional Selection**  
 * ###Click [here](alkati_subsampling_simulations.html) to see subsampling simulations on ALK^ATI^ data.  
-![](docs/assets/atisubsamplingsims.png)  
 ![](assets/atisubsamplingsims.png)  
   
 * ###Click [here](ALKATI_Filter_Cutoff_Analysis.html) to see my results on ALK^ATI^ filter cutoff analyses.  
-![](docs/assets/aticutoffs.png)  
 ![](assets/aticutoffs.png)  
   
-* ###Click [here](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression in SKCM. ![](docs/assets/atiskcmexpression.png)   
-SKCM. ![](assets/atiskcmexpression.png)   
+* ###Click [here](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression in 
+SKCM.  
+![](assets/atiskcmexpression.png)   
 * ###Click [here](TCGA_luad_data_parser.html) to see my results on ALK expression in LUAD.
-![](docs/assets/atiluadexpression.png)   
-![](docs/assets/atiluadexpression.png)   
+![](assets/atiluadexpression.png)   
   
 * ###Click [here]() to see my results on EGFR expression in LUAD.
 ![](assets/egfrluadexpression.png)   
   
 * ###Click [here]() to ALK^ATI^ cell line expression data analysis showing that ALK^ATI^ is necessary in melanoma.
-![](docs/assets/ccle.png)   
+![](assets/ccle.png)   
   
 #### Click [here](https://github.com/pritchardlabatpsu/pair_con_select) to be redirected to the github page that contains all my data.  
 What’s in each directory:  
-*   **Data**: contains data downloaded from internet  
-*  **Output**: contains data that your code makes  
-*  **Analysis**: contains your Rmarkdown files that are converted to PDFs  
-*  **Code**: contains .R files  that are functions that your Rmd files in the analysis folder goes off of.  
+  
+* __Data__: contains data downloaded from internet  
+* __Output__: contains data that your code makes  
+* __Analysis__: contains your Rmarkdown files that are converted to PDFs  
+* __Code__: contains .R files  that are functions that your Rmd files in the analysis folder goes off of.  
