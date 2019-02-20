@@ -6,13 +6,26 @@ output:
     toc: false
 ---
 
-Welcome to my research website.
-Click on this [link](alkati_subsampling_simulations.html) to see my results.  
-Click on this [link](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression in SKCM.  
-Click on this [link](ALKATI_Filter_Cutoff_Analysis.html) to see my results on ALKATI filter
-Click on this [link](TCGA_luad_data_parser.html) to see my results on ALK expression in LUAD.
-What’s in each directory:
-Data: contains data downloaded from internet
-Output: contains data that your code makes
-Analysis: contains your Rmarkdown files that are converted to PDFs
-Code: contains .R files  that are functions that your Rmd files in the analysis folder goes off of
+# **Pairwise Comparisons of Conditional Selection**  
+* ###Click [here](alkati_subsampling_simulations.html) to see subsampling simulations on ALK^ATI^ data.  
+![](assets/atisubsamplingsims.png)  
+  
+* ###Click [here](ALKATI_Filter_Cutoff_Analysis.html) to see my results on ALK^ATI^ filter cutoff analyses.  
+![](assets/aticutoffs.png)  
+  
+* ###Click [here](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression in SKCM. ![](assets/atiskcmexpression.png)   
+* ###Click [here](TCGA_luad_data_parser.html) to see my results on ALK expression in LUAD.
+![](assets/atiluadexpression.png)   
+  
+* ###Click [here]() to see my results on EGFR expression in LUAD.
+![](assets/egfrluadexpression.png)   
+  
+* ###Click [here]() to ALK^ATI^ cell line expression data analysis showing that ALK^ATI^ is necessary in melanoma.
+![](assets/ccle.png)   
+  
+#### Click [here](https://github.com/pritchardlabatpsu/pair_con_select) to be redirected to the github page that contains all my data.  
+What’s in each directory:  
+*   **Data**: contains data downloaded from internet  
+*  **Output**: contains data that your code makes  
+*  **Analysis**: contains your Rmarkdown files that are converted to PDFs  
+*  **Code**: contains .R files  that are functions that your Rmd files in the analysis folder goes off of.  
