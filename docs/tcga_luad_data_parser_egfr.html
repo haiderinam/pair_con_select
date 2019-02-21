@@ -12,7 +12,7 @@
 <meta name="author" content="Haider Inam" />
 
 
-<title>ALK_ExonImbalance_SKCM_Analysis</title>
+<title>tcga_luad_data_parser_egfr</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -412,9 +412,9 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">ALK_ExonImbalance_SKCM_Analysis</h1>
+<h1 class="title toc-ignore">tcga_luad_data_parser_egfr</h1>
 <h4 class="author"><em>Haider Inam</em></h4>
-<h4 class="date"><em>2/16/2019</em></h4>
+<h4 class="date"><em>2/20/2019</em></h4>
 
 </div>
 
@@ -462,7 +462,6 @@ Untracked files:
     Untracked:  data/tcga_luad_expression/
     Untracked:  data/tcga_skcm_expression/
     Untracked:  docs/figure/Filteranalysis.Rmd/
-    Untracked:  docs/figure/tcga_luad_data_parser_egfr.Rmd/
     Untracked:  output/alkati_filtercutoff_allfilters.csv
     Untracked:  output/alkati_luad_exonimbalance.pdf
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
@@ -507,87 +506,19 @@ Message
 <tbody>
 <tr>
 <td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/0b5f5cb94c139b5c731b45b4f5ae45dd07138e02/docs/ALK_ExonImbalance_SKCM_Analysis.html" target="_blank">0b5f5cb</a>
-</td>
-<td style="text-align:left;">
-haiderinam
-</td>
-<td style="text-align:left;">
-2019-02-19
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/ALK_ExonImbalance_SKCM_Analysis.html" target="_blank">4b082e4</a>
-</td>
-<td style="text-align:left;">
-haiderinam
-</td>
-<td style="text-align:left;">
-2019-02-19
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/08e9438bae6cc22172d8ce04ac2dce445a23a4db/docs/ALK_ExonImbalance_SKCM_Analysis.html" target="_blank">08e9438</a>
-</td>
-<td style="text-align:left;">
-haiderinam
-</td>
-<td style="text-align:left;">
-2019-02-17
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/dfdb600f85c2dc720e155db4244975de63389c35/docs/ALK_ExonImbalance_SKCM_Analysis.html" target="_blank">dfdb600</a>
-</td>
-<td style="text-align:left;">
-haiderinam
-</td>
-<td style="text-align:left;">
-2019-02-17
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 Rmd
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/haiderinam/pair_con_select/blob/f8e2d5ee223a57b39e5ad0e08f27948a9559ede3/analysis/ALK_ExonImbalance_SKCM_Analysis.Rmd" target="_blank">f8e2d5e</a>
+<a href="https://github.com/haiderinam/pair_con_select/blob/6fec6220ee12e0b3a246b129a30ce3c874dc3b51/analysis/tcga_luad_data_parser_egfr.Rmd" target="_blank">6fec622</a>
 </td>
 <td style="text-align:left;">
 haiderinam
 </td>
 <td style="text-align:left;">
-2019-02-17
+2019-02-20
 </td>
 <td style="text-align:left;">
-Published Analysis on ALK expression levels #2
+Added EGFR Expression Analysis
 </td>
 </tr>
 </tbody>
@@ -595,113 +526,144 @@ Published Analysis on ALK expression levels #2
 </ul>
 <p></details></p>
 <hr />
-<pre class="r"><code>library(knitr)
-library(tictoc)
-library(workflowr)</code></pre>
-<pre><code>This is workflowr version 1.1.1
-Run ?workflowr for help getting started</code></pre>
-<pre class="r"><code>library(VennDiagram)</code></pre>
-<pre><code>Loading required package: grid</code></pre>
-<pre><code>Loading required package: futile.logger</code></pre>
-<pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>
-Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
+<p>This code is to look at the EGFR exon imbalance. Therefore, we need the count data, rsem data, and exon data</p>
+<p><strong>LUAD Genes RSEM</strong></p>
+<pre class="r"><code>rsemdatanormalized=read.table(&quot;data/tcga_luad_expression/luadrsemdata/gdac.broadinstitute.org_LUAD.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.Level_3.2016012800.0.0/LUAD.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt&quot;,sep = &quot;\t&quot;,header = T,stringsAsFactors = F)
+egfr_rsem=data.frame(t(rsemdatanormalized[grepl(&quot;^egfr\\|&quot;,rsemdatanormalized$Hybridization.REF,ignore.case = T),])[-1,])
+#410 of the 577 patients have an RSEM higher than 410
+colnames(egfr_rsem)[1]=&quot;RSEM_normalized&quot;
+egfr_rsem$Patid=rownames(egfr_rsem)
+#Standardizing Patid Names
+egfr_rsem$Patid=substring(egfr_rsem$Patid,first = 1,last = 12)
+egfr_rsem$Patid=gsub(&quot;\\.&quot;,&quot;-&quot;,egfr_rsem$Patid)
 
-    filter, lag</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
+# # As Character
+egfr_rsem[colnames(egfr_rsem)] &lt;- lapply(egfr_rsem[colnames(egfr_rsem)],as.character)
+# # As Numeric: Converting from list to numeric
+egfr_rsem$RSEM_normalized=unlist(egfr_rsem$RSEM_normalized)
+egfr_rsem$RSEM_normalized=as.numeric(egfr_rsem$RSEM_normalized)</code></pre>
+<p>LUAD Count data:</p>
+<pre class="r"><code>#Non-normalized:
+gene_expression_data=read.table(&quot;data/tcga_luad_expression/luadgeneexpression/gdac.broadinstitute.org_LUAD.Merge_rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__gene_expression__data.Level_3.2016012800.0.0/LUAD.rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__gene_expression__data.data.txt&quot;,sep = &quot;\t&quot;,header = T,stringsAsFactors = F)
+#Normalized
+# gene_expression_data=read.table(,sep = &quot;\t&quot;,header = T,stringsAsFactors = F)
 
-    intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(foreach)
-library(doParallel)</code></pre>
-<pre><code>Loading required package: iterators</code></pre>
-<pre><code>Loading required package: parallel</code></pre>
-<pre class="r"><code>library(ggplot2)
-library(reshape2)
-library(RColorBrewer)
-library(devtools)
-library(ggsignif)
-source(&quot;code/contab_maker.R&quot;)
-source(&quot;code/alldata_compiler.R&quot;)
-source(&quot;code/quadratic_solver.R&quot;)
-source(&quot;code/mut_excl_genes_generator.R&quot;)
-source(&quot;code/mut_excl_genes_datapoints.R&quot;)
-source(&quot;code/simresults_generator.R&quot;)
+  #Finding egfr
+  egfr_gene_exp=rbind(gene_expression_data[1,],gene_expression_data[grepl(&quot;^egfr\\|&quot;,gene_expression_data$Hybridization.REF,ignore.case = T),])
+  #Removing Columns for Median_length_normalized and RPKM
+  t_egfr_gene_exp=data.frame(t(egfr_gene_exp[,grepl(&quot;raw_count&quot;,egfr_gene_exp[1,])]))
+  
+  #Counting patients with raw reads &gt;500
+  # sum(as.numeric(as.numeric(as.character(t_egfr_gene_exp$X580))&gt;=500))
+#ONLY 6 PATIENTS HAVE RAW COUNTS OF &gt;500</code></pre>
+<p>LUAD Exon RPKM This creates a .csv file and only needs to be run once.</p>
+<pre class="r"><code># rm(list=ls())#Clears workspace
+exondatacomb=read.table(&quot;data/tcga_luad_expression/luadexondatacomb/gdac.broadinstitute.org_LUAD.Merge_rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__exon_expression__data.Level_3.2016012800.0.0/LUAD.rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__exon_expression__data.data.txt&quot;,stringsAsFactors=FALSE,header=TRUE, sep=&quot;\t&quot;,fill=TRUE)
+# head(exondatacomb)
 
-######################Cleanup for GGPlot2#########################################
-cleanup=theme_bw() +
+# Obtained EGFR data from here: https://useast.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g=ENSG00000146648;r=7:55019021-55211628
+
+#Chromosome 7
+exondatachr7=exondatacomb[grep(&quot;^chr7:&quot;,exondatacomb$Hybridization.REF),] #i.e. it starts with chromosome 7
+#EGFR within Chromosome 7
+exondatachr7egfr=exondatacomb[c(90511:90542),]
+exondatachr7egfr=exondatachr7egfr[grep(&quot;:\\+&quot;,exondatachr2egfr$Hybridization.REF),] #i.e. it is only on +ive strand
+exondatachr7egfr=exondatachr7egfr[c(-4,-16,-17),]
+exondatachr7egfr$exon=c(27:1)
+alldataegfr=exondatachr7egfr[,c(488,c(2:487))]
+#Switching up order
+alldataegfr2=alldataegfr[c(27:1),]
+#Making the dataframe of a numeric type so that analysis can be carried out on it.
+# As Character
+alldataegfr[colnames(alldataegfr)] &lt;- lapply(alldataegfr[colnames(alldataegfr)],as.character)
+# As Numeric
+alldataegfr[colnames(alldataegfr)] &lt;- lapply(alldataegfr[colnames(alldataegfr)],as.numeric)
+
+#Getting the correct column names for alldataegfr
+colnames_exondata=exondatacomb[1,]
+colnames(colnames_exondata)=colnames(alldataegfr)
+
+alldataegfr=rbind(colnames_exondata,alldataegfr) #Adding first row that contains names of measurements such as RPKM, RSEM, Counts
+write.table(alldataegfr,&#39;output/luad_egfr_exon_expression.csv&#39;)</code></pre>
+<div id="obtaining-rpkm-count-data-from-luad-exon-data.-followed-by-merging-with-rsem-data" class="section level3">
+<h3>Obtaining RPKM, Count data from LUAD Exon Data. Followed by merging with RSEM data</h3>
+<div id="note-that-were-not-concerned-with-the-mutation-data-of-egfr-so-we-dont-use-it-here" class="section level4">
+<h4>Note that we’re not concerned with the mutation data of EGFR so we don’t use it here</h4>
+<pre class="r"><code>alldataegfr=read.csv(&quot;output/luad_egfr_exon_expression.csv&quot;,stringsAsFactors = F,header = T,sep = &quot;&quot;,fill = T)
+#Getting Count Data
+alldataegfr_count=cbind(alldataegfr$exon,alldataegfr[,grepl(&quot;raw_counts&quot;,alldataegfr[1,])])[-1,]
+# As Character
+alldataegfr_count[colnames(alldataegfr_count)] &lt;-lapply(alldataegfr_count[colnames(alldataegfr_count)],as.character)
+# As Numeric
+alldataegfr_count[colnames(alldataegfr_count)] &lt;- lapply(alldataegfr_count[colnames(alldataegfr_count)],as.numeric)
+#Sum exons 1:27
+egfr_count_data=data.frame(t(data.frame(lapply(alldataegfr_count[c(1:27),],sum))[,-1])) #Not sure if lapply is the right thing to use here. Really messed up way of summing indices in dataframe
+colnames(egfr_count_data)=&quot;mRNA_count&quot;
+
+alldataegfr_medianlength=cbind(alldataegfr$exon,alldataegfr[,grepl(&quot;median_length&quot;,alldataegfr[1,])])
+# As Character
+alldataegfr_medianlength=alldataegfr_medianlength[-1,] #Removing the first row. May be unnecessary in the future
+alldataegfr_medianlength[colnames(alldataegfr_medianlength)] &lt;- lapply(alldataegfr_medianlength[colnames(alldataegfr_medianlength)],as.character)
+# As Numeric
+alldataegfr_medianlength[colnames(alldataegfr_medianlength)] &lt;- lapply(alldataegfr_medianlength[colnames(alldataegfr_medianlength)],as.numeric)
+#Sum exons 1:27
+egfr_medianlength_data=data.frame(t(data.frame(lapply(alldataegfr_medianlength[c(1:27),],sum))[,-1])) #Removing sum of exons lol
+colnames(egfr_medianlength_data)=&quot;medianlength&quot;
+
+#Getting RPKM
+alldataegfr_RPKM=cbind(alldataegfr$exon,alldataegfr[,grepl(&quot;RPKM&quot;,alldataegfr[1,])])
+# As Character
+alldataegfr_RPKM=alldataegfr_RPKM[-1,] #Removing the first row. May be unnecessary in the future
+alldataegfr_RPKM[colnames(alldataegfr_RPKM)] &lt;- lapply(alldataegfr_RPKM[colnames(alldataegfr_RPKM)],as.character)
+# As Numeric
+alldataegfr_RPKM[colnames(alldataegfr_RPKM)] &lt;- lapply(alldataegfr_RPKM[colnames(alldataegfr_RPKM)],as.numeric)
+egfr_RPKM_data=data.frame(cbind(lapply(alldataegfr_RPKM[c(1:17),],mean),lapply(alldataegfr_RPKM[c(18:24),],mean))[-1,])
+colnames(egfr_RPKM_data)=c(&quot;mean_RPKM_1.17&quot;,&quot;mean_RPKM_18.24&quot;)
+# As Character
+egfr_RPKM_data[colnames(egfr_RPKM_data)] &lt;- lapply(egfr_RPKM_data[colnames(egfr_RPKM_data)],as.character)
+# As Numeric
+egfr_RPKM_data[colnames(egfr_RPKM_data)] &lt;- lapply(egfr_RPKM_data[colnames(egfr_RPKM_data)],as.numeric)
+#  Calculating Ratios of exon RPKM means
+egfr_RPKM_data$Ratio18.24=egfr_RPKM_data$mean_RPKM_18.24/egfr_RPKM_data$mean_RPKM_1.17
+
+#Changing rownames (patient_ids) to become the same between each other
+rownames(egfr_RPKM_data)=substring(rownames(egfr_RPKM_data),first=1,last=28)
+rownames(egfr_medianlength_data)=substring(rownames(egfr_medianlength_data),first=1,last=28)
+egfr_RPKM_data$Patid=rownames(egfr_RPKM_data)
+egfr_medianlength_data$Patid=rownames(egfr_medianlength_data)
+egfr_count_data$Patid=rownames(egfr_count_data)
+
+mergetemp=merge(egfr_RPKM_data,egfr_count_data,by=&quot;Patid&quot;)
+egfr_exon_data=merge(mergetemp,egfr_medianlength_data,by=&quot;Patid&quot;)
+#Transforming the Patids so that they&#39;re compatible with the Patids in the mutation data
+egfr_exon_data$Patid=substring(egfr_exon_data$Patid,first = 1,last = 12)
+#Since the names for exon data are not the same format as the mutation data, we&#39;re gonna change that here
+egfr_exon_data$Patid=gsub(&quot;\\.&quot;,&quot;-&quot;,egfr_exon_data$Patid)
+
+egfr_merged_data=merge(egfr_exon_data,egfr_rsem,by=&quot;Patid&quot;,all=T)
+
+write.csv(egfr_merged_data,&quot;output/all_data_luad_egfr.csv&quot;)</code></pre>
+<p><strong>Making EGFR Expression the plots:</strong></p>
+<pre class="r"><code>egfr_merged_data=read.csv(&quot;output/all_data_luad_egfr.csv&quot;)
+
+ggplot(egfr_merged_data,aes(x=mean_RPKM_1.17, y=mean_RPKM_18.24))+
+  geom_abline(size=1)+
+  geom_point(size=4)+
+  scale_x_continuous(trans = &quot;log10&quot;,name=&quot;Exon 1:17 RPKM&quot;,breaks=c(1e-2,1e0,1e2),labels = parse(text = c(&quot;10^-2&quot;,&quot;10^0&quot;,&quot;10^2&quot;)),limits = c(1e-3,1e3))+
+  scale_y_continuous(trans = &quot;log10&quot;,name=&quot;Exon 20:24 RPKM&quot;,breaks=c(1e-2,1e0,1e2),labels = parse(text = c(&quot;10^-2&quot;,&quot;10^0&quot;,&quot;10^2&quot;)),limits = c(1e-3,1e3))+
+  cleanup+
   theme(plot.title = element_text(hjust=.5),
-        panel.grid.major = element_blank(),
-        panel.grid.major.y = element_blank(),
-        panel.background = element_blank(),
-        axis.line = element_line(color = &quot;black&quot;))</code></pre>
-<p>Making ALK Expression the plots:</p>
-<pre class="r"><code>alkati_merged_data=read.csv(&quot;output/all_data_skcm.csv&quot;)
-alkati_merged_data$alkati=0
-alkati_merged_data$alkati[alkati_merged_data$Ratio&gt;=10&amp;alkati_merged_data$mRNA_count&gt;=500&amp;alkati_merged_data$RSEM_normalized&gt;=100]=1
-alkati_merged_data$alkati=factor(alkati_merged_data$alkati,levels=c(&quot;1&quot;,&quot;0&quot;))
-
-  ggplot(alkati_merged_data,aes(x=mean_RPKM_1.19, y=mean_RPKM_20.29,color=factor(alkati)))+
-    geom_abline(size=1)+
-    geom_point(size=4)+
-    ####Had to add this line to not overplot the alkati datapoint- Haider 1/31/19
-    geom_point(data=alkati_merged_data[alkati_merged_data$alkati==1,],aes(x=mean_RPKM_1.19, y=mean_RPKM_20.29,color=factor(alkati)),size=4)+
-    scale_x_continuous(trans = &quot;log10&quot;,name=&quot;Exon 1:19 RPKM&quot;,breaks=c(1e-2,1e0,1e2),labels = parse(text = c(&quot;10^-2&quot;,&quot;10^0&quot;,&quot;10^2&quot;)),limits = c(1e-3,1e3))+
-    scale_y_continuous(trans = &quot;log10&quot;,name=&quot;Exon 20:29 RPKM&quot;,breaks=c(1e-2,1e0,1e2),labels = parse(text = c(&quot;10^-2&quot;,&quot;10^0&quot;,&quot;10^2&quot;)),limits = c(1e-3,1e3))+
-    scale_color_brewer(palette=&quot;Set1&quot;,name=&quot;ALKATI&quot;,labels=c(&quot;Yes&quot;, &quot;No&quot;))+
-    cleanup+
-    theme(plot.title = element_text(hjust=.5),
-          text = element_text(size=24,face = &quot;bold&quot;),
-          axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
-          axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;,colour = &quot;black&quot;))+
-    theme(legend.key.size = unit(30,&quot;pt&quot;))</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
-<p><img src="figure/ALK_ExonImbalance_SKCM_Analysis.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<details> <summary><em>Expand here to see past versions of unnamed-chunk-2-1.png:</em></summary>
-<table style="border-collapse:separate; border-spacing:5px;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Version
-</th>
-<th style="text-align:left;">
-Author
-</th>
-<th style="text-align:left;">
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<a href="https://github.com/haiderinam/pair_con_select/blob/dfdb600f85c2dc720e155db4244975de63389c35/docs/figure/ALK_ExonImbalance_SKCM_Analysis.Rmd/unnamed-chunk-2-1.png" target="_blank">dfdb600</a>
-</td>
-<td style="text-align:left;">
-haiderinam
-</td>
-<td style="text-align:left;">
-2019-02-17
-</td>
-</tr>
-</tbody>
-</table>
-<p></details></p>
-<pre class="r"><code># ggsave(&quot;output/alkati_skcm_exonimbalance.pdf&quot;,width =12 ,height =10 ,units = &quot;in&quot;,useDingbats=F)
-
-#Testing if both kinase and ALK expression are different
-ks.test(alkati_merged_data$mean_RPKM_1.19,alkati_merged_data$mean_RPKM_20.29)</code></pre>
-<pre><code>Warning in ks.test(alkati_merged_data$mean_RPKM_1.19,
-alkati_merged_data$mean_RPKM_20.29): p-value will be approximate in the
-presence of ties</code></pre>
-<pre><code>
-    Two-sample Kolmogorov-Smirnov test
-
-data:  alkati_merged_data$mean_RPKM_1.19 and alkati_merged_data$mean_RPKM_20.29
-D = 0.40456, p-value &lt; 2.2e-16
-alternative hypothesis: two-sided</code></pre>
-<pre class="r"><code>###We observed a significant difference between the distribution for the 20-29 exons and the 1-19 exons The reported p-value was 2-16.</code></pre>
+        text = element_text(size=24,face = &quot;bold&quot;),
+        axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
+        axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;,colour = &quot;black&quot;))+
+  theme(legend.key.size = unit(30,&quot;pt&quot;))</code></pre>
+<pre><code>Warning: Removed 389 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/tcga_luad_data_parser_egfr.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(&quot;output/egfr_luad_exonimbalance.pdf&quot;,width =12 ,height =10 ,units = &quot;in&quot;,useDingbats=F)</code></pre>
+<pre><code>Warning: Removed 389 rows containing missing values (geom_point).</code></pre>
+<pre class="r"><code>###We observed an insignificant difference between the distribution for the 1-17 exons and the 20-24 exons.</code></pre>
+</div>
+</div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <pre class="r"><code>sessionInfo()</code></pre>

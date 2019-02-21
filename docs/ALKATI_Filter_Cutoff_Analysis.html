@@ -415,7 +415,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2019-02-19</p>
+<p><strong>Last updated:</strong> 2019-02-20</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -439,7 +439,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/f3edec6a1af73b881e4b47ec148843460b08ae2e" target="_blank">f3edec6</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/6fec6220ee12e0b3a246b129a30ce3c874dc3b51" target="_blank">6fec622</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -453,24 +453,25 @@ Untracked files:
     Untracked:  code/mut_excl_genes_generator.R
     Untracked:  code/quadratic_solver.R
     Untracked:  code/simresults_generator.R
-    Untracked:  code/tcga_skcm_data_parser.Rmd
     Untracked:  data/All_Data_V2.csv
     Untracked:  data/all_data.csv
     Untracked:  data/tcga_luad_expression/
     Untracked:  data/tcga_skcm_expression/
     Untracked:  docs/figure/Filteranalysis.Rmd/
-    Untracked:  docs/figure/TCGA_luad_data_parser.Rmd/
-    Untracked:  filteranalysisheatmap.pdf
+    Untracked:  docs/figure/tcga_luad_data_parser_egfr.Rmd/
     Untracked:  output/alkati_filtercutoff_allfilters.csv
     Untracked:  output/alkati_luad_exonimbalance.pdf
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
     Untracked:  output/alkati_skcm_exonimbalance.pdf
     Untracked:  output/all_data_luad.csv
+    Untracked:  output/all_data_luad_egfr.csv
     Untracked:  output/all_data_skcm.csv
+    Untracked:  output/egfr_luad_exonimbalance.pdf
     Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
     Untracked:  output/fig2b_filtercutoff_atibraf.pdf
     Untracked:  output/fig2b_filtercutoff_atinras.pdf
     Untracked:  output/luad_alk_exon_expression.csv
+    Untracked:  output/luad_egfr_exon_expression.csv
     Untracked:  output/skcm_alk_exon_expression.csv
 
 </code></pre>
@@ -500,6 +501,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/0b5f5cb94c139b5c731b45b4f5ae45dd07138e02/docs/ALKATI_Filter_Cutoff_Analysis.html" target="_blank">0b5f5cb</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 html
@@ -854,6 +872,17 @@ Date
 <tbody>
 <tr>
 <td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/0b5f5cb94c139b5c731b45b4f5ae45dd07138e02/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-7-1.png" target="_blank">0b5f5cb</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-7-1.png" target="_blank">4b082e4</a>
 </td>
 <td style="text-align:left;">
@@ -880,6 +909,36 @@ ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+
       theme_bw()+
       theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,color=&quot;black&quot;,size=&quot;26&quot;))</code></pre>
 <p><img src="figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-7-2.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-7-2.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/0b5f5cb94c139b5c731b45b4f5ae45dd07138e02/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-7-2.png" target="_blank">0b5f5cb</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code>  ggsave(&quot;output/fig2b2_filtercutoff_atinras_totalalk.pdf&quot;,width = 16,height = 14,units = &quot;in&quot;,useDingbats=F)</code></pre>
 <div id="heat-map-for-nras-vs-alkati-with-count-data" class="section level4">
 <h4><strong>Heat map for NRAS vs ALKATI with count data</strong></h4>
@@ -1117,6 +1176,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/0b5f5cb94c139b5c731b45b4f5ae45dd07138e02/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-9-1.png" target="_blank">0b5f5cb</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-19
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 <a href="https://github.com/haiderinam/pair_con_select/blob/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/figure/ALKATI_Filter_Cutoff_Analysis.Rmd/unnamed-chunk-9-1.png" target="_blank">4b082e4</a>
