@@ -1,22 +1,23 @@
 ---
-title: "TCGA_luad_data_parser.Rmd"
+title: "tcga_skcm_data_parser"
 author: "Haider Inam"
-date: "2/19/2019"
+date: "2/12/2019"
 output: html_document
 ---
-##This code essentially processes LUAD TCGA data:
+##This code essentially processes SKCM TCGA data:
 1) Mutation Data
 2) RSEM Normalized
 3) mRNA Count DAta
-4) Exon Expression data   
-Once it processes these data, it makes a merged all_data_luad.csv file for ALK that contains:
+4) Exon Expression data  
+Once it processes these data, it makes a merged all_data_skcm.csv file for ALK that contains:
 1) RSEM
 2) RPKM (exon 20-29/exon 1-19 expression)
 3) Count data
-4) EGFR and KRAS Mutations  
+4) BRAF and NRAS Mutations  
 Please note: there are two chunks with eval=F. Therefore, turn EVAL=T when running these for the first time
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
 knitr::opts_knit$set(root.dir = "..") #To change the root directory from Analysis to myproject
 ```
 
@@ -50,62 +51,61 @@ cleanup=theme_bw() +
 ```
 
 
-## **LUAD Mutation Data: Grabbing EGFR and KRAS for 230 patients.**
+
+### **SKCM Mutation Data: Grabbing BRAF and NRAS for 345 patients.**
 ```{r}
-x1=list.dirs("data/tcga_luad_expression/luad_mutation_data",full.names=TRUE)#Lists all files in the current working directory x
+x1=list.dirs("data/tcga_skcm_expression/gdac.broadinstitute.org_SKCM.Mutation_Packager_Oncotated_Calls.Level_3.2016012800.0.0/",full.names=TRUE)#Lists all files in the current working directory x
 
 Data_list=list.files(x1[1],pattern="^TCGA-[A-Za-z0-9]{2}-[A-Za-z0-9]{4}-[A-Za-z0-9]{2}.hg19.oncotator.hugo_entrez_remapped.maf.txt*", ignore.case=F)#lists the files in the folder
 
   patmat=matrix(nrow=length(Data_list),ncol=3)# This initializes the storage matrix
   for (i in 1:length(Data_list)){
     patdat=read.table(paste(x1,"/",Data_list[i],sep=""),stringsAsFactors=FALSE,header=TRUE, sep="\t",fill=TRUE,quote = "")#opens each file as the loop progresses
-    egfr=patdat%>%filter(Hugo_Symbol=="EGFR",Variant_Classification!="Silent")
-    kras=patdat%>%filter(Hugo_Symbol=="KRAS",Variant_Classification!="Silent")
+    braf=patdat%>%filter(Hugo_Symbol=="BRAF",Variant_Classification!="Silent")
+    nras=patdat%>%filter(Hugo_Symbol=="NRAS",Variant_Classification!="Silent")
 
+    #and braf is not 0
     #This essentially says that if you can't find the mutant, enter NaN. If you find two mutants, then search for the major transforming mutation (e.g. BrafV600E). Non of the >1 mutations are the transforming mutation, just select the first one
-      if(nrow(egfr)>=2){
-      if(egfr$Protein_Change%in%"p.T790M"){
-        egfr=egfr%>%filter(Protein_Change=="p.T790M")
+      if(nrow(braf)>=2){
+      if(braf$Protein_Change%in%"p.V600E"){
+        braf=braf%>%filter(Protein_Change=="p.V600E")
       } else{
-          egfr=egfr[1,]
+          braf=braf[1,]
         }
-      } else if(nrow(egfr)==0){
-        egfr[1,]="p.NaN"
+      } else if(nrow(braf)==0){
+        braf[1,]="p.NaN"  
       }
-    if(nrow(kras)>=2){
-      if(kras$Protein_Change%in%"p.G12D"){
-        kras=kras%>%filter(Protein_Change=="p.G12D")
+    if(nrow(nras)>=2){
+      if(nras$Protein_Change%in%"p.Q61L"){
+        nras=nras%>%filter(Protein_Change=="p.Q61L")
       } else{
-          kras=kras[1,]
+          nras=nras[1,]
         }
-      } else if(nrow(kras)==0){
-        kras[1,]="p.NaN"
+      } else if(nrow(nras)==0){
+        nras[1,]="p.NaN"
       }
-
+    
     # missense=nrow(patdat[patdat$Variant_Classification=="Missense_Mutation",])#counts missense mutations by identifying the number of rows in a   
     patmat[i,1]=Data_list[i]#Record the Patient ID from the file name
-    patmat[i,2]=egfr$Protein_Change
-    patmat[i,3]=kras$Protein_Change
+    patmat[i,2]=braf$Protein_Change
+    patmat[i,3]=nras$Protein_Change
     }
 patframe=data.frame(patmat)#Turn storage matrix into data frame
-colnames(patframe)[1:3]=c("Patid","EGFR","KRAS")#Rename the columns
+colnames(patframe)[1:3]=c("Patid","BRAF","NRAS")#Rename the columns
 # write.csv(patframe,"patients_tally_muttype2.csv")# Record data frame as a CSV and write to the working directory
 
 #Grabbing Patient Names so that they can be used to merge with exon data later
 alk_mutated_data=patframe
 alk_mutated_data$Patid=substring(alk_mutated_data$Patid,first = 1,last = 12)
 ###Removing "p." from names of mutants:
-alk_mutated_data$EGFR=unlist(sub("p.","",alk_mutated_data$EGFR))
-alk_mutated_data$KRAS=unlist(sub("p.","",alk_mutated_data$KRAS))
-head(alk_mutated_data)
+alk_mutated_data$BRAF=unlist(sub("p.","",alk_mutated_data$BRAF))
+alk_mutated_data$NRAS=unlist(sub("p.","",alk_mutated_data$NRAS))
 
 ```
 
-
-LUAD Genes RSEM
+SKCM Genes RSEM
 ```{r}
-
-rsemdatanormalized=read.table("data/tcga_luad_expression/luadrsemdata/gdac.broadinstitute.org_LUAD.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.Level_3.2016012800.0.0/LUAD.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt",sep = "\t",header = T,stringsAsFactors = F)
+rsemdatanormalized=read.table("data/tcga_skcm_expression/gdac.broadinstitute.org_SKCM.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.Level_3.2016012800.0.0/SKCM.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt",sep = "\t",header = T,stringsAsFactors = F)
 alk_rsem=data.frame(t(rsemdatanormalized[grepl("^alk\\|",rsemdatanormalized$Hybridization.REF,ignore.case = T),])[-1,])
 #410 of the 577 patients have an RSEM higher than 410
 colnames(alk_rsem)[1]="RSEM_normalized"
@@ -119,14 +119,19 @@ alk_rsem[colnames(alk_rsem)] <- lapply(alk_rsem[colnames(alk_rsem)],as.character
 # # As Numeric: Converting from list to numeric
 alk_rsem$RSEM_normalized=unlist(alk_rsem$RSEM_normalized)
 alk_rsem$RSEM_normalized=as.numeric(alk_rsem$RSEM_normalized)
+
+
 ```
 
-LUAD Count data:
+
+
+SKCM Count data:
 ```{r}
 #Non-normalized:
-gene_expression_data=read.table("data/tcga_luad_expression/luadgeneexpression/gdac.broadinstitute.org_LUAD.Merge_rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__gene_expression__data.Level_3.2016012800.0.0/LUAD.rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__gene_expression__data.data.txt",sep = "\t",header = T,stringsAsFactors = F)
+gene_expression_data=read.table("data/tcga_skcm_expression/gdac.broadinstitute.org_SKCM.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes__data.Level_3.2016012800.0.0/SKCM.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes__data.data.txt",sep = "\t",header = T,stringsAsFactors = F)
+
 #Normalized
-# gene_expression_data=read.table(,sep = "\t",header = T,stringsAsFactors = F)
+gene_expression_data=read.table("data/tcga_skcm_expression/gdac.broadinstitute.org_SKCM.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.Level_3.2016012800.0.0/SKCM.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt",sep = "\t",header = T,stringsAsFactors = F)
 
   #Finding Alk
   alk_gene_exp=rbind(gene_expression_data[1,],gene_expression_data[grepl("^alk\\|",gene_expression_data$Hybridization.REF,ignore.case = T),])
@@ -135,14 +140,14 @@ gene_expression_data=read.table("data/tcga_luad_expression/luadgeneexpression/gd
   
   #Counting patients with raw reads >500
   # sum(as.numeric(as.numeric(as.character(t_alk_gene_exp$X580))>=500))
-#ONLY 6 PATIENTS HAVE RAW COUNTS OF >500
+#ONLY 89 PATIENTS HAVE RAW COUNTS OF >500
 ```
 
-LUAD Exon RPKM
+SKCM Exon RPKM
 This creates a .csv file and only needs to be run once.
 ```{r,eval=F}
 # rm(list=ls())#Clears workspace
-exondatacomb=read.table("data/tcga_luad_expression/luadexondatacomb/gdac.broadinstitute.org_LUAD.Merge_rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__exon_expression__data.Level_3.2016012800.0.0/LUAD.rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__exon_expression__data.data.txt",stringsAsFactors=FALSE,header=TRUE, sep="\t",fill=TRUE)
+exondatacomb=read.table("data/tcga_skcm_expression/gdac.broadinstitute.org_SKCM.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__exon_quantification__data.Level_3.2016012800.0.0/SKCM.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__exon_quantification__data.data.txt",stringsAsFactors=FALSE,header=TRUE, sep="\t",fill=TRUE)
 # head(exondatacomb)
 
 #Chromosome 2
@@ -150,13 +155,13 @@ exondatachr2=exondatacomb[grep("^chr2:",exondatacomb$Hybridization.REF),] #i.e. 
 #Alk within Chromosome 2
 # The exon locations were found on ensembl here https://useast.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g=ENSG00000171094;r=2:29192774-29921566;t=ENST00000389048
 ##These start at chr2:29415641-29416788:-
-exondatachr2alk=exondatacomb[c(26031:26059),]
+exondatachr2alk=exondatacomb[c(25916:25944),]
 
 # # write.table(exondatachr2alk,'exondatachr2alk.csv')
 # exondatachr2alk=read.csv("exondatachr2alk.csv",stringsAsFactors = F,header = T,sep = "",fill = T)
 #Adding Names for Exons
 exondatachr2alk$exon=c(29:1)
-alldataalk=exondatachr2alk[,c(488,c(2:487))]
+alldataalk=exondatachr2alk[,c(1421,c(2:1420))]
 #Switching up order
 alldataalk2=alldataalk[c(29:1),]
 
@@ -172,7 +177,7 @@ colnames_exondata=exondatacomb[1,]
 colnames(colnames_exondata)=colnames(alldataalk2)
 
 alldataalk2=rbind(colnames_exondata,alldataalk2) #Adding first row that contains names of measurements such as RPKM, RSEM, Counts
-write.table(alldataalk2,'output/luad_alk_exon_expression.csv')
+write.table(alldataalk2,'../output/skcm_alk_exon_expression.csv')
 
 #I used this code to find the length of exons and compare these to the lengths of the exons on Ensembl. I had to calculate exon lengths because annotations in this file and annotations in enseml weren't the same.
 # trunc_names=gsub("chr2:|:\\+|:\\-","",exondatachr2$Hybridization.REF)
@@ -188,9 +193,9 @@ write.table(alldataalk2,'output/luad_alk_exon_expression.csv')
 # positions$net=positions$end-positions$start
 ```
 
-###Obtaining RPKM, Count data from LUAD Exon Data. Followed by merging with RSEM data
-```{r,eval=F}
-alldataalk2=read.csv("output/luad_alk_exon_expression.csv",stringsAsFactors = F,header = T,sep = "",fill = T)
+###Obtaining RPKM, Count data from SKCM Exon Data. Followed by merging with RSEM data
+```{r}
+alldataalk2=read.csv("output/skcm_alk_exon_expression.csv",stringsAsFactors = F,header = T,sep = "",fill = T)
 #Getting Count Data
 alldataalk2_count=cbind(alldataalk2$exon,alldataalk2[,grepl("raw_counts",alldataalk2[1,])])[-1,]
 # As Character
@@ -240,48 +245,19 @@ alk_exon_data=merge(mergetemp,alk_medianlength_data,by="Patid")
 alk_exon_data$Patid=substring(alk_exon_data$Patid,first = 1,last = 12)
 #Since the names for exon data are not the same format as the mutation data, we're gonna change that here
 alk_exon_data$Patid=gsub("\\.","-",alk_exon_data$Patid)
-alkati_merged_data=merge(alk_exon_data,alk_mutated_data,by="Patid",all=T)
-alkati_merged_data=merge(alkati_merged_data,alk_rsem,by="Patid",all = T)
-# alkati_merged_data=merge(alk_exon_data,alk_mutated_data,by="Patid")
-# alkati_merged_data=merge(alkati_merged_data,alk_rsem,by="Patid")
+# alkati_merged_data=merge(alk_exon_data,alk_mutated_data,by="Patid",all=T)
+# alkati_merged_data=merge(alkati_merged_data,alk_rsem,by="Patid",all = T)
+alkati_merged_data=merge(alk_exon_data,alk_mutated_data,by="Patid")
+alkati_merged_data=merge(alkati_merged_data,alk_rsem,by="Patid")
 
 ###Now adding ALK hits to the data based on filters by Wiesner et al
 ###2/15 note: use the TCGA data sorter to just process your data
 # alk_data=read.csv("../data/all_data.csv",stringsAsFactors = F)
 # alldata=tcgadatasorter("data/all_data.csv",meanRPKM,100,500)
 alkati_merged_data_alkati=alkati_merged_data%>%
-  group_by(Patid,mean_RPKM_1.19,mean_RPKM_20.29,Ratio20.29, mRNA_count,EGFR,KRAS,RSEM_normalized)%>%
-  summarize(ATI=as.numeric(mRNA_count>=100&Ratio20.29>10&RSEM_normalized>=80)[1])
+  group_by(Patid,mean_RPKM_1.19,mean_RPKM_20.29,Ratio20.29, mRNA_count,BRAF,NRAS,RSEM_normalized)%>%
+  summarize(ATI=as.numeric(mRNA_count>=500&Ratio20.29>10&RSEM_normalized>=100)[1])
 
-write.csv(alkati_merged_data_alkati,"output/all_data_luad.csv")
+write.csv(alkati_merged_data_alkati,"output/all_data_skcm.csv")
+
 ```
-
-Making ALK Expression the plots:
-```{r}
-alkati_merged_data=read.csv("output/all_data_luad.csv")
-alkati_merged_data$alkati=0
-alkati_merged_data$alkati[alkati_merged_data$Ratio>=10&alkati_merged_data$mRNA_count>=500&alkati_merged_data$RSEM_normalized>=80]=1
-alkati_merged_data$alkati=factor(alkati_merged_data$alkati,levels=c("1","0"))
-
-  ggplot(alkati_merged_data,aes(x=mean_RPKM_1.19, y=mean_RPKM_20.29,color=factor(alkati)))+
-    geom_abline(size=1)+
-    geom_point(size=4)+
-    ####Had to add this line to not overplot the alkati datapoint- Haider 1/31/19
-    geom_point(data=alkati_merged_data[alkati_merged_data$alkati==1,],aes(x=mean_RPKM_1.19, y=mean_RPKM_20.29,color=factor(alkati)),size=4)+
-    scale_x_continuous(trans = "log10",name="Exon 1:19 RPKM",breaks=c(1e-2,1e0,1e2),labels = parse(text = c("10^-2","10^0","10^2")),limits = c(1e-3,1e3))+
-    scale_y_continuous(trans = "log10",name="Exon 20:29 RPKM",breaks=c(1e-2,1e0,1e2),labels = parse(text = c("10^-2","10^0","10^2")),limits = c(1e-3,1e3))+
-    scale_color_brewer(palette="Set1",name="ALKATI",labels=c("Yes", "No"))+
-    cleanup+
-    theme(plot.title = element_text(hjust=.5),
-          text = element_text(size=24,face = "bold"),
-          axis.title = element_text(face="bold",size="24"),
-          axis.text=element_text(face="bold",size="24",colour = "black"))+
-    theme(legend.key.size = unit(30,"pt"))
-ggsave("output/alkati_luad_exonimbalance.pdf",width =12 ,height =10 ,units = "in",useDingbats=F)
-
-#Testing if both kinase and ALK expression are different
-ks.test(alkati_merged_data$mean_RPKM_1.19,alkati_merged_data$mean_RPKM_20.29)
-###We observed a significant difference between the distribution for the 20-29 exons and the 1-19 exons The reported p-value was 2-16.
-```
-
-

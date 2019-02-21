@@ -1,0 +1,196 @@
+---
+title: "tcga_luad_data_parser_egfr"
+author: "Haider Inam"
+date: "2/20/2019"
+output: html_document
+---
+This code is to look at the EGFR exon imbalance.
+Therefore, we need the count data, rsem data, and exon data
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "..") #To change the root directory from Analysis to myproject
+```
+
+```{r,include=F}
+library(knitr)
+library(tictoc)
+library(workflowr)
+library(VennDiagram)
+library(dplyr)
+library(foreach)
+library(doParallel)
+library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+library(devtools)
+library(ggsignif)
+source("code/contab_maker.R")
+source("code/alldata_compiler.R")
+source("code/quadratic_solver.R")
+source("code/mut_excl_genes_generator.R")
+source("code/mut_excl_genes_datapoints.R")
+source("code/simresults_generator.R")
+
+######################Cleanup for GGPlot2#########################################
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = "black"))
+```
+
+
+
+**LUAD Genes RSEM**
+```{r}
+
+rsemdatanormalized=read.table("data/tcga_luad_expression/luadrsemdata/gdac.broadinstitute.org_LUAD.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.Level_3.2016012800.0.0/LUAD.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt",sep = "\t",header = T,stringsAsFactors = F)
+egfr_rsem=data.frame(t(rsemdatanormalized[grepl("^egfr\\|",rsemdatanormalized$Hybridization.REF,ignore.case = T),])[-1,])
+#410 of the 577 patients have an RSEM higher than 410
+colnames(egfr_rsem)[1]="RSEM_normalized"
+egfr_rsem$Patid=rownames(egfr_rsem)
+#Standardizing Patid Names
+egfr_rsem$Patid=substring(egfr_rsem$Patid,first = 1,last = 12)
+egfr_rsem$Patid=gsub("\\.","-",egfr_rsem$Patid)
+
+# # As Character
+egfr_rsem[colnames(egfr_rsem)] <- lapply(egfr_rsem[colnames(egfr_rsem)],as.character)
+# # As Numeric: Converting from list to numeric
+egfr_rsem$RSEM_normalized=unlist(egfr_rsem$RSEM_normalized)
+egfr_rsem$RSEM_normalized=as.numeric(egfr_rsem$RSEM_normalized)
+```
+
+
+LUAD Count data:
+```{r}
+#Non-normalized:
+gene_expression_data=read.table("data/tcga_luad_expression/luadgeneexpression/gdac.broadinstitute.org_LUAD.Merge_rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__gene_expression__data.Level_3.2016012800.0.0/LUAD.rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__gene_expression__data.data.txt",sep = "\t",header = T,stringsAsFactors = F)
+#Normalized
+# gene_expression_data=read.table(,sep = "\t",header = T,stringsAsFactors = F)
+
+  #Finding egfr
+  egfr_gene_exp=rbind(gene_expression_data[1,],gene_expression_data[grepl("^egfr\\|",gene_expression_data$Hybridization.REF,ignore.case = T),])
+  #Removing Columns for Median_length_normalized and RPKM
+  t_egfr_gene_exp=data.frame(t(egfr_gene_exp[,grepl("raw_count",egfr_gene_exp[1,])]))
+  
+  #Counting patients with raw reads >500
+  # sum(as.numeric(as.numeric(as.character(t_egfr_gene_exp$X580))>=500))
+#ONLY 6 PATIENTS HAVE RAW COUNTS OF >500
+```
+
+
+
+LUAD Exon RPKM
+This creates a .csv file and only needs to be run once.
+```{r,eval=F}
+# rm(list=ls())#Clears workspace
+exondatacomb=read.table("data/tcga_luad_expression/luadexondatacomb/gdac.broadinstitute.org_LUAD.Merge_rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__exon_expression__data.Level_3.2016012800.0.0/LUAD.rnaseq__illuminahiseq_rnaseq__unc_edu__Level_3__exon_expression__data.data.txt",stringsAsFactors=FALSE,header=TRUE, sep="\t",fill=TRUE)
+# head(exondatacomb)
+
+# Obtained EGFR data from here: https://useast.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g=ENSG00000146648;r=7:55019021-55211628
+
+#Chromosome 7
+exondatachr7=exondatacomb[grep("^chr7:",exondatacomb$Hybridization.REF),] #i.e. it starts with chromosome 7
+#EGFR within Chromosome 7
+exondatachr7egfr=exondatacomb[c(90511:90542),]
+exondatachr7egfr=exondatachr7egfr[grep(":\\+",exondatachr2egfr$Hybridization.REF),] #i.e. it is only on +ive strand
+exondatachr7egfr=exondatachr7egfr[c(-4,-16,-17),]
+exondatachr7egfr$exon=c(27:1)
+alldataegfr=exondatachr7egfr[,c(488,c(2:487))]
+#Switching up order
+alldataegfr2=alldataegfr[c(27:1),]
+#Making the dataframe of a numeric type so that analysis can be carried out on it.
+# As Character
+alldataegfr[colnames(alldataegfr)] <- lapply(alldataegfr[colnames(alldataegfr)],as.character)
+# As Numeric
+alldataegfr[colnames(alldataegfr)] <- lapply(alldataegfr[colnames(alldataegfr)],as.numeric)
+
+#Getting the correct column names for alldataegfr
+colnames_exondata=exondatacomb[1,]
+colnames(colnames_exondata)=colnames(alldataegfr)
+
+alldataegfr=rbind(colnames_exondata,alldataegfr) #Adding first row that contains names of measurements such as RPKM, RSEM, Counts
+write.table(alldataegfr,'output/luad_egfr_exon_expression.csv')
+```
+
+###Obtaining RPKM, Count data from LUAD Exon Data. Followed by merging with RSEM data
+####Note that we're not concerned with the mutation data of EGFR so we don't use it here
+```{r,eval=F}
+alldataegfr=read.csv("output/luad_egfr_exon_expression.csv",stringsAsFactors = F,header = T,sep = "",fill = T)
+#Getting Count Data
+alldataegfr_count=cbind(alldataegfr$exon,alldataegfr[,grepl("raw_counts",alldataegfr[1,])])[-1,]
+# As Character
+alldataegfr_count[colnames(alldataegfr_count)] <-lapply(alldataegfr_count[colnames(alldataegfr_count)],as.character)
+# As Numeric
+alldataegfr_count[colnames(alldataegfr_count)] <- lapply(alldataegfr_count[colnames(alldataegfr_count)],as.numeric)
+#Sum exons 1:27
+egfr_count_data=data.frame(t(data.frame(lapply(alldataegfr_count[c(1:27),],sum))[,-1])) #Not sure if lapply is the right thing to use here. Really messed up way of summing indices in dataframe
+colnames(egfr_count_data)="mRNA_count"
+
+alldataegfr_medianlength=cbind(alldataegfr$exon,alldataegfr[,grepl("median_length",alldataegfr[1,])])
+# As Character
+alldataegfr_medianlength=alldataegfr_medianlength[-1,] #Removing the first row. May be unnecessary in the future
+alldataegfr_medianlength[colnames(alldataegfr_medianlength)] <- lapply(alldataegfr_medianlength[colnames(alldataegfr_medianlength)],as.character)
+# As Numeric
+alldataegfr_medianlength[colnames(alldataegfr_medianlength)] <- lapply(alldataegfr_medianlength[colnames(alldataegfr_medianlength)],as.numeric)
+#Sum exons 1:27
+egfr_medianlength_data=data.frame(t(data.frame(lapply(alldataegfr_medianlength[c(1:27),],sum))[,-1])) #Removing sum of exons lol
+colnames(egfr_medianlength_data)="medianlength"
+
+#Getting RPKM
+alldataegfr_RPKM=cbind(alldataegfr$exon,alldataegfr[,grepl("RPKM",alldataegfr[1,])])
+# As Character
+alldataegfr_RPKM=alldataegfr_RPKM[-1,] #Removing the first row. May be unnecessary in the future
+alldataegfr_RPKM[colnames(alldataegfr_RPKM)] <- lapply(alldataegfr_RPKM[colnames(alldataegfr_RPKM)],as.character)
+# As Numeric
+alldataegfr_RPKM[colnames(alldataegfr_RPKM)] <- lapply(alldataegfr_RPKM[colnames(alldataegfr_RPKM)],as.numeric)
+egfr_RPKM_data=data.frame(cbind(lapply(alldataegfr_RPKM[c(1:17),],mean),lapply(alldataegfr_RPKM[c(18:24),],mean))[-1,])
+colnames(egfr_RPKM_data)=c("mean_RPKM_1.17","mean_RPKM_18.24")
+# As Character
+egfr_RPKM_data[colnames(egfr_RPKM_data)] <- lapply(egfr_RPKM_data[colnames(egfr_RPKM_data)],as.character)
+# As Numeric
+egfr_RPKM_data[colnames(egfr_RPKM_data)] <- lapply(egfr_RPKM_data[colnames(egfr_RPKM_data)],as.numeric)
+#  Calculating Ratios of exon RPKM means
+egfr_RPKM_data$Ratio18.24=egfr_RPKM_data$mean_RPKM_18.24/egfr_RPKM_data$mean_RPKM_1.17
+
+#Changing rownames (patient_ids) to become the same between each other
+rownames(egfr_RPKM_data)=substring(rownames(egfr_RPKM_data),first=1,last=28)
+rownames(egfr_medianlength_data)=substring(rownames(egfr_medianlength_data),first=1,last=28)
+egfr_RPKM_data$Patid=rownames(egfr_RPKM_data)
+egfr_medianlength_data$Patid=rownames(egfr_medianlength_data)
+egfr_count_data$Patid=rownames(egfr_count_data)
+
+mergetemp=merge(egfr_RPKM_data,egfr_count_data,by="Patid")
+egfr_exon_data=merge(mergetemp,egfr_medianlength_data,by="Patid")
+#Transforming the Patids so that they're compatible with the Patids in the mutation data
+egfr_exon_data$Patid=substring(egfr_exon_data$Patid,first = 1,last = 12)
+#Since the names for exon data are not the same format as the mutation data, we're gonna change that here
+egfr_exon_data$Patid=gsub("\\.","-",egfr_exon_data$Patid)
+
+egfr_merged_data=merge(egfr_exon_data,egfr_rsem,by="Patid",all=T)
+
+write.csv(egfr_merged_data,"output/all_data_luad_egfr.csv")
+```
+
+
+**Making EGFR Expression the plots:**
+```{r}
+egfr_merged_data=read.csv("output/all_data_luad_egfr.csv")
+
+ggplot(egfr_merged_data,aes(x=mean_RPKM_1.17, y=mean_RPKM_18.24))+
+  geom_abline(size=1)+
+  geom_point(size=4)+
+  scale_x_continuous(trans = "log10",name="Exon 1:17 RPKM",breaks=c(1e-2,1e0,1e2),labels = parse(text = c("10^-2","10^0","10^2")),limits = c(1e-3,1e3))+
+  scale_y_continuous(trans = "log10",name="Exon 20:24 RPKM",breaks=c(1e-2,1e0,1e2),labels = parse(text = c("10^-2","10^0","10^2")),limits = c(1e-3,1e3))+
+  cleanup+
+  theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=24,face = "bold"),
+        axis.title = element_text(face="bold",size="24"),
+        axis.text=element_text(face="bold",size="24",colour = "black"))+
+  theme(legend.key.size = unit(30,"pt"))
+ggsave("output/egfr_luad_exonimbalance.pdf",width =12 ,height =10 ,units = "in",useDingbats=F)
+
+###We observed an insignificant difference between the distribution for the 1-17 exons and the 20-24 exons.
+```

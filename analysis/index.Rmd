@@ -14,13 +14,13 @@ output:
 * ###Click [here](ALKATI_Filter_Cutoff_Analysis.html) to see my results on ALK^ATI^ filter cutoff analyses.  
 ![](assets/aticutoffs.png)  
   
-* ###Click [here](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression in 
-SKCM.  
+* ###Click [here](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression in SKCM.  
+* ###Or click [here](tcga_skcm_data_parser.html) to see my analysis code for ALK-expression in SKCM.  
 ![](assets/atiskcmexpression.png)   
 * ###Click [here](TCGA_luad_data_parser.html) to see my results on ALK expression in LUAD.
 ![](assets/atiluadexpression.png)   
   
-* ###Click [here]() to see my results on EGFR expression in LUAD.
+* ###Click [here](tcga_luad_data_parser.html) to see my results on EGFR expression in LUAD.
 ![](assets/egfrluadexpression.png)   
   
 * ###Click [here]() to ALK^ATI^ cell line expression data analysis showing that ALK^ATI^ is necessary in melanoma.
