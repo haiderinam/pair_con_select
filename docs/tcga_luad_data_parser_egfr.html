@@ -419,7 +419,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2019-02-20</p>
+<p><strong>Last updated:</strong> 2019-03-06</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -443,7 +443,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/6fec6220ee12e0b3a246b129a30ce3c874dc3b51" target="_blank">6fec622</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/b7d812d4ab27cd7a70ba750f39a0edd13091bad5" target="_blank">b7d812d</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -458,10 +458,14 @@ Untracked files:
     Untracked:  code/quadratic_solver.R
     Untracked:  code/simresults_generator.R
     Untracked:  data/All_Data_V2.csv
+    Untracked:  data/alkati_growthcurvedata.csv
+    Untracked:  data/alkati_growthcurvedata_popdoublings.csv
+    Untracked:  data/alkati_melanoma_vemurafenib_figure_data.csv
     Untracked:  data/all_data.csv
     Untracked:  data/tcga_luad_expression/
     Untracked:  data/tcga_skcm_expression/
     Untracked:  docs/figure/Filteranalysis.Rmd/
+    Untracked:  docs/figure/baf3_alkati_transformations.Rmd/
     Untracked:  output/alkati_filtercutoff_allfilters.csv
     Untracked:  output/alkati_luad_exonimbalance.pdf
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
@@ -469,12 +473,16 @@ Untracked files:
     Untracked:  output/all_data_luad.csv
     Untracked:  output/all_data_luad_egfr.csv
     Untracked:  output/all_data_skcm.csv
+    Untracked:  output/baf3_alkati_figure_deltaadjusted_doublings.pdf
+    Untracked:  output/baf3_barplot.pdf
+    Untracked:  output/baf3_elisa_barplot.pdf
     Untracked:  output/egfr_luad_exonimbalance.pdf
     Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
     Untracked:  output/fig2b_filtercutoff_atibraf.pdf
     Untracked:  output/fig2b_filtercutoff_atinras.pdf
     Untracked:  output/luad_alk_exon_expression.csv
     Untracked:  output/luad_egfr_exon_expression.csv
+    Untracked:  output/melanoma_vemurafenib_fig.pdf
     Untracked:  output/skcm_alk_exon_expression.csv
 
 </code></pre>
@@ -504,6 +512,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/b7d812d4ab27cd7a70ba750f39a0edd13091bad5/analysis/tcga_luad_data_parser_egfr.Rmd" target="_blank">b7d812d</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-03-06
+</td>
+<td style="text-align:left;">
+Published Fig 4 analysis analysis, added statistical test for fig 3 &amp; 4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/aff917b4079ef57366ed90adf6c4b8d4a31383af/docs/tcga_luad_data_parser_egfr.html" target="_blank">aff917b</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-20
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -659,10 +701,70 @@ ggplot(egfr_merged_data,aes(x=mean_RPKM_1.17, y=mean_RPKM_18.24))+
   theme(legend.key.size = unit(30,&quot;pt&quot;))</code></pre>
 <pre><code>Warning: Removed 389 rows containing missing values (geom_point).</code></pre>
 <p><img src="figure/tcga_luad_data_parser_egfr.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-6-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/aff917b4079ef57366ed90adf6c4b8d4a31383af/docs/figure/tcga_luad_data_parser_egfr.Rmd/unnamed-chunk-6-1.png" target="_blank">aff917b</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-20
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <pre class="r"><code>ggsave(&quot;output/egfr_luad_exonimbalance.pdf&quot;,width =12 ,height =10 ,units = &quot;in&quot;,useDingbats=F)</code></pre>
 <pre><code>Warning: Removed 389 rows containing missing values (geom_point).</code></pre>
 <pre class="r"><code>###We observed an insignificant difference between the distribution for the 1-17 exons and the 20-24 exons.</code></pre>
 </div>
+</div>
+<div id="statistical-test-to-see-if-alk-kinase-domain-expression-was-significantly-higher-than-other-domains" class="section level3">
+<h3>Statistical test to see if ALK kinase domain expression was significantly higher than other domains</h3>
+<pre class="r"><code>#Testing if both kinase and ALK expression are different
+ks.test(egfr_merged_data$mean_RPKM_1.17,egfr_merged_data$mean_RPKM_18.24)</code></pre>
+<pre><code>Warning in ks.test(egfr_merged_data$mean_RPKM_1.17,
+egfr_merged_data$mean_RPKM_18.24): p-value will be approximate in the
+presence of ties</code></pre>
+<pre><code>
+    Two-sample Kolmogorov-Smirnov test
+
+data:  egfr_merged_data$mean_RPKM_1.17 and egfr_merged_data$mean_RPKM_18.24
+D = 0.38397, p-value = 1.332e-15
+alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>###We observed a significant difference between the distribution for the 20-29 exons and the 1-19 exons The reported p-value was 2-16.
+###The p-value from a Chi-sq test was 2.2e-16 too
+    #for all ALK data, not ALKATI
+ov_expr_obs=c(sum(as.numeric(egfr_merged_data$Ratio18.24&gt;1),na.rm = T),
+              dim(egfr_merged_data)[1]-sum(as.numeric(egfr_merged_data$Ratio18.24&gt;1),na.rm = T))
+ov_expr_expected=c(round(dim(egfr_merged_data)[1]/2),
+                   round(dim(egfr_merged_data)[1]/2))
+overexpression=data.frame(rbind(ov_expr_obs,ov_expr_expected))
+# overexpression=data.frame(rbind(c(338,13),c(176,176)))
+colnames(overexpression)=c(&quot;Yes&quot;,&quot;No&quot;)
+chisq.test(overexpression)</code></pre>
+<pre><code>
+    Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+
+data:  overexpression
+X-squared = 18.24, df = 1, p-value = 1.947e-05</code></pre>
 </div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>

@@ -419,7 +419,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2019-02-20</p>
+<p><strong>Last updated:</strong> 2019-03-06</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -443,7 +443,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/6fec6220ee12e0b3a246b129a30ce3c874dc3b51" target="_blank">6fec622</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/b7d812d4ab27cd7a70ba750f39a0edd13091bad5" target="_blank">b7d812d</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -458,11 +458,14 @@ Untracked files:
     Untracked:  code/quadratic_solver.R
     Untracked:  code/simresults_generator.R
     Untracked:  data/All_Data_V2.csv
+    Untracked:  data/alkati_growthcurvedata.csv
+    Untracked:  data/alkati_growthcurvedata_popdoublings.csv
+    Untracked:  data/alkati_melanoma_vemurafenib_figure_data.csv
     Untracked:  data/all_data.csv
     Untracked:  data/tcga_luad_expression/
     Untracked:  data/tcga_skcm_expression/
     Untracked:  docs/figure/Filteranalysis.Rmd/
-    Untracked:  docs/figure/tcga_luad_data_parser_egfr.Rmd/
+    Untracked:  docs/figure/baf3_alkati_transformations.Rmd/
     Untracked:  output/alkati_filtercutoff_allfilters.csv
     Untracked:  output/alkati_luad_exonimbalance.pdf
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
@@ -470,12 +473,16 @@ Untracked files:
     Untracked:  output/all_data_luad.csv
     Untracked:  output/all_data_luad_egfr.csv
     Untracked:  output/all_data_skcm.csv
+    Untracked:  output/baf3_alkati_figure_deltaadjusted_doublings.pdf
+    Untracked:  output/baf3_barplot.pdf
+    Untracked:  output/baf3_elisa_barplot.pdf
     Untracked:  output/egfr_luad_exonimbalance.pdf
     Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
     Untracked:  output/fig2b_filtercutoff_atibraf.pdf
     Untracked:  output/fig2b_filtercutoff_atinras.pdf
     Untracked:  output/luad_alk_exon_expression.csv
     Untracked:  output/luad_egfr_exon_expression.csv
+    Untracked:  output/melanoma_vemurafenib_fig.pdf
     Untracked:  output/skcm_alk_exon_expression.csv
 
 </code></pre>
@@ -505,6 +512,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/aff917b4079ef57366ed90adf6c4b8d4a31383af/docs/tcga_skcm_data_parser.html" target="_blank">aff917b</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-02-20
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -609,6 +633,14 @@ alk_mutated_data$Patid=substring(alk_mutated_data$Patid,first = 1,last = 12)
 ###Removing &quot;p.&quot; from names of mutants:
 alk_mutated_data$BRAF=unlist(sub(&quot;p.&quot;,&quot;&quot;,alk_mutated_data$BRAF))
 alk_mutated_data$NRAS=unlist(sub(&quot;p.&quot;,&quot;&quot;,alk_mutated_data$NRAS))</code></pre>
+<pre class="r"><code># x1=list.dirs(&quot;data/tcga_skcm_expression/gdac.broadinstitute.org_SKCM.Mutation_Packager_Oncotated_Calls.Level_3.2016012800.0.0/&quot;,full.names=TRUE)#Lists all files in the current working directory x
+# 
+# Data_list=list.files(x1[1],pattern%in%c(&quot;TCGA-DA-A1IC&quot;,&quot;TCGA-EB-A41B&quot;,&quot;TCGA-EE-A182&quot;,&quot;TCGA-EE-A29D&quot;,&quot;TCGA-EE-A2GI&quot;,&quot;TCGA-EE-A2MT&quot;,&quot;TCGA-EE-A3AE&quot;,&quot;TCGA-ER-A197&quot;), ignore.case=F)#lists the files in the folder
+# for(i=1:length(Data_list)){
+# patdat=read.table(paste(x1,&quot;/&quot;,Data_list[1],sep=&quot;&quot;),stringsAsFactors=FALSE,header=TRUE, sep=&quot;\t&quot;,fill=TRUE,quote = &quot;&quot;)#opens each file as the loop progresses
+# patdat_interesting= patdat%&gt;%filter(Hugo_Symbol%in%c(&quot;BRAF&quot;,&quot;NRAS&quot;,&quot;TP53&quot;,&quot;CDKN2A&quot;,&quot;NF1&quot;,&quot;PTEN&quot;,&quot;RAC1&quot;,&quot;ARID2&quot;,&quot;c15orf23&quot;,&quot;SLC38A4&quot;,&quot;PPP6C&quot;,&quot;KIT&quot;,&quot;MAP2K&quot;,&quot;ZNF559&quot;),Variant_Classification!=&quot;Silent&quot;)
+# #Crouts et al tested BRAF NRAS KIT GNAQ GNA11(R183C) and NF1  
+# }</code></pre>
 <p>SKCM Genes RSEM</p>
 <pre class="r"><code>rsemdatanormalized=read.table(&quot;data/tcga_skcm_expression/gdac.broadinstitute.org_SKCM.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.Level_3.2016012800.0.0/SKCM.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt&quot;,sep = &quot;\t&quot;,header = T,stringsAsFactors = F)
 alk_rsem=data.frame(t(rsemdatanormalized[grepl(&quot;^alk\\|&quot;,rsemdatanormalized$Hybridization.REF,ignore.case = T),])[-1,])

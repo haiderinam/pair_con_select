@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Haider Inam" />
+
+
+<title>baf3_alkati_transformations</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">pair_con_select</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jdblischak/workflowr">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">baf3_alkati_transformations</h1>
+<h4 class="author"><em>Haider Inam</em></h4>
+<h4 class="date"><em>3/4/2019</em></h4>
+
+</div>
+
+
+<p><strong>Last updated:</strong> 2019-03-06</p>
+<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
+<ul>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20190211)</code> </summary></p>
+<p>The command <code>set.seed(20190211)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/b7d812d4ab27cd7a70ba750f39a0edd13091bad5" target="_blank">b7d812d</a> </summary></p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  code/alldata_compiler.R
+    Untracked:  code/contab_maker.R
+    Untracked:  code/mut_excl_genes_datapoints.R
+    Untracked:  code/mut_excl_genes_generator.R
+    Untracked:  code/quadratic_solver.R
+    Untracked:  code/simresults_generator.R
+    Untracked:  data/All_Data_V2.csv
+    Untracked:  data/alkati_growthcurvedata.csv
+    Untracked:  data/alkati_growthcurvedata_popdoublings.csv
+    Untracked:  data/alkati_melanoma_vemurafenib_figure_data.csv
+    Untracked:  data/all_data.csv
+    Untracked:  data/tcga_luad_expression/
+    Untracked:  data/tcga_skcm_expression/
+    Untracked:  docs/figure/Filteranalysis.Rmd/
+    Untracked:  output/alkati_filtercutoff_allfilters.csv
+    Untracked:  output/alkati_luad_exonimbalance.pdf
+    Untracked:  output/alkati_mtn_pval_fig2B.pdf
+    Untracked:  output/alkati_skcm_exonimbalance.pdf
+    Untracked:  output/all_data_luad.csv
+    Untracked:  output/all_data_luad_egfr.csv
+    Untracked:  output/all_data_skcm.csv
+    Untracked:  output/baf3_alkati_figure_deltaadjusted_doublings.pdf
+    Untracked:  output/baf3_barplot.pdf
+    Untracked:  output/baf3_elisa_barplot.pdf
+    Untracked:  output/egfr_luad_exonimbalance.pdf
+    Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
+    Untracked:  output/fig2b_filtercutoff_atibraf.pdf
+    Untracked:  output/fig2b_filtercutoff_atinras.pdf
+    Untracked:  output/luad_alk_exon_expression.csv
+    Untracked:  output/luad_egfr_exon_expression.csv
+    Untracked:  output/melanoma_vemurafenib_fig.pdf
+    Untracked:  output/skcm_alk_exon_expression.csv
+
+</code></pre>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
+</li>
+</ul>
+<hr />
+<pre class="r"><code>library(ggsignif)
+library(ggplot2)
+library(knitr)
+library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tictoc)
+library(foreach)
+library(doParallel)</code></pre>
+<pre><code>Loading required package: iterators</code></pre>
+<pre><code>Loading required package: parallel</code></pre>
+<pre class="r"><code>source(&quot;code/alldata_compiler.R&quot;)
+source(&quot;code/contab_maker.R&quot;)
+######################Cleanup for GGPlot2#########################################
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = &quot;black&quot;))</code></pre>
+<div id="alkati-does-not-seem-to-be-sufficient-to-make-baf3s-growth-factor-independent" class="section level2">
+<h2>ALKATI does not seem to be sufficient to make Baf3s growth factor independent</h2>
+<div id="displaying-the-population-doublings-of-alkati-eml4alk-and-vector-over-time" class="section level3">
+<h3>Displaying the population doublings of ALKATI, EML4ALK, and Vector over time</h3>
+<div id="please-not-that-while-we-performed-a-total-of-48-alkati-transductions-we-only-counted-the-first-9-transductions." class="section level4">
+<h4>Please not that while we performed a total of 48 ALKATI transductions, we only counted the first 9 transductions.</h4>
+<pre class="r"><code>library(ggplot2)
+library(reshape2)
+library(Hmisc)</code></pre>
+<pre><code>Loading required package: lattice</code></pre>
+<pre><code>Loading required package: survival</code></pre>
+<pre><code>Loading required package: Formula</code></pre>
+<pre><code>
+Attaching package: &#39;Hmisc&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    src, summarize</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    format.pval, units</code></pre>
+<pre class="r"><code>cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = &quot;black&quot;))
+
+# setwd(&quot;../Box/AlkAti/figures/baf3transformationsfigure/&quot;)
+
+baf3data=read.table(&quot;data/alkati_growthcurvedata_popdoublings.csv&quot;,header=T,stringsAsFactors = F,sep = &quot;,&quot;)
+###Removing 7th march data because the cells grew a lot in the first day post selection
+baf3data=baf3data[!grepl(&quot;7-Mar&quot;,baf3data$Infection),]
+baf3data=baf3data[,c(1:11)]
+###If you want only eml4alk and alk ati data, do this:
+# baf3data=baf3data[,c(1:8)]
+
+#
+baf3data2=melt(baf3data,id.vars = c(&quot;Time&quot;,&quot;Infection&quot;))
+
+baf3data2=baf3data2 %&gt;%
+  filter(value&gt;=-10)
+
+
+baf3data2=na.omit(baf3data2)
+
+baf3data2$variable=as.character(baf3data2$variable)
+###Transforming counts into actual numbers because these counts represent x1000s
+# baf3data2$value=baf3data2$value*1000
+###Creating a boolean for Type of infection
+baf3data2$type=&quot;EML4ALK&quot;
+baf3data2$type[grep(&quot;alkati&quot;,baf3data2$variable,ignore.case = T)]=&quot;ALKATI&quot;
+baf3data2$type[grep(&quot;vector&quot;,baf3data2$variable,ignore.case = T)]=&quot;VECTOR&quot;
+#
+#
+
+ggplot(baf3data2,aes(x=Time,y=value,color=type,fill=Infection,shape=variable))+
+  geom_line(size=3)+
+  geom_point(size=5,shape=16)+
+  # scale_y_continuous(limits = c(1,1e8))+
+  ggtitle(&quot;ALK-ATI sporadically promotes growth-factor-independent proliferation&quot;)+
+  xlab(&quot;Days after Transduction&quot;)+
+  ylab(&quot;Number of Cell Doublings&quot;)+
+  cleanup+
+  theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=24,face = &quot;bold&quot;),
+        axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
+        axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;))+
+  theme(legend.position=&quot;none&quot;)+
+  xlim(0,14)+
+  scale_colour_brewer(palette=&quot;Set2&quot;)</code></pre>
+<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values
+because more than 6 becomes difficult to discriminate; you have 9.
+Consider specifying shapes manually if you must have them.</code></pre>
+<pre><code>Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
+<pre><code>Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Can also make your own palette and color manually. Obtained from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+ggsave(&quot;output/baf3_alkati_figure_deltaadjusted_doublings.pdf&quot;,width = 16, height = 12, units = &quot;in&quot;)</code></pre>
+<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values
+because more than 6 becomes difficult to discriminate; you have 9.
+Consider specifying shapes manually if you must have them.</code></pre>
+<pre><code>Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
+<pre><code>Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<pre class="r"><code># Mean and standard deviation to grow out:
+#Our criteria for cells &quot;growing out&quot; was when they reached two population doublings
+#I extracted the number of days it took for ALKATI and EML4ALK samples to reach 2 population doublings by looking at the data of cells growing out.
+head(baf3data2)</code></pre>
+<pre><code>  Time Infection variable     value   type
+1  1.0    24-Nov  ALKATI1 0.0000000 ALKATI
+2  2.0    24-Nov  ALKATI1 0.6918777 ALKATI
+3  3.5    24-Nov  ALKATI1 0.9142701 ALKATI
+4  5.0    24-Nov  ALKATI1 0.7589919 ALKATI
+5  6.0    24-Nov  ALKATI1 0.4694853 ALKATI
+6  9.0    24-Nov  ALKATI1 2.8387191 ALKATI</code></pre>
+<pre class="r"><code>#ALKATI grew out in 9,10, and 11 days.
+mean(c(9,10,11))</code></pre>
+<pre><code>[1] 10</code></pre>
+<pre class="r"><code>sd(c(9,10,11))</code></pre>
+<pre><code>[1] 1</code></pre>
+<pre class="r"><code>#Eml4ALK grew out in 6,6,6,6,6, and 5 days
+mean(c(6,6,6,6,6,10))</code></pre>
+<pre><code>[1] 6.666667</code></pre>
+<pre class="r"><code>sd(c(6,6,6,6,6,5))</code></pre>
+<pre><code>[1] 0.4082483</code></pre>
+</div>
+</div>
+<div id="converting-the-number-of-infections-growing-out-to-a-barplot" class="section level3">
+<h3>Converting the number of infections growing out to a barplot</h3>
+<pre class="r"><code>baf3_alkati_infections=data.frame(cbind(c(&quot;EML4ALK&quot;,&quot;ALKATI&quot;,&quot;VECTOR&quot;),c(48/48*100,18/48*100,8/48*100)))
+colnames(baf3_alkati_infections)=c(&quot;Infection_Type&quot;,&quot;Infection_efficiency&quot;)
+baf3_alkati_infections$Infection_efficiency=as.numeric(as.character(baf3_alkati_infections$Infection_efficiency))
+
+ggplot(baf3_alkati_infections,aes(x=Infection_Type,y=Infection_efficiency))+
+  geom_col(aes(fill=Infection_Type))+
+  scale_fill_brewer(palette=&quot;Set2&quot;)+
+  scale_y_continuous(limits = c(0,110),name = &quot;% Infections conferring GF-independence&quot;)+
+  xlab(&quot;&quot;)+
+  cleanup+
+  theme(plot.title = element_text(hjust=.5),
+      text = element_text(size=24,face = &quot;bold&quot;),
+      axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
+      axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;))+
+  theme(legend.position=&quot;none&quot;)+
+  geom_text(label = c(&quot;48/48&quot;,&quot;18/48&quot;,&quot;8/48&quot;),size=10,nudge_y = -10)+
+  geom_signif(annotations = &#39;*&#39;, y_position = 90 ,xmin=&quot;ALKATI&quot;, xmax=&quot;EML4ALK&quot;,size = 1,textsize = 10,nudge_y=-10)+
+  geom_signif(annotations = &#39;*&#39;, y_position = 100 ,xmin=&quot;ALKATI&quot;, xmax=&quot;VECTOR&quot;,size = 1,textsize = 10,nudge_y=-10)</code></pre>
+<pre><code>Warning: Ignoring unknown parameters: nudge_y
+
+Warning: Ignoring unknown parameters: nudge_y</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(&quot;output/baf3_barplot.pdf&quot;,width = 10,height = 8,units = &quot;in&quot;)
+###Since meeting successful infection vs unsuccesfful infection are categorical variables, I will use the Chi-Sq test
+#ALKATI vs EML4ALK Pvalue= 1.707e-10:
+chisq.test(data.frame(rbind(c(18,30),c(48,0))))</code></pre>
+<pre><code>
+    Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+
+data:  data.frame(rbind(c(18, 30), c(48, 0)))
+X-squared = 40.776, df = 1, p-value = 1.707e-10</code></pre>
+<pre class="r"><code>#ALKATI vs Vector Pvalue= .038
+chisq.test(data.frame(rbind(c(18,30),c(8,40))))</code></pre>
+<pre><code>
+    Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+
+data:  data.frame(rbind(c(18, 30), c(8, 40)))
+X-squared = 4.2725, df = 1, p-value = 0.03873</code></pre>
+</div>
+<div id="barplot-for-p24-eliza" class="section level3">
+<h3>Barplot for P24 Eliza</h3>
+<pre class="r"><code>#####################Barplot for P24 Elisa########################
+#Inputting the lenitivirus particles that were calculated using the P24 Eliza
+baf3_alkati_elisa=data.frame(cbind(c(&quot;EML4ALK&quot;,&quot;EML4ALK&quot;,&quot;EML4ALK&quot;,&quot;EML4ALK&quot;,&quot;ALKATI&quot;,&quot;ALKATI&quot;,&quot;ALKATI&quot;,&quot;ALKATI&quot;),c(&quot;6-Nov&quot;,&quot;21-Nov&quot;,&quot;6-Jul&quot;,&quot;26-Jul&quot;,&quot;6-Nov&quot;,&quot;21-Nov&quot;,&quot;6-Jul&quot;,&quot;26-Jul&quot;),c(590346562.5,118892812.5,46836562.5,172420312.5,744238125,410720625,46836563,75659063)))
+colnames(baf3_alkati_elisa)=c(&quot;Infection_Type&quot;,&quot;Infection_Date&quot;,&quot;Lentivirus_Particles&quot;)
+baf3_alkati_elisa$Lentivirus_Particles=as.numeric(as.character(baf3_alkati_elisa$Lentivirus_Particles))
+baf3_alkati_elisa$Infection_Date=factor(baf3_alkati_elisa$Infection_Date,levels = (c(&quot;6-Nov&quot;,&quot;21-Nov&quot;,&quot;6-Jul&quot;,&quot;26-Jul&quot;)))
+ggplot(baf3_alkati_elisa,aes(x=Infection_Date,y=Lentivirus_Particles))+
+  geom_col(aes(fill=Infection_Type),position = &quot;dodge&quot;)+
+  scale_fill_brewer(palette=&quot;Set2&quot;,name=&quot;Infection\n&quot;,labels=c(&quot;ALK-ATI&quot;, &quot;EML4ALK&quot;))+
+  ylab(&quot;Lentivirus Particles&quot;)+
+  xlab(&quot;Infection Date&quot;)+
+  cleanup+
+  theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=24,face = &quot;bold&quot;),
+        axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
+        axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;,colour = &quot;black&quot;))+
+  scale_y_continuous(trans = &quot;log&quot;,breaks=c(1e2,1e4,1e6,1e8),labels = parse(text = c(&quot;10^2&quot;,&quot;10^4&quot;,&quot;10^6&quot;,&quot;10^8&quot;)))</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(&quot;output/baf3_elisa_barplot.pdf&quot;,width = 12,height = 8,units = &quot;in&quot;)</code></pre>
+<div id="another-way-of-displaying-fig-4a-using-unn" class="section level4">
+<h4>Another way of displaying Fig 4a using unn</h4>
+<pre class="r"><code>##################Baf3 figure based on raw numbers  
+baf3data=read.table(&quot;data/alkati_growthcurvedata.csv&quot;,header=T,stringsAsFactors = F,sep = &quot;,&quot;)
+# ###Removing 7th march data because the cells grew a lot in the first day post selection
+baf3data=baf3data[!grepl(&quot;7-Mar&quot;,baf3data$Infection),]
+baf3data=baf3data[,c(1:11)]
+# ###If you want only eml4alk and alk ati data, do this:
+# # baf3data=baf3data[,c(1:8)]
+# 
+# 
+baf3data2=melt(baf3data,id.vars = c(&quot;Time&quot;,&quot;Infection&quot;))
+baf3data2=na.omit(baf3data2)
+baf3data2$variable=as.character(baf3data2$variable)
+# ###Transforming counts into actual numbers because these counts represent x1000s
+baf3data2$value=baf3data2$value*1000
+# ###Creating a boolean for Type of infection
+baf3data2$type=&quot;EML4ALK&quot;
+baf3data2$type[grep(&quot;alkati&quot;,baf3data2$variable,ignore.case = T)]=&quot;ALKATI&quot;
+baf3data2$type[grep(&quot;vector&quot;,baf3data2$variable,ignore.case = T)]=&quot;VECTOR&quot;
+# ###We will use the log2 ratio of the starting population to the pop of interest to get the number of doubling of a population
+# ###These are called pseudo counts
+# ###To avoid the problem of undefined regions when the populations go to 0, we have 
+ggplot(baf3data2,aes(x=Time,y=value,color=type,fill=Infection,shape=variable))+
+  geom_line(size=3)+
+  geom_point(size=5,shape=16)+
+  scale_y_continuous(trans = &quot;log10&quot;)+
+  ggtitle(&quot;ALK-ATI sporadically promotes growth-factor-independent proliferation&quot;)+
+  xlab(&quot;Days after Transduction&quot;)+
+  ylab(expression(paste(~Delta,&quot;Cell Number (&quot;, ~10^6, &quot;)&quot;)))+
+  cleanup+
+  theme(plot.title = element_text(hjust=.5),
+       text = element_text(size=24,face = &quot;bold&quot;),
+       axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
+       axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;))+
+  theme(legend.position=&quot;none&quot;)</code></pre>
+<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values
+because more than 6 becomes difficult to discriminate; you have 9.
+Consider specifying shapes manually if you must have them.</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="alkati-is-not-sufficient-to-rescue-melanoma-form-a-vemurafenib-challenge" class="section level2">
+<h2>ALKATI is not sufficient to rescue melanoma form a vemurafenib challenge</h2>
+<pre class="r"><code>melanoma_data=read.table(&quot;data/alkati_melanoma_vemurafenib_figure_data.csv&quot;,header = T,stringsAsFactors = F,sep=&quot;,&quot;)
+
+# colnames(melanoma_data)=c(&quot;dose&quot;,&quot;skmel_pig&quot;,&quot;skmel_alkati&quot;,&quot;g361_pig&quot;,&quot;g361_alkati&quot;)
+# colnames(melanoma_data)
+melanoma_data2=melt(melanoma_data,id.vars = c(&quot;Dose&quot;))
+###Coercing skmel28-pig.1, .2, .3 to become the same name.
+melanoma_data2$variable[grep(&quot;Skmel28.PIG&quot;,melanoma_data2$variable)]=&quot;Skmel28.PIG&quot;
+melanoma_data2$variable[grep(&quot;Skmel28.AlkAti&quot;,melanoma_data2$variable)]=&quot;Skmel28.AlkAti&quot;
+melanoma_data2$variable[grep(&quot;G361.PIG&quot;,melanoma_data2$variable)]=&quot;G361.PIG&quot;
+melanoma_data2$variable[grep(&quot;G361.AlkAti&quot;,melanoma_data2$variable)]=&quot;G361.AlkAti&quot;
+
+  ggplot(melanoma_data2,aes(Dose,value,color=variable))+
+    stat_summary(fun.y=mean,
+                 geom=&quot;point&quot;,size=10) +
+    scale_x_continuous(trans = &quot;log10&quot;) +
+    stat_summary(fun.data = mean_cl_normal,
+                 geom=&quot;errorbar&quot;,
+                 width=.05)+
+    xlab(&quot;Vemurafenib Dose (uM)&quot;) +
+    ylab(&quot;Live Cell Fraction&quot;)+
+    ggtitle(&quot;Dose-Response of ALK-ATI \nin Melanoma to BRAF inhibitor&quot;)+
+    scale_color_manual(name=&quot;Cell Line&quot;, labels=c(&quot;\nSkmel-28 PIG&quot;,&quot;\nSkmel-28 ALKATI&quot;,&quot;\nG361 PIG&quot;,&quot;\nG361 ALKATI&quot;),values=c(&quot;#efbc04&quot;,&quot;red&quot;,&quot;#19a4ef&quot;,&quot;#3a1aef&quot;))+
+    cleanup+
+  theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;Black&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;Black&quot;))</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(&quot;output/melanoma_vemurafenib_fig.pdf&quot;,width = 16, height = 12, units = &quot;in&quot;)
+
+###Testing whether ALKATI has a different IC50 than vector
+ks.test(melanoma_data2$value[melanoma_data2$variable==&quot;Skmel28.AlkAti&quot;],melanoma_data2$value[melanoma_data2$variable==&quot;Skmel28.PIG&quot;])</code></pre>
+<pre><code>
+    Two-sample Kolmogorov-Smirnov test
+
+data:  melanoma_data2$value[melanoma_data2$variable == &quot;Skmel28.AlkAti&quot;] and melanoma_data2$value[melanoma_data2$variable == &quot;Skmel28.PIG&quot;]
+D = 0.11111, p-value = 0.9974
+alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>ks.test(melanoma_data2$value[melanoma_data2$variable==&quot;G361.AlkAti&quot;],melanoma_data2$value[melanoma_data2$variable==&quot;G361.PIG&quot;])</code></pre>
+<pre><code>
+    Two-sample Kolmogorov-Smirnov test
+
+data:  melanoma_data2$value[melanoma_data2$variable == &quot;G361.AlkAti&quot;] and melanoma_data2$value[melanoma_data2$variable == &quot;G361.PIG&quot;]
+D = 0.18519, p-value = 0.7537
+alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>#As a proof of principle showing that my test works, if I increase the dose response of G361.PIG by 25% gives my significant p.values
+ks.test(melanoma_data2$value[melanoma_data2$variable==&quot;G361.AlkAti&quot;],melanoma_data2$value[melanoma_data2$variable==&quot;G361.PIG&quot;]+.25)</code></pre>
+<pre><code>
+    Two-sample Kolmogorov-Smirnov test
+
+data:  melanoma_data2$value[melanoma_data2$variable == &quot;G361.AlkAti&quot;] and melanoma_data2$value[melanoma_data2$variable == &quot;G361.PIG&quot;] + melanoma_data2$value[melanoma_data2$variable == &quot;G361.AlkAti&quot;] and     0.25
+D = 0.40741, p-value = 0.02167
+alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>###P-Values: 0.99 for Skmel28, and 0.75 for G361s, showing that the ALKATI distributions were not significantly different.</code></pre>
+</div>
+<div id="session-information" class="section level2">
+<h2>Session information</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.2 (2018-12-20)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS Mojave 10.14.3
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] parallel  stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] bindrcpp_0.2.2    Hmisc_4.2-0       Formula_1.2-3    
+ [4] survival_2.43-3   lattice_0.20-38   reshape2_1.4.3   
+ [7] doParallel_1.0.14 iterators_1.0.10  foreach_1.4.4    
+[10] tictoc_1.0        dplyr_0.7.8       knitr_1.21       
+[13] ggplot2_3.1.0     ggsignif_0.4.0   
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.0          assertthat_0.2.0    rprojroot_1.3-2    
+ [4] digest_0.6.18       R6_2.3.0            plyr_1.8.4         
+ [7] backports_1.1.3     acepack_1.4.1       evaluate_0.12      
+[10] pillar_1.3.1        rlang_0.3.1         lazyeval_0.2.1     
+[13] data.table_1.12.0   rstudioapi_0.9.0    whisker_0.3-2      
+[16] R.utils_2.7.0       R.oo_1.22.0         rpart_4.1-13       
+[19] Matrix_1.2-15       checkmate_1.9.1     rmarkdown_1.11     
+[22] labeling_0.3        splines_3.5.2       stringr_1.3.1      
+[25] foreign_0.8-71      htmlwidgets_1.3     munsell_0.5.0      
+[28] compiler_3.5.2      xfun_0.4            pkgconfig_2.0.2    
+[31] base64enc_0.1-3     htmltools_0.3.6     nnet_7.3-12        
+[34] tidyselect_0.2.5    tibble_2.0.1        gridExtra_2.3      
+[37] htmlTable_1.13.1    workflowr_1.1.1     codetools_0.2-16   
+[40] crayon_1.3.4        withr_2.1.2         R.methodsS3_1.7.1  
+[43] grid_3.5.2          gtable_0.2.0        git2r_0.24.0       
+[46] magrittr_1.5        scales_1.0.0        stringi_1.2.4      
+[49] latticeExtra_0.6-28 RColorBrewer_1.1-2  tools_3.5.2        
+[52] glue_1.3.0          purrr_0.3.0         yaml_2.2.0         
+[55] colorspace_1.4-0    cluster_2.0.7-1     bindr_0.1.1        </code></pre>
+</div>
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<hr>
+<p>
+  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
+  analysis was created with
+  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
+</p>
+<hr>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
