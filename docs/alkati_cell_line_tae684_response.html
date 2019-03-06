@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Haider Inam" />
+
+
+<title>alkati_cell_line_tae684_response</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">pair_con_select</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jdblischak/workflowr">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">alkati_cell_line_tae684_response</h1>
+<h4 class="author"><em>Haider Inam</em></h4>
+<h4 class="date"><em>3/6/2019</em></h4>
+
+</div>
+
+
+<p><strong>Last updated:</strong> 2019-03-06</p>
+<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
+<ul>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20190211)</code> </summary></p>
+<p>The command <code>set.seed(20190211)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/6f573964a56d06394e5052ded68cd187fc1b67de" target="_blank">6f57396</a> </summary></p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  code/alldata_compiler.R
+    Untracked:  code/contab_maker.R
+    Untracked:  code/mut_excl_genes_datapoints.R
+    Untracked:  code/mut_excl_genes_generator.R
+    Untracked:  code/quadratic_solver.R
+    Untracked:  code/simresults_generator.R
+    Untracked:  data/ALKATI_ccle.csv
+    Untracked:  data/All_Data_V2.csv
+    Untracked:  data/CCLE_NP24.2009_Drug_data_2015.02.24.csv
+    Untracked:  data/alkati_growthcurvedata.csv
+    Untracked:  data/alkati_growthcurvedata_popdoublings.csv
+    Untracked:  data/alkati_melanoma_vemurafenib_figure_data.csv
+    Untracked:  data/all_data.csv
+    Untracked:  data/tcga_luad_expression/
+    Untracked:  data/tcga_skcm_expression/
+    Untracked:  docs/figure/Filteranalysis.Rmd/
+    Untracked:  output/alkati_ccle_tae684_plot.pdf
+    Untracked:  output/alkati_filtercutoff_allfilters.csv
+    Untracked:  output/alkati_luad_exonimbalance.pdf
+    Untracked:  output/alkati_mtn_pval_fig2B.pdf
+    Untracked:  output/alkati_skcm_exonimbalance.pdf
+    Untracked:  output/all_data_luad.csv
+    Untracked:  output/all_data_luad_egfr.csv
+    Untracked:  output/all_data_skcm.csv
+    Untracked:  output/baf3_alkati_figure_deltaadjusted_doublings.pdf
+    Untracked:  output/baf3_barplot.pdf
+    Untracked:  output/baf3_elisa_barplot.pdf
+    Untracked:  output/egfr_luad_exonimbalance.pdf
+    Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
+    Untracked:  output/fig2b_filtercutoff_atibraf.pdf
+    Untracked:  output/fig2b_filtercutoff_atinras.pdf
+    Untracked:  output/luad_alk_exon_expression.csv
+    Untracked:  output/luad_egfr_exon_expression.csv
+    Untracked:  output/melanoma_vemurafenib_fig.pdf
+    Untracked:  output/skcm_alk_exon_expression.csv
+
+Unstaged changes:
+    Modified:   analysis/ALKATI_Filter_Cutoff_Analysis.Rmd
+    Modified:   analysis/baf3_alkati_transformations.Rmd
+
+</code></pre>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
+</li>
+</ul>
+<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
+<ul>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+File
+</th>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/pair_con_select/blob/6f573964a56d06394e5052ded68cd187fc1b67de/analysis/alkati_cell_line_tae684_response.Rmd" target="_blank">6f57396</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2019-03-06
+</td>
+<td style="text-align:left;">
+Added CCLE analyses on cancer cell line TAE684 response. This includes a logistic
+</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<p></details></p>
+<hr />
+<div id="here-we-combine-data-from-3-sources-tcga-skcm-alk-expressiossion-ccle-tae684-ic50-and-alk-expression-for-some-of-the-cell-lines-on-ccle" class="section level3">
+<h3><strong>Here, we combine data from 3 sources: TCGA SKCM ALK expressiossion, CCLE TAE684 IC50, and ALK expression for some of the cell lines on CCLE</strong></h3>
+<p>The inputs here are 3 .csv files.</p>
+<ul>
+<li>alldata.csv contains SKCM mutation data for BRAF,NRAS and expression data for ALK<br />
+</li>
+<li>CCLE_NP24.2009_Drug_data_2015.02.24.csv contains SKCM dose responses for different drugs for many cell lines. Of these drugs, only TAE684 targets ALK. There are 504 cell lines with dose repsonses for drug. We had expression data for only 54 of these 504 cell lines.<br />
+</li>
+<li>ALKATI_ccle.csv contains ALK exon expression RPKMs for 54 cell lines. Obtained from crownbio</li>
+</ul>
+<pre class="r"><code>ccle_drug=read.csv(&quot;data/CCLE_NP24.2009_Drug_data_2015.02.24.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
+ccle_alk=ccle_drug[ccle_drug$Target==&quot;ALK&quot;,]
+rm(ccle_drug)
+
+ccle_rpkm=read.csv(&quot;data/ALKATI_ccle.csv&quot;, sep=&quot;,&quot;,header=T, stringsAsFactors=F)
+ccleRpkmT=t(ccle_rpkm)
+#Extracting our desired cell lines
+data_mat=data.frame(ccleRpkmT[5:57,])
+colnames(data_mat)[1:28]=ccleRpkmT[4,2:29]
+data_mat_rpkm=data.frame(cbind(rownames(data_mat),data_mat))
+rownames(data_mat_rpkm)=NULL
+data_mat_rpkm$rownames.data_mat.=sub(&quot;^G[0-9]{5}.([A-Za-z0-9._]*).[0-9].bam&quot;,&quot;\\1&quot;,data_mat_rpkm$rownames.data_mat.)
+############################################################################################################
+ccle_alk$CCLE.Cell.Line.Name=sub(&quot;^([0-9A-Z]*)_[A-Za-z0-9_]*&quot;,&quot;\\1&quot;,ccle_alk$CCLE.Cell.Line.Name)
+data_mat_rpkm$rownames.data_mat.=gsub(&quot;[_]&quot;,&quot;&quot;,data_mat_rpkm$rownames.data_mat.)
+data_mat_rpkm$rownames.data_mat.=gsub(&quot;[.]&quot;,&quot;&quot;,data_mat_rpkm$rownames.data_mat.)
+data_mat_rpkm$rownames.data_mat.=toupper(data_mat_rpkm$rownames.data_mat.)
+#they were character because of auto import
+for (i in 2:ncol(data_mat_rpkm)){
+  data_mat_rpkm[,i]=as.numeric(as.character(data_mat_rpkm[,i]))
+}
+for (i in 2:nrow(data_mat_rpkm)){
+  data_mat_rpkm[i,31]=sum(data_mat_rpkm[i,2:29])
+  data_mat_rpkm[i,32]=sum(data_mat_rpkm[i,2:19])/19
+  data_mat_rpkm[i,33]=sum(data_mat_rpkm[i,20:29])/10
+}
+colnames(data_mat_rpkm)[31]=&quot;SumRPKM&quot;
+colnames(data_mat_rpkm)[32]=&quot;Avg1_19RPKM&quot;
+colnames(data_mat_rpkm)[33]=&quot;Avg20_29RPKM&quot;
+alldata=merge(data_mat_rpkm,ccle_alk, by.x=&quot;rownames.data_mat.&quot;, by.y=&quot;CCLE.Cell.Line.Name&quot;)
+alldata=data.frame(cbind(alldata,alldata$Avg20_29RPKM/alldata$Avg1_19RPKM))
+data_mat_rpkm=data.frame(cbind(data_mat_rpkm,data_mat_rpkm$Avg20_29RPKM/data_mat_rpkm$Avg1_19RPKM))
+#####Makingderivative columns for RPKM ratio and Sum RPKM######### 
+skcm=read.csv(&quot;data/all_data.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)#Downloaded from firehose 02-xx-2016,compiled with mutation data, 340 patients with RNAseq and Muts
+skcm_comp=data.frame(cbind(skcm,skcm$mean_RPKM_20.29/skcm$mean_RPKM_1.19))
+dim(skcm_comp)</code></pre>
+<pre><code>[1] 351  11</code></pre>
+<pre class="r"><code>skcm_comp[12]=skcm_comp[5]
+skcm_comp[13]=data.frame(20*(skcm_comp$mean_RPKM_1.19)+10*(skcm_comp$mean_RPKM_20.29))
+colnames(skcm_comp)[13]=&quot;Total_RPKM&quot;
+colnames(skcm_comp)[12]=&quot;Ratio_ALK_Exons20_29vsExons1_19&quot;
+skcm_comp[14]=data.frame(skcm_comp$BRAF!=NaN)
+colnames(skcm_comp)[14]=&quot;is.BRAF&quot;
+skcm_comp[15]=data.frame(grepl(&quot;V600&quot;,skcm_comp$BRAF),&quot;BRAF&quot;)</code></pre>
+<pre><code>Warning in `[&lt;-.data.frame`(`*tmp*`, 15, value =
+structure(list(grepl..V600...skcm_comp.BRAF. = c(TRUE, : provided 2
+variables to replace 1 variables</code></pre>
+<pre class="r"><code>colnames(skcm_comp)[15]=&quot;is.V600&quot;
+skcm_comp[16]=data.frame(skcm_comp$NRAS!=NaN)
+colnames(skcm_comp)[16]=&quot;is.NRAS&quot;
+skcm_comp[17]=data.frame(grepl(&quot;Q61&quot;,skcm_comp$NRAS),&quot;NRAS&quot;)</code></pre>
+<pre><code>Warning in `[&lt;-.data.frame`(`*tmp*`, 17, value =
+structure(list(grepl..Q61...skcm_comp.NRAS. = c(FALSE, : provided 2
+variables to replace 1 variables</code></pre>
+<pre class="r"><code>colnames(skcm_comp)[17]=&quot;is.Q61&quot;
+skcm_comp[skcm_comp$BRAF==NaN &amp; skcm_comp$NRAS==NaN, 18]= &quot;DoubleNegative&quot;
+colnames(skcm_comp)[18]=&quot;is.neitherBRAForNRAS&quot;
+skcm_comp[skcm_comp$BRAF!=NaN, 19]= &quot;BRAF Mutant&quot;
+skcm_comp[skcm_comp$NRAS!=NaN, 19]= &quot;NRAS Mutant&quot;
+skcm_comp[skcm_comp$BRAF==NaN &amp; skcm_comp$NRAS==NaN, 19]= &quot;DoubleNegative&quot;
+colnames(skcm_comp)[19]=&quot;is.mutant&quot;
+
+######Graphing########
+ggplot()+geom_point(data=skcm_comp,aes(x=Ratio_ALK_Exons20_29vsExons1_19, y=Total_RPKM,color=is.mutant))+geom_point(data=alldata,aes(x=alldata.Avg20_29RPKM.alldata.Avg1_19RPKM,y=SumRPKM,size=IC50..uM.))+scale_x_log10()+scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/alkati_cell_line_tae684_response.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;cellline,IC50.png&quot;,width=10,length=10)
+# ggplot()+geom_point(data=skcm_comp,aes(x=Ratio_ALK_Exons20_29vsExons1_19, y=Total_RPKM,color=is.mutant))+geom_point(data=data_mat_rpkm,aes(x=alldata.Avg20_29RPKM.alldata.Avg1_19RPKM,y=SumRPKM,size=IC50..uM.))+scale_x_log10()+scale_y_log10()
+# ggsave(&quot;cellline_clinical_all.png&quot;,width=10,length=10)
+ggplot()+
+  geom_point(data=skcm_comp,aes(x=Ratio_ALK_Exons20_29vsExons1_19, y=Total_RPKM,color=factor(skcm_comp$is.mutant,levels = c(&quot;DoubleNegative&quot;,&quot;BRAF Mutant&quot;,&quot;NRAS Mutant&quot;)),size=2.5))+
+  geom_point(data=alldata,aes(x=alldata.Avg20_29RPKM.alldata.Avg1_19RPKM,y=SumRPKM,size=IC50..uM.))+
+  annotate(&quot;rect&quot;, xmin = 10, xmax = Inf, ymin = 10, ymax = Inf,fill=&quot;#66C2A5&quot;,alpha = .4)+
+  scale_x_log10()+
+  scale_y_log10()+
+  cleanup+
+  # scale_color_brewer(palette=&quot;Set2&quot;,name=&quot;Mutation&quot;)+
+  scale_color_manual(values =c(&quot;#FFD92F&quot;,&quot;#E78AC3&quot;,&quot;#8DA0CB&quot;),name=&quot;Mutation&quot;)+
+  scale_size_continuous(&quot;Cell Line IC50[uM]&quot;)+
+  xlab(&quot;Ratio ALK Ex20-29 to Ex1-19&quot;)+
+  ylab(&quot;Total RPKM&quot;)+
+  theme(plot.title = element_text(hjust=.5),
+      text = element_text(size=26,face=&quot;bold&quot;),
+      axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;black&quot;),
+      axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;,color=&quot;black&quot;))</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis
+
+Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/alkati_cell_line_tae684_response.Rmd/unnamed-chunk-2-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(&quot;output/alkati_ccle_tae684_plot.pdf&quot;,height=8,width=12, useDingbats=FALSE)</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis
+
+Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+</div>
+<div id="logistic-regression-to-see-if-ic50-can-predict-alkati-or-overexpression" class="section level3">
+<h3><strong>Logistic regression to see if IC50 can predict ALKATI or Overexpression</strong></h3>
+<pre class="r"><code>#Notice that we are keeping the EML4ALK translocation from the supm2 lung cancer cell line. These improving IC50&#39;s predictive power, if anything.
+
+#Since we only have two ALK
+#We are going to look at how well IC50 predicts whether a hit is ALKATI.
+
+#Checking for overexpression. overexpression taken as 1.5x expression in kinase &amp; RPKM of at least 50
+#Detecting ALKATI
+alldata$alkati=0
+alldata$alkati[alldata$alldata.Avg20_29RPKM.alldata.Avg1_19RPKM&gt;5&amp;alldata$SumRPKM&gt;50]=1
+#Predictive power of IC50 in a logistic regression model
+logistic=glm(alkati~IC50..uM.,data = alldata,family = &quot;binomial&quot;)</code></pre>
+<pre><code>Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre class="r"><code>summary(logistic)</code></pre>
+<pre><code>
+Call:
+glm(formula = alkati ~ IC50..uM., family = &quot;binomial&quot;, data = alldata)
+
+Deviance Residuals: 
+       Min          1Q      Median          3Q         Max  
+-1.548e-04  -2.100e-08  -2.100e-08  -2.100e-08   1.237e-04  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)     28.6     8921.1   0.003    0.997
+IC50..uM.     -106.0    25472.7  -0.004    0.997
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 9.0818e+00  on 34  degrees of freedom
+Residual deviance: 3.9275e-08  on 33  degrees of freedom
+AIC: 4
+
+Number of Fisher Scoring iterations: 25</code></pre>
+<pre class="r"><code>#Checking for overexpression. overexpression taken as twice the expression in the kinase
+#Detecting ALKATI
+alldata$alkati=as.numeric(alldata$alldata.Avg20_29RPKM.alldata.Avg1_19RPKM&gt;2,na.rm=T)
+alldata$alkati[is.na(alldata$alkati)]=0
+alldata$alkati=as.factor(alldata$alkati)
+#Predictive power of IC50 in a logistic regression model
+logistic=glm(alkati~IC50..uM.,data = alldata,family = &quot;binomial&quot;)
+summary(logistic)</code></pre>
+<pre><code>
+Call:
+glm(formula = alkati ~ IC50..uM., family = &quot;binomial&quot;, data = alldata)
+
+Deviance Residuals: 
+   Min      1Q  Median      3Q     Max  
+-1.315  -1.245   1.045   1.098   1.247  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept) -0.16801    0.81338  -0.207    0.836
+IC50..uM.    0.06082    0.13242   0.459    0.646
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 48.263  on 34  degrees of freedom
+Residual deviance: 48.051  on 33  degrees of freedom
+AIC: 52.051
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+<div id="session-information" class="section level2">
+<h2>Session information</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.2 (2018-12-20)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS Mojave 10.14.3
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] parallel  grid      stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] ggsignif_0.4.0      usethis_1.4.0       devtools_2.0.1     
+ [4] RColorBrewer_1.1-2  reshape2_1.4.3      ggplot2_3.1.0      
+ [7] doParallel_1.0.14   iterators_1.0.10    foreach_1.4.4      
+[10] dplyr_0.7.8         VennDiagram_1.6.20  futile.logger_1.4.3
+[13] workflowr_1.1.1     tictoc_1.0          knitr_1.21         
+
+loaded via a namespace (and not attached):
+ [1] tidyselect_0.2.5     xfun_0.4             remotes_2.0.2       
+ [4] purrr_0.3.0          colorspace_1.4-0     htmltools_0.3.6     
+ [7] yaml_2.2.0           rlang_0.3.1          pkgbuild_1.0.2      
+[10] R.oo_1.22.0          pillar_1.3.1         glue_1.3.0          
+[13] withr_2.1.2          R.utils_2.7.0        sessioninfo_1.1.1   
+[16] lambda.r_1.2.3       bindrcpp_0.2.2       bindr_0.1.1         
+[19] plyr_1.8.4           stringr_1.3.1        munsell_0.5.0       
+[22] gtable_0.2.0         R.methodsS3_1.7.1    codetools_0.2-16    
+[25] evaluate_0.12        memoise_1.1.0        labeling_0.3        
+[28] callr_3.1.1          ps_1.3.0             Rcpp_1.0.0          
+[31] backports_1.1.3      scales_1.0.0         formatR_1.5         
+[34] desc_1.2.0           pkgload_1.0.2        fs_1.2.6            
+[37] digest_0.6.18        stringi_1.2.4        processx_3.2.1      
+[40] rprojroot_1.3-2      cli_1.0.1            tools_3.5.2         
+[43] magrittr_1.5         lazyeval_0.2.1       tibble_2.0.1        
+[46] futile.options_1.0.1 crayon_1.3.4         whisker_0.3-2       
+[49] pkgconfig_2.0.2      prettyunits_1.0.2    assertthat_0.2.0    
+[52] rmarkdown_1.11       R6_2.3.0             git2r_0.24.0        
+[55] compiler_3.5.2      </code></pre>
+</div>
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<hr>
+<p>
+  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
+  analysis was created with
+  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
+</p>
+<hr>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
