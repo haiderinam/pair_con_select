@@ -1,0 +1,155 @@
+---
+title: "alkati_cell_line_tae684_response"
+author: "Haider Inam"
+date: "3/6/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "..")
+```
+
+```{r,include=F}
+library(knitr)
+library(tictoc)
+library(workflowr)
+library(VennDiagram)
+library(dplyr)
+library(foreach)
+library(doParallel)
+library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+library(devtools)
+library(ggsignif)
+source("code/contab_maker.R")
+source("code/alldata_compiler.R")
+source("code/quadratic_solver.R")
+source("code/mut_excl_genes_generator.R")
+source("code/mut_excl_genes_datapoints.R")
+source("code/simresults_generator.R")
+
+######################Cleanup for GGPlot2#########################################
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = "black"))
+```
+  
+   
+### __Here, we combine data from 3 sources: TCGA SKCM ALK expressiossion, CCLE TAE684 IC50, and ALK expression for some of the cell lines on CCLE__
+
+The inputs here are 3 .csv files.  
+  
+* alldata.csv contains SKCM mutation data for BRAF,NRAS and expression data for ALK  
+* CCLE_NP24.2009_Drug_data_2015.02.24.csv contains SKCM dose responses for different drugs for many cell lines. Of these drugs, only TAE684 targets ALK. There are 504 cell lines with dose repsonses for drug. We had expression data for only 54 of these 504 cell lines.  
+* ALKATI_ccle.csv contains ALK exon expression RPKMs for 54 cell lines. Obtained from crownbio    
+```{r}
+ccle_drug=read.csv("data/CCLE_NP24.2009_Drug_data_2015.02.24.csv",sep=",",header=T,stringsAsFactors=F)
+ccle_alk=ccle_drug[ccle_drug$Target=="ALK",]
+rm(ccle_drug)
+
+ccle_rpkm=read.csv("data/ALKATI_ccle.csv", sep=",",header=T, stringsAsFactors=F)
+ccleRpkmT=t(ccle_rpkm)
+#Extracting our desired cell lines
+data_mat=data.frame(ccleRpkmT[5:57,])
+colnames(data_mat)[1:28]=ccleRpkmT[4,2:29]
+data_mat_rpkm=data.frame(cbind(rownames(data_mat),data_mat))
+rownames(data_mat_rpkm)=NULL
+data_mat_rpkm$rownames.data_mat.=sub("^G[0-9]{5}.([A-Za-z0-9._]*).[0-9].bam","\\1",data_mat_rpkm$rownames.data_mat.)
+############################################################################################################
+ccle_alk$CCLE.Cell.Line.Name=sub("^([0-9A-Z]*)_[A-Za-z0-9_]*","\\1",ccle_alk$CCLE.Cell.Line.Name)
+data_mat_rpkm$rownames.data_mat.=gsub("[_]","",data_mat_rpkm$rownames.data_mat.)
+data_mat_rpkm$rownames.data_mat.=gsub("[.]","",data_mat_rpkm$rownames.data_mat.)
+data_mat_rpkm$rownames.data_mat.=toupper(data_mat_rpkm$rownames.data_mat.)
+#they were character because of auto import
+for (i in 2:ncol(data_mat_rpkm)){
+  data_mat_rpkm[,i]=as.numeric(as.character(data_mat_rpkm[,i]))
+}
+for (i in 2:nrow(data_mat_rpkm)){
+  data_mat_rpkm[i,31]=sum(data_mat_rpkm[i,2:29])
+  data_mat_rpkm[i,32]=sum(data_mat_rpkm[i,2:19])/19
+  data_mat_rpkm[i,33]=sum(data_mat_rpkm[i,20:29])/10
+}
+colnames(data_mat_rpkm)[31]="SumRPKM"
+colnames(data_mat_rpkm)[32]="Avg1_19RPKM"
+colnames(data_mat_rpkm)[33]="Avg20_29RPKM"
+alldata=merge(data_mat_rpkm,ccle_alk, by.x="rownames.data_mat.", by.y="CCLE.Cell.Line.Name")
+alldata=data.frame(cbind(alldata,alldata$Avg20_29RPKM/alldata$Avg1_19RPKM))
+data_mat_rpkm=data.frame(cbind(data_mat_rpkm,data_mat_rpkm$Avg20_29RPKM/data_mat_rpkm$Avg1_19RPKM))
+#####Makingderivative columns for RPKM ratio and Sum RPKM######### 
+skcm=read.csv("data/all_data.csv",sep=",",header=T,stringsAsFactors=F)#Downloaded from firehose 02-xx-2016,compiled with mutation data, 340 patients with RNAseq and Muts
+skcm_comp=data.frame(cbind(skcm,skcm$mean_RPKM_20.29/skcm$mean_RPKM_1.19))
+dim(skcm_comp)
+skcm_comp[12]=skcm_comp[5]
+skcm_comp[13]=data.frame(20*(skcm_comp$mean_RPKM_1.19)+10*(skcm_comp$mean_RPKM_20.29))
+colnames(skcm_comp)[13]="Total_RPKM"
+colnames(skcm_comp)[12]="Ratio_ALK_Exons20_29vsExons1_19"
+skcm_comp[14]=data.frame(skcm_comp$BRAF!=NaN)
+colnames(skcm_comp)[14]="is.BRAF"
+skcm_comp[15]=data.frame(grepl("V600",skcm_comp$BRAF),"BRAF")
+colnames(skcm_comp)[15]="is.V600"
+skcm_comp[16]=data.frame(skcm_comp$NRAS!=NaN)
+colnames(skcm_comp)[16]="is.NRAS"
+skcm_comp[17]=data.frame(grepl("Q61",skcm_comp$NRAS),"NRAS")
+colnames(skcm_comp)[17]="is.Q61"
+skcm_comp[skcm_comp$BRAF==NaN & skcm_comp$NRAS==NaN, 18]= "DoubleNegative"
+colnames(skcm_comp)[18]="is.neitherBRAForNRAS"
+skcm_comp[skcm_comp$BRAF!=NaN, 19]= "BRAF Mutant"
+skcm_comp[skcm_comp$NRAS!=NaN, 19]= "NRAS Mutant"
+skcm_comp[skcm_comp$BRAF==NaN & skcm_comp$NRAS==NaN, 19]= "DoubleNegative"
+colnames(skcm_comp)[19]="is.mutant"
+
+######Graphing########
+ggplot()+geom_point(data=skcm_comp,aes(x=Ratio_ALK_Exons20_29vsExons1_19, y=Total_RPKM,color=is.mutant))+geom_point(data=alldata,aes(x=alldata.Avg20_29RPKM.alldata.Avg1_19RPKM,y=SumRPKM,size=IC50..uM.))+scale_x_log10()+scale_y_log10()
+# ggsave("cellline,IC50.png",width=10,length=10)
+# ggplot()+geom_point(data=skcm_comp,aes(x=Ratio_ALK_Exons20_29vsExons1_19, y=Total_RPKM,color=is.mutant))+geom_point(data=data_mat_rpkm,aes(x=alldata.Avg20_29RPKM.alldata.Avg1_19RPKM,y=SumRPKM,size=IC50..uM.))+scale_x_log10()+scale_y_log10()
+# ggsave("cellline_clinical_all.png",width=10,length=10)
+ggplot()+
+  geom_point(data=skcm_comp,aes(x=Ratio_ALK_Exons20_29vsExons1_19, y=Total_RPKM,color=factor(skcm_comp$is.mutant,levels = c("DoubleNegative","BRAF Mutant","NRAS Mutant")),size=2.5))+
+  geom_point(data=alldata,aes(x=alldata.Avg20_29RPKM.alldata.Avg1_19RPKM,y=SumRPKM,size=IC50..uM.))+
+  annotate("rect", xmin = 10, xmax = Inf, ymin = 10, ymax = Inf,fill="#66C2A5",alpha = .4)+
+  scale_x_log10()+
+  scale_y_log10()+
+  cleanup+
+  # scale_color_brewer(palette="Set2",name="Mutation")+
+  scale_color_manual(values =c("#FFD92F","#E78AC3","#8DA0CB"),name="Mutation")+
+  scale_size_continuous("Cell Line IC50[uM]")+
+  xlab("Ratio ALK Ex20-29 to Ex1-19")+
+  ylab("Total RPKM")+
+  theme(plot.title = element_text(hjust=.5),
+      text = element_text(size=26,face="bold"),
+      axis.title = element_text(face="bold",size="26",color="black"),
+      axis.text=element_text(face="bold",size="24",color="black"))
+ggsave("output/alkati_ccle_tae684_plot.pdf",height=8,width=12, useDingbats=FALSE)
+```
+
+### __Logistic regression to see if IC50 can predict ALKATI or Overexpression__
+```{r}
+#Notice that we are keeping the EML4ALK translocation from the supm2 lung cancer cell line. These improving IC50's predictive power, if anything.
+
+#Since we only have two ALK
+#We are going to look at how well IC50 predicts whether a hit is ALKATI.
+
+#Checking for overexpression. overexpression taken as 1.5x expression in kinase & RPKM of at least 50
+#Detecting ALKATI
+alldata$alkati=0
+alldata$alkati[alldata$alldata.Avg20_29RPKM.alldata.Avg1_19RPKM>5&alldata$SumRPKM>50]=1
+#Predictive power of IC50 in a logistic regression model
+logistic=glm(alkati~IC50..uM.,data = alldata,family = "binomial")
+summary(logistic)
+  
+#Checking for overexpression. overexpression taken as twice the expression in the kinase
+#Detecting ALKATI
+alldata$alkati=as.numeric(alldata$alldata.Avg20_29RPKM.alldata.Avg1_19RPKM>2,na.rm=T)
+alldata$alkati[is.na(alldata$alkati)]=0
+alldata$alkati=as.factor(alldata$alkati)
+#Predictive power of IC50 in a logistic regression model
+logistic=glm(alkati~IC50..uM.,data = alldata,family = "binomial")
+summary(logistic)
+
+```
+
