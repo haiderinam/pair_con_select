@@ -100,8 +100,19 @@ alk_mutated_data$Patid=substring(alk_mutated_data$Patid,first = 1,last = 12)
 ###Removing "p." from names of mutants:
 alk_mutated_data$BRAF=unlist(sub("p.","",alk_mutated_data$BRAF))
 alk_mutated_data$NRAS=unlist(sub("p.","",alk_mutated_data$NRAS))
+```
+```{r}
+# x1=list.dirs("data/tcga_skcm_expression/gdac.broadinstitute.org_SKCM.Mutation_Packager_Oncotated_Calls.Level_3.2016012800.0.0/",full.names=TRUE)#Lists all files in the current working directory x
+# 
+# Data_list=list.files(x1[1],pattern%in%c("TCGA-DA-A1IC","TCGA-EB-A41B","TCGA-EE-A182","TCGA-EE-A29D","TCGA-EE-A2GI","TCGA-EE-A2MT","TCGA-EE-A3AE","TCGA-ER-A197"), ignore.case=F)#lists the files in the folder
+# for(i=1:length(Data_list)){
+# patdat=read.table(paste(x1,"/",Data_list[1],sep=""),stringsAsFactors=FALSE,header=TRUE, sep="\t",fill=TRUE,quote = "")#opens each file as the loop progresses
+# patdat_interesting= patdat%>%filter(Hugo_Symbol%in%c("BRAF","NRAS","TP53","CDKN2A","NF1","PTEN","RAC1","ARID2","c15orf23","SLC38A4","PPP6C","KIT","MAP2K","ZNF559"),Variant_Classification!="Silent")
+# #Crouts et al tested BRAF NRAS KIT GNAQ GNA11(R183C) and NF1  
+# }
 
 ```
+
 
 SKCM Genes RSEM
 ```{r}

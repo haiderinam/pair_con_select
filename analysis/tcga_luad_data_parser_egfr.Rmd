@@ -194,3 +194,19 @@ ggsave("output/egfr_luad_exonimbalance.pdf",width =12 ,height =10 ,units = "in",
 
 ###We observed an insignificant difference between the distribution for the 1-17 exons and the 20-24 exons.
 ```
+###Statistical test to see if ALK kinase domain expression was significantly higher than other domains
+```{r}
+#Testing if both kinase and ALK expression are different
+ks.test(egfr_merged_data$mean_RPKM_1.17,egfr_merged_data$mean_RPKM_18.24)
+###We observed a significant difference between the distribution for the 20-29 exons and the 1-19 exons The reported p-value was 2-16.
+###The p-value from a Chi-sq test was 2.2e-16 too
+    #for all ALK data, not ALKATI
+ov_expr_obs=c(sum(as.numeric(egfr_merged_data$Ratio18.24>1),na.rm = T),
+              dim(egfr_merged_data)[1]-sum(as.numeric(egfr_merged_data$Ratio18.24>1),na.rm = T))
+ov_expr_expected=c(round(dim(egfr_merged_data)[1]/2),
+                   round(dim(egfr_merged_data)[1]/2))
+overexpression=data.frame(rbind(ov_expr_obs,ov_expr_expected))
+# overexpression=data.frame(rbind(c(338,13),c(176,176)))
+colnames(overexpression)=c("Yes","No")
+chisq.test(overexpression)
+```

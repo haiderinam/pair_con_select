@@ -179,7 +179,7 @@ toc()
 simresults[colnames(simresults)] <- lapply(simresults[colnames(simresults)],as.character)
 simresults[colnames(simresults)] <- lapply(simresults[colnames(simresults)],as.numeric)
   
-write.csv(simresults,"output/alkati_filtercutoff_allfilters.csv")
+# write.csv(simresults,"output/alkati_filtercutoff_allfilters.csv")
 ```
 
 ```{r}
@@ -223,7 +223,7 @@ ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+
       theme_bw()+
       theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",color="black",size="26"))
 
-  ggsave("output/fig2b2_filtercutoff_atinras_totalalk.pdf",width = 16,height = 14,units = "in",useDingbats=F)
+  # ggsave("output/fig2b2_filtercutoff_atinras_totalalk.pdf",width = 16,height = 14,units = "in",useDingbats=F)
 ```
 
 ####**Heat map for NRAS vs ALKATI with count data**
@@ -295,7 +295,7 @@ datapoints$min_p_val_pc1=as.numeric(datapoints$min_p_val_pc1)
       theme_bw()+
       theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",color="black",size="26"))
   
-ggsave("output/fig2b_filtercutoff_atibraf.pdf",width = 16,height = 14,units = "in",useDingbats=F)
+# ggsave("output/fig2b_filtercutoff_atibraf.pdf",width = 16,height = 14,units = "in",useDingbats=F)
 ```
 
 

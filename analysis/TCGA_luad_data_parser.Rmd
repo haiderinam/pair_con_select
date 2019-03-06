@@ -285,3 +285,18 @@ ks.test(alkati_merged_data$mean_RPKM_1.19,alkati_merged_data$mean_RPKM_20.29)
 ```
 
 
+###Statistical test to see if ALK kinase domain expression was significantly higher than other domains
+```{r}
+#Testing if both kinase and ALK expression are different
+ks.test(alkati_merged_data$mean_RPKM_1.19,alkati_merged_data$mean_RPKM_20.29)
+###We observed a significant difference between the distribution for the 20-29 exons and the 1-19 exons The reported p-value was 2-16.
+###The p-value from a Chi-sq test was 2.2e-16 too
+    #for all ALK data, not ALKATI
+ov_expr_obs=c(sum(as.numeric(alkati_merged_data$Ratio20.29>1),na.rm = T),
+              dim(alkati_merged_data)[1]-sum(as.numeric(alkati_merged_data$Ratio20.29>1),na.rm = T))
+ov_expr_expected=c(round(dim(alkati_merged_data)[1]/2),
+                   round(dim(alkati_merged_data)[1]/2))
+overexpression=data.frame(rbind(ov_expr_obs,ov_expr_expected))
+colnames(overexpression)=c("Yes","No")
+chisq.test(overexpression)
+```
