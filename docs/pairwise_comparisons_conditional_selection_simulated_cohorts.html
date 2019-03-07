@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Haider Inam" />
+
+
+<title>pairwise_comparisons_conditional_selection_simulated_cohorts</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">pair_con_select</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jdblischak/workflowr">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">pairwise_comparisons_conditional_selection_simulated_cohorts</h1>
+<h4 class="author"><em>Haider Inam</em></h4>
+<h4 class="date"><em>3/7/2019</em></h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#report"> Report <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2019-03-07
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>pair_con_select/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.2.0). The <em>Report</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="report" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20190211code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20190211)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20190211code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20190211)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhaiderinampairconselecttreeae888d058687bc170cafbbc398f20381874e7ac1targetblankae888d0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/ae888d058687bc170cafbbc398f20381874e7ac1" target="_blank">ae888d0</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomhaiderinampairconselecttreeae888d058687bc170cafbbc398f20381874e7ac1targetblankae888d0a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  .Rproj.user/
+    Untracked:  code/alldata_compiler.R
+    Untracked:  code/contab_maker.R
+    Untracked:  code/mut_excl_genes_datapoints.R
+    Untracked:  code/mut_excl_genes_generator.R
+    Untracked:  code/quadratic_solver.R
+    Untracked:  code/simresults_generator.R
+    Untracked:  data/ALKATI_ccle.csv
+    Untracked:  data/All_Data_V2.csv
+    Untracked:  data/CCLE_NP24.2009_Drug_data_2015.02.24.csv
+    Untracked:  data/alkati_growthcurvedata.csv
+    Untracked:  data/alkati_growthcurvedata_popdoublings.csv
+    Untracked:  data/alkati_melanoma_vemurafenib_figure_data.csv
+    Untracked:  data/alkati_simulations_compiled_1000_12319.csv
+    Untracked:  data/all_data.csv
+    Untracked:  data/tcga_luad_expression/
+    Untracked:  data/tcga_skcm_expression/
+    Untracked:  docs/figure/Filteranalysis.Rmd/
+    Untracked:  output/alkati_ccle_tae684_plot.pdf
+    Untracked:  output/alkati_filtercutoff_allfilters.csv
+    Untracked:  output/alkati_luad_exonimbalance.pdf
+    Untracked:  output/alkati_mtn_pval_fig2B.pdf
+    Untracked:  output/alkati_skcm_exonimbalance.pdf
+    Untracked:  output/all_data_luad.csv
+    Untracked:  output/all_data_luad_egfr.csv
+    Untracked:  output/all_data_skcm.csv
+    Untracked:  output/baf3_alkati_figure_deltaadjusted_doublings.pdf
+    Untracked:  output/baf3_barplot.pdf
+    Untracked:  output/baf3_elisa_barplot.pdf
+    Untracked:  output/egfr_luad_exonimbalance.pdf
+    Untracked:  output/fig1c_3719_4.pdf
+    Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
+    Untracked:  output/fig2b_filtercutoff_atibraf.pdf
+    Untracked:  output/fig2b_filtercutoff_atinras.pdf
+    Untracked:  output/luad_alk_exon_expression.csv
+    Untracked:  output/luad_egfr_exon_expression.csv
+    Untracked:  output/melanoma_vemurafenib_fig.pdf
+    Untracked:  output/skcm_alk_exon_expression.csv
+
+Unstaged changes:
+    Deleted:    .Rprofile
+    Deleted:    .gitignore
+    Modified:   analysis/ALKATI_Filter_Cutoff_Analysis.Rmd
+    Modified:   analysis/baf3_alkati_transformations.Rmd
+    Modified:   analysis/practice.Rmd
+    Deleted:    docs/.nojekyll
+    Modified:   pair_con_select.Rproj
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/ae888d058687bc170cafbbc398f20381874e7ac1/analysis/pairwise_comparisons_conditional_selection_simulated_cohorts.Rmd" target="_blank">ae888d0</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2019-03-07
+</td>
+<td>
+Published Analysis on performing pairwise comparisons in
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="part-1-performing-comparisons-between-genes" class="section level2">
+<h2>Part 1: Performing comparisons between genes</h2>
+<div id="here-we-will-perform-pairwise-comparisons-of-conditional-seleciton-on-simulated-cohorts" class="section level3">
+<h3><strong>Here, we will perform pairwise comparisons of conditional seleciton on simulated cohorts</strong></h3>
+</div>
+<div id="for-a-detailed-description-of-the-resamplingbootstrapping-algorithm-for-pairwise-comparisons-please-refer-to-pseudo-code" class="section level3">
+<h3><strong>For a detailed description of the resampling/bootstrapping algorithm for pairwise comparisons, please refer to pseudo code</strong></h3>
+</div>
+<div id="for-a-detailed-description-of-the-algorithm-for-simulating-genes-please-refer-to-methods" class="section level3">
+<h3><strong>For a detailed description of the algorithm for simulating genes, please refer to methods</strong></h3>
+</div>
+<div id="plugging-data-into-simresults-generator-2" class="section level3">
+<h3>Plugging Data into simresults generator #2</h3>
+<p>These simulation have been optimized to used parallel computing. Please note that true_OR refers to the odds ratio of the gene of interest with a positive control<br />
+Please note that or_pair2 refers to teh odds ratio between the two positive controls (generally low)<br />
+Note to self: just convert all the “true OR” variables to or_pair1</p>
+<pre class="r"><code>##GenePair1
+cores=detectCores()
+cl= makeCluster(cores[1]-1)
+registerDoParallel(cl)
+tic()
+or_pair1=c(.01,.05,.1,.2,.3,.4,.5,.6,.7,.8,.9,1)
+or_pair2=seq(.01,.1,by=.02)
+incidence=seq(4,36,by=1)
+cohort_size=seq(100,1000,by=200)
+# unlist(mut_excl_genes_generator(500,25,.4,.01)[1])
+
+# or_pair1=c(.01,.05,.1,.2,.3,.4,.5,.6,.7,.8,.9,1)
+# or_pair2=seq(.01,.01)
+# incidence=seq(4,50,by=1)
+# cohort_size=seq(500,500)
+
+# or_pair1=.8
+# or_pair2=.01
+# incidence=25
+# cohort_size=500
+
+true_or_vals=or_pair1
+cohort_size_vals=cohort_size
+gene1_total_vals=incidence
+
+# simresults_compiled=as.data.frame(matrix(nrow=1,ncol=12)) #10 because there is an OR vals column being added at the end of the simulations
+simresults_compiled=as.list(seq_len(length(or_pair2)*length(or_pair1)*length(incidence)*length(cohort_size)))
+
+ct=1
+# for(j in 1:length(gene1_total_vals)){
+parfunc=foreach(j =1:length(gene1_total_vals),.combine = rbind)%dopar%{
+for(l in 1:length(or_pair2)){
+for(k in 1:length(cohort_size_vals)){
+    for(i in 1:length(true_or_vals)){
+gene_pair_1=unlist(mut_excl_genes_generator(cohort_size[k],incidence[j],or_pair1[i],or_pair2[l])[1])
+gene_pair_2=unlist(mut_excl_genes_generator(cohort_size[k],incidence[j],or_pair1[i],or_pair2[l])[2])
+alldata_1=mut_excl_genes_datapoints(gene_pair_1)
+alldata_2=mut_excl_genes_datapoints(gene_pair_2)
+alldata_comp_1=alldata_compiler(alldata_1,&quot;gene2&quot;,&quot;gene3&quot;,&quot;gene1&quot;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[2]]
+genex_replication_prop_1=alldata_compiler(alldata_1,&quot;gene2&quot;,&quot;gene3&quot;,&quot;gene1&quot;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[1]]
+alldata_comp_2=alldata_compiler(alldata_2,&quot;gene2&quot;,&quot;gene3&quot;,&quot;gene1&quot;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[2]]
+genex_replication_prop_2=alldata_compiler(alldata_2,&quot;gene2&quot;,&quot;gene3&quot;,&quot;gene1&quot;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[1]]
+#Number of simulations are the minimum of: subsampling with replacement combinations of incidence of gene pair 1, pair 2, and 10000. 10000 because I don&#39;t want to do more than 1k simulations per experiment.
+nsims=min(c(choose(sum(alldata_comp_1$genex)+sum(alldata_comp_1$genex)-1,sum(alldata_comp_1$genex)),
+  choose(sum(alldata_comp_2$genex)+sum(alldata_comp_2$genex)-1,sum(alldata_comp_2$genex)),1000))
+# nsubsamples=sum(alldata_comp_2$genex) #Verify that this is what it is.    
+
+# Max subsample size is whichever integer is the minimum of:
+# number of genex in sample vs. number of NOTgenex or PC1 or PC2 in sample*genexreplication proportion. For example we had 165 PC1s, therefore 340-175=165 PC1s in our data. Since we want to sample 7.35% positive hits and 92.65% negative hits, a sample containing too many positive hits can impose an upper bound on our subsampling size.
+alldata_comp=alldata_comp_1
+genex_replication_prop=genex_replication_prop_1
+maxsubsamplesize_1=min(c(genex_replication_prop*length(alldata_comp$Positive_Ctrl1),
+                       floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl1))*genex_replication_prop),
+                       floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl2))*genex_replication_prop),
+                       floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$genex))*genex_replication_prop)))
+alldata_comp=alldata_comp_2
+genex_replication_prop=genex_replication_prop_2
+maxsubsamplesize_2=min(c(genex_replication_prop*length(alldata_comp$Positive_Ctrl1),
+                       floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl1))*genex_replication_prop),
+                       floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl2))*genex_replication_prop),
+                       floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$genex))*genex_replication_prop)))
+
+nsubsamples=min(c(maxsubsamplesize_1,maxsubsamplesize_2)) #minimum of either of the subsamples.
+nexperiments=7
+
+#####If Cohort size is greater than gene1total, run simresults_generator for that simulation####
+
+    if(cohort_size_vals[k]&gt;gene1_total_vals[j]){
+
+      simresults_pair1=simresults_generator(alldata_comp_1,7)
+      simresults_pair1$gene_pair=1
+      
+      simresults_pair2=simresults_generator(alldata_comp_2,7)
+      simresults_pair2$gene_pair=2
+      
+      simresults=rbind(simresults_pair1,simresults_pair2)
+      simresults=as.data.frame(simresults, stringsAsFactors = F)
+
+simresults$true_OR=true_or_vals[i]
+simresults$gene1_total=gene1_total_vals[j]
+simresults$cohort_size=cohort_size_vals[k]
+simresults$or_pair2=or_pair2[l]
+
+# colnames(simresults_compiled)=names(simresults)
+# simresults_compiled[[i+j+k+l-3]]=simresults
+simresults_compiled[[ct]]=simresults
+# simresults_compiled=rbind(simresults_compiled,simresults)
+
+    }
+ct=ct+1
+}
+}
+}
+simresults_compiled
+}
+simresults_compiled=parfunc
+simresults_compiled2=do.call(rbind,simresults_compiled)
+stopCluster(cl)
+toc()
+# tic()
+# pair1=simresults_generator(alldata_comp_1,7)
+# pair1$gene_pair=1
+# pair2=simresults_generator(alldata_comp_1,7)
+# pair2$gene_pair=2
+# aaa=rbind(pair1,pair2)
+# a=c()
+# a=rbind(a,aaa)
+# toc()
+# write.csv(simresults_compiled2,&quot;alkati_simulations_compiled_12219.csv&quot;)
+write.csv(simresults_compiled2,&quot;data/alkati_simulations_compiled_1000_3719.csv&quot;)
+# simresults_compiled[[5]]
+#Looking at which conditions didn&#39;t yield a maxsimnumber of 1000 revealed that at a subsample size of 1, the max simnum was 35.
+# a=simresults_compiled2%&gt;%
+#   group_by(subsample_size,exp_num,gene_pair,gene1_total,cohort_size,or_pair2)%&gt;%
+#   summarize(maxsimnum=max(sim_num))</code></pre>
+</div>
+</div>
+<div id="part-2-performing-pairwise-comparisons-between-gene-pairs-using-ks-test" class="section level2">
+<h2>Part 2: Performing pairwise comparisons between gene pairs using KS-test</h2>
+<pre class="r"><code>simresults_compiled2=read.csv(&quot;data/alkati_simulations_compiled_1000_12319.csv&quot;,header = T)
+# simresults_compiled2=read.csv(&quot;alkati_simulations_compiled_testrun_10000.csv&quot;,header = T) 
+# simresults_compiled2=read.csv(&quot;alkati_simulations_compiled.csv&quot;,header = T)
+simresults_stored=simresults_compiled2
+simresults_compiled2=simresults_stored
+simresults_compiled2=simresults_compiled2%&gt;%
+  filter((exp_num==2&amp;gene_pair==2)|(exp_num==2&amp;gene_pair==1))
+simresults_compiled2=simresults_compiled2[,c(1,2,5,6,4,9,11,3,12,10,13,7,8)] ###This changes the simresults&#39; columns to a more intuitive order
+# simresults_compiled_concat=simresults_compiled2[,c(-1,-2,-3)]
+# write.csv(simresults_compiled_concat,&quot;alkati_simulations_compiled_1000_12319_filtered.csv&quot;)
+datapoints_reshape=dcast(simresults_compiled2,exp_name+sim_num+gene1_total+subsample_size+cohort_size+true_OR+or_pair2~gene_pair,fun.aggregate = mean,value.var=&quot;p_val&quot;) 
+colnames(datapoints_reshape)[8]=&quot;pair1_pval&quot;
+colnames(datapoints_reshape)[9]=&quot;pair2_pval&quot;
+
+###Performing KS test on the ps_p1_genex for genepair1 vs gene2
+ks_results=datapoints_reshape%&gt;%
+  group_by(gene1_total,cohort_size,true_OR,or_pair2)%&gt;%
+  summarize(ks_pval=ks.test(pair1_pval,pair2_pval,alternative=&quot;less&quot;)$p.value)
+  # summarize(ks_pval=ks.test(pair1_pval,pair2_pval,alternative=&quot;less&quot;)$p.value)
+
+
+###Summarizing data so that min_incidence is the minimum incidence that gives a p-value for all cohorts
+a=ks_results%&gt;%
+  group_by(cohort_size,true_OR,or_pair2)%&gt;%
+  summarize(sig_incidence=gene1_total[ks_pval&lt;=.05][1])
+
+a2=a%&gt;%
+  filter(cohort_size==500,or_pair2%in%c(.01))
+##Note: these labels are only accurate for the or_pair2=.01 cohort
+# label.df &lt;- data.frame(
+#   rbind(
+#     # data.frame(
+#     #   true_OR=c(.01),
+#     #   gene1_total = c(19), 
+#     #   p_val = c(1),
+#     #   gene_pair=c(2)),
+#     data.frame(
+#       true_OR=c(.1),
+#       gene1_total = c(9), 
+#       p_val = c(1),
+#       gene_pair=c(2)),
+#     data.frame(
+#       true_OR=c(1),
+#       gene1_total = c(7), 
+#       p_val = c(1),
+#       gene_pair=c(2))))
+simresults_test=simresults_compiled2%&gt;%
+  filter(cohort_size==500,or_pair2==.01,true_OR%in%c(.01,.1,1),gene1_total%in%seq(4,25,1))
+simresults_test$true_OR=paste(&#39;OR of &#39;,simresults_test$true_OR)
+###Choosing parameters that most closely match ALKATI 3/6/19
+simresults_test=simresults_compiled2%&gt;%
+  filter(cohort_size==300,or_pair2==.01,true_OR%in%c(.01,.1,1),gene1_total%in%seq(4,25,1))
+simresults_test$true_OR=paste(&#39;OR of &#39;,simresults_test$true_OR)
+
+ggplot(simresults_test,aes(x=factor(gene1_total),y=log10(p_val),fill=factor(gene_pair)))+
+  geom_boxplot(position = position_dodge(1))+
+  facet_wrap(~true_OR,ncol=4)+
+  # geom_text(data = label.df, label = &quot;*&quot;,size=15,color=&quot;black&quot;)+
+  scale_fill_brewer(palette = &quot;Set2&quot;,name=&quot;Gene Pair&quot;,labels=c(&quot;GOI&quot;, &quot;Positive Control&quot;),direction = -1)+
+  cleanup+
+  scale_y_continuous(name=&quot;Log(P-Value from Fisher&#39;s Test)&quot;,
+                     limits = c(-3,0))+
+  scale_x_discrete(name=&quot;Incidence of GOI in simulated cohort&quot;,limits=c(&quot;5&quot;,&quot;10&quot;,&quot;15&quot;,&quot;20&quot;,&quot;25&quot;))+
+  theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=26,face=&quot;bold&quot;),
+        axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;black&quot;),
+        axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;,color=&quot;black&quot;))</code></pre>
+<p><img src="figure/pairwise_comparisons_conditional_selection_simulated_cohorts.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;output/fig1c_3719_4.pdf&quot;,height = 8,width = 20,units = &quot;in&quot;)
+
+# +xlab(&quot;Subsample Size&quot;)+ylab(&quot;P-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=26,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;26&quot;))
+# +scale_color_discrete(name=&quot;Pairwise \nComparison\n&quot;,labels=c(&quot;OR 0.1 to 1\n&quot;,&quot;OR 0.1 to 0.01&quot;))
+
+# If you wanna look at true_OR on the x-axis:
+# simresults_test=simresults_compiled2%&gt;%
+#   filter(cohort_size==500,or_pair2==.01,gene1_total%in%c(10))
+# ggplot(simresults_test,aes(x=factor(true_OR),y=p_val,fill=factor(gene_pair)))+
+#   geom_boxplot(position = position_dodge(1))+
+#   facet_wrap(~factor(gene1_total))</code></pre>
+</div>
+<div id="part-3-data-analysis-and-plotting" class="section level2">
+<h2>Part 3: Data Analysis and Plotting</h2>
+<br> <br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.2 (2018-12-20)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows Server x64 (build 17763)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] parallel  grid      stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] ggsignif_0.5.0      usethis_1.4.0       devtools_2.0.1     
+ [4] RColorBrewer_1.1-2  reshape2_1.4.3      ggplot2_3.1.0      
+ [7] doParallel_1.0.14   iterators_1.0.10    foreach_1.4.4      
+[10] dplyr_0.8.0.1       VennDiagram_1.6.20  futile.logger_1.4.3
+[13] workflowr_1.2.0     tictoc_1.0          knitr_1.21         
+
+loaded via a namespace (and not attached):
+ [1] tidyselect_0.2.5     xfun_0.5             remotes_2.0.2       
+ [4] purrr_0.3.1          colorspace_1.4-0     htmltools_0.3.6     
+ [7] yaml_2.2.0           rlang_0.3.1          pkgbuild_1.0.2      
+[10] pillar_1.3.1         glue_1.3.0           withr_2.1.2         
+[13] lambda.r_1.2.3       sessioninfo_1.1.1    plyr_1.8.4          
+[16] stringr_1.4.0        munsell_0.5.0        gtable_0.2.0        
+[19] codetools_0.2-15     evaluate_0.13        memoise_1.1.0       
+[22] labeling_0.3         callr_3.1.1          ps_1.3.0            
+[25] Rcpp_1.0.0           scales_1.0.0         backports_1.1.3     
+[28] formatR_1.6          desc_1.2.0           pkgload_1.0.2       
+[31] fs_1.2.6             digest_0.6.18        stringi_1.3.1       
+[34] processx_3.2.1       rprojroot_1.3-2      cli_1.0.1           
+[37] tools_3.5.2          magrittr_1.5         lazyeval_0.2.1      
+[40] tibble_2.0.1         futile.options_1.0.1 crayon_1.3.4        
+[43] whisker_0.3-2        pkgconfig_2.0.2      prettyunits_1.0.2   
+[46] assertthat_0.2.0     rmarkdown_1.11       R6_2.4.0            
+[49] git2r_0.24.0         compiler_3.5.2      </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
