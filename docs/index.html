@@ -318,24 +318,68 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2019-03-06</p>
-<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
-<ul>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
-</details>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/79bf9a6e8f1b1a55c3dfa208acd9b827ad6f58b0" target="_blank">79bf9a6</a> </summary></p>
+<a data-toggle="tab" href="#report"> Report <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2019-03-08
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>pair_con_select/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.2.0). The <em>Report</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="report" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhaiderinampairconselecttree5477bb6d89eb524ea5604f2d287de6b9e972e32etargetblank5477bb6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/5477bb6d89eb524ea5604f2d287de6b9e972e32e" target="_blank">5477bb6</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomhaiderinampairconselecttree5477bb6d89eb524ea5604f2d287de6b9e972e32etargetblank5477bb6a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
 <pre><code>
-Ignored files:
-    Ignored:    .Rhistory
-    Ignored:    .Rproj.user/
-
 Untracked files:
-    Untracked:  analysis/alkati_cell_line_tae684_response.Rmd
+    Untracked:  .Rproj.user/
     Untracked:  code/alldata_compiler.R
     Untracked:  code/contab_maker.R
     Untracked:  code/mut_excl_genes_datapoints.R
@@ -348,11 +392,11 @@ Untracked files:
     Untracked:  data/alkati_growthcurvedata.csv
     Untracked:  data/alkati_growthcurvedata_popdoublings.csv
     Untracked:  data/alkati_melanoma_vemurafenib_figure_data.csv
+    Untracked:  data/alkati_simulations_compiled_1000_12319.csv
     Untracked:  data/all_data.csv
     Untracked:  data/tcga_luad_expression/
     Untracked:  data/tcga_skcm_expression/
     Untracked:  docs/figure/Filteranalysis.Rmd/
-    Untracked:  docs/figure/alkati_cell_line_tae684_response.Rmd/
     Untracked:  output/alkati_ccle_tae684_plot.pdf
     Untracked:  output/alkati_filtercutoff_allfilters.csv
     Untracked:  output/alkati_luad_exonimbalance.pdf
@@ -365,6 +409,7 @@ Untracked files:
     Untracked:  output/baf3_barplot.pdf
     Untracked:  output/baf3_elisa_barplot.pdf
     Untracked:  output/egfr_luad_exonimbalance.pdf
+    Untracked:  output/fig1c_3719_4.pdf
     Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
     Untracked:  output/fig2b_filtercutoff_atibraf.pdf
     Untracked:  output/fig2b_filtercutoff_atinras.pdf
@@ -374,489 +419,544 @@ Untracked files:
     Untracked:  output/skcm_alk_exon_expression.csv
 
 Unstaged changes:
+    Deleted:    .Rprofile
+    Deleted:    .gitignore
     Modified:   analysis/ALKATI_Filter_Cutoff_Analysis.Rmd
     Modified:   analysis/baf3_alkati_transformations.Rmd
+    Modified:   analysis/practice.Rmd
+    Modified:   pair_con_select.Rproj
 
 </code></pre>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
-</li>
-</ul>
-<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
-<ul>
-<table style="border-collapse:separate; border-spacing:5px;">
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th>
 File
 </th>
-<th style="text-align:left;">
+<th>
 Version
 </th>
-<th style="text-align:left;">
+<th>
 Author
 </th>
-<th style="text-align:left;">
+<th>
 Date
 </th>
-<th style="text-align:left;">
+<th>
 Message
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
-<a href="https://github.com/haiderinam/pair_con_select/blob/79bf9a6e8f1b1a55c3dfa208acd9b827ad6f58b0/analysis/index.Rmd" target="_blank">79bf9a6</a>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/5477bb6d89eb524ea5604f2d287de6b9e972e32e/analysis/index.Rmd" target="_blank">5477bb6</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
+2019-03-08
+</td>
+<td>
+Added page for analysis on performing pairwise comparisons in
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/80e52c0f73833fb249e6c08a34fcfb80e6e317d9/docs/index.html" target="_blank">80e52c0</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
 2019-03-06
 </td>
-<td style="text-align:left;">
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/79bf9a6e8f1b1a55c3dfa208acd9b827ad6f58b0/analysis/index.Rmd" target="_blank">79bf9a6</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2019-03-06
+</td>
+<td>
 Added CCLE analyses
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/6744c50a7c827ccdc3ae5580a1c62edbfb827137/docs/index.html" target="_blank">6744c50</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/6744c50a7c827ccdc3ae5580a1c62edbfb827137/docs/index.html" target="_blank">6744c50</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-03-06
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/755da19edc3e15f5da04f114d47ff49e5d6d8e2b/docs/index.html" target="_blank">755da19</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/755da19edc3e15f5da04f114d47ff49e5d6d8e2b/docs/index.html" target="_blank">755da19</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/6a85fdccbbd3fa39f32a31c5fce6426b8dad3f4b/docs/index.html" target="_blank">6a85fdc</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/6a85fdccbbd3fa39f32a31c5fce6426b8dad3f4b/docs/index.html" target="_blank">6a85fdc</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
+<td>
 <a href="https://github.com/haiderinam/pair_con_select/blob/ead5e6b93a957bea8f7aee9210f9fdc35e9d2e3d/analysis/index.Rmd" target="_blank">ead5e6b</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
 Fixed link for EGFR Expression Analysis
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/aff917b4079ef57366ed90adf6c4b8d4a31383af/docs/index.html" target="_blank">aff917b</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/aff917b4079ef57366ed90adf6c4b8d4a31383af/docs/index.html" target="_blank">aff917b</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
+<td>
 <a href="https://github.com/haiderinam/pair_con_select/blob/6fec6220ee12e0b3a246b129a30ce3c874dc3b51/analysis/index.Rmd" target="_blank">6fec622</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
 Added EGFR Expression Analysis
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/227aa373603165f57a6b29d7d74db639d2c8f5c7/docs/index.html" target="_blank">227aa37</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/227aa373603165f57a6b29d7d74db639d2c8f5c7/docs/index.html" target="_blank">227aa37</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
+<td>
 <a href="https://github.com/haiderinam/pair_con_select/blob/d60f046b3d900d60838918ebfb44597bab363f2a/analysis/index.Rmd" target="_blank">d60f046</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
 Changed theme # 2
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/4d0be9469a47ca97d40cf9e529f32807745ccc2e/docs/index.html" target="_blank">4d0be94</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/4d0be9469a47ca97d40cf9e529f32807745ccc2e/docs/index.html" target="_blank">4d0be94</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/be5169a217cef4d780a1bd0c4959b736aa7af74e/docs/index.html" target="_blank">be5169a</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/be5169a217cef4d780a1bd0c4959b736aa7af74e/docs/index.html" target="_blank">be5169a</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
+<td>
 <a href="https://github.com/haiderinam/pair_con_select/blob/66533e8e900b563cb69b351d850d04b718be6cf5/analysis/index.Rmd" target="_blank">66533e8</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
 Added images attempt #2
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/5ce63847576777ae32793aaccebe8e65bd6a6dec/docs/index.html" target="_blank">5ce6384</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/5ce63847576777ae32793aaccebe8e65bd6a6dec/docs/index.html" target="_blank">5ce6384</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-19
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
+<td>
 <a href="https://github.com/haiderinam/pair_con_select/blob/d5d11e6715893f4ac251a2620dc3ec9c0a29ede9/analysis/index.Rmd" target="_blank">d5d11e6</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-19
 </td>
-<td style="text-align:left;">
+<td>
 Added images #2
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/5f668d904a708b8935f4539da1e48b0bc4eed855/docs/index.html" target="_blank">5f668d9</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/5f668d904a708b8935f4539da1e48b0bc4eed855/docs/index.html" target="_blank">5f668d9</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-19
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
+<td>
 <a href="https://github.com/haiderinam/pair_con_select/blob/efc817853867d9984ccb8d9ff0c4d5c6ce2f821d/analysis/index.Rmd" target="_blank">efc8178</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-19
 </td>
-<td style="text-align:left;">
+<td>
 Added images and descriptions
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/0b5f5cb94c139b5c731b45b4f5ae45dd07138e02/docs/index.html" target="_blank">0b5f5cb</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/0b5f5cb94c139b5c731b45b4f5ae45dd07138e02/docs/index.html" target="_blank">0b5f5cb</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-19
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/index.html" target="_blank">4b082e4</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/4b082e482d622feaf081a1ef02ccc8a249fe93a6/docs/index.html" target="_blank">4b082e4</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-19
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/08e9438bae6cc22172d8ce04ac2dce445a23a4db/docs/index.html" target="_blank">08e9438</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/08e9438bae6cc22172d8ce04ac2dce445a23a4db/docs/index.html" target="_blank">08e9438</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-17
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
+<td>
 <a href="https://github.com/haiderinam/pair_con_select/blob/33e1acb2c8bc453c7307210f1873833ce9ced2f7/analysis/index.Rmd" target="_blank">33e1acb</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-17
 </td>
-<td style="text-align:left;">
+<td>
 Published Analysis on ALK expression levels #3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/dfdb600f85c2dc720e155db4244975de63389c35/docs/index.html" target="_blank">dfdb600</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/dfdb600f85c2dc720e155db4244975de63389c35/docs/index.html" target="_blank">dfdb600</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-17
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/0cad4ec8c38e13644373ae06a92059d2d2fd43f1/docs/index.html" target="_blank">0cad4ec</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/0cad4ec8c38e13644373ae06a92059d2d2fd43f1/docs/index.html" target="_blank">0cad4ec</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-16
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/5d432fbdea919055a9b7e22d43fc513adc784679/docs/index.html" target="_blank">5d432fb</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/5d432fbdea919055a9b7e22d43fc513adc784679/docs/index.html" target="_blank">5d432fb</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-11
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
+<td>
 <a href="https://github.com/haiderinam/pair_con_select/blob/4c89be38f2e2edfe2dc709562929b98b1d9cec08/analysis/index.Rmd" target="_blank">4c89be3</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-11
 </td>
-<td style="text-align:left;">
+<td>
 Publish the initial files for myproject
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/d46a9cb416aec3be0031cc98efe61f3f6fb80368/docs/index.html" target="_blank">d46a9cb</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/d46a9cb416aec3be0031cc98efe61f3f6fb80368/docs/index.html" target="_blank">d46a9cb</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-11
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
+<td>
 <a href="https://github.com/haiderinam/pair_con_select/blob/644865d7b41456cb82695eb229571a1678258029/analysis/index.Rmd" target="_blank">644865d</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
 2019-02-11
 </td>
-<td style="text-align:left;">
+<td>
 Start workflowr project.
 </td>
 </tr>
 </tbody>
 </table>
-</ul>
-<p></details></p>
-<hr />
+</div>
+<hr>
+</div>
+</div>
+</div>
 <div id="pairwise-comparisons-of-conditional-selection" class="section level1">
 <h1><strong>Pairwise Comparisons of Conditional Selection</strong></h1>
 <ul>
-<li><h3 id="click-here-to-see-subsampling-simulations-on-alkati-data.">Click <a href="alkati_subsampling_simulations.html">here</a> to see subsampling simulations on ALK<sup>ATI</sup> data.</h3>
+<li><h3 id="click-here-to-see-pairwise-comparisons-of-conditional-selection-applied-to-simulated-cohorts">Click <a href="pairwise_comparisons_conditional_selection_simulated_cohorts.html">here</a> to see pairwise comparisons of conditional selection applied to simulated cohorts</h3>
 <div class="figure">
 <img src="assets/atisubsamplingsims.png" />
+
+</div></li>
+<li><h3 id="click-here-to-see-subsampling-simulations-on-alkati-data.">Click <a href="alkati_subsampling_simulations.html">here</a> to see subsampling simulations on ALK<sup>ATI</sup> data.</h3>
+<div class="figure">
+<img src="assets/alkati_subsampling_simulations.png" />
 
 </div></li>
 <li><h3 id="click-here-to-see-my-results-on-alkati-filter-cutoff-analyses.">Click <a href="ALKATI_Filter_Cutoff_Analysis.html">here</a> to see my results on ALK<sup>ATI</sup> filter cutoff analyses.</h3>
@@ -891,7 +991,7 @@ Start workflowr project.
 </ul>
 <div id="click-here-to-be-redirected-to-the-github-page-that-contains-all-my-data." class="section level4">
 <h4>Click <a href="https://github.com/pritchardlabatpsu/pair_con_select">here</a> to be redirected to the github page that contains all my data.</h4>
-<p>What’s in each directory:</p>
+<p>Whatâ€™s in each directory:</p>
 <ul>
 <li><strong>Data</strong>: contains data downloaded from internet<br />
 </li>
@@ -904,6 +1004,7 @@ Start workflowr project.
 </div>
 </div>
 
+
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
 http://docs.mathjax.org/en/latest/configuration.html.  This will make
@@ -915,14 +1016,6 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
-
-<hr>
-<p>
-  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
-  analysis was created with
-  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
-</p>
-<hr>
 
 
 
