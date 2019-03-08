@@ -8,8 +8,13 @@ output:
 ---
 
 # **Pairwise Comparisons of Conditional Selection**  
+
+* ###Click [here](pairwise_comparisons_conditional_selection_simulated_cohorts.html) to see pairwise comparisons of conditional selection applied to simulated cohorts
+![](assets/atisubsamplingsims.png)
+
+
 * ###Click [here](alkati_subsampling_simulations.html) to see subsampling simulations on ALK^ATI^ data.  
-![](assets/atisubsamplingsims.png)  
+![](assets/alkati_subsampling_simulations.png)  
   
 * ###Click [here](ALKATI_Filter_Cutoff_Analysis.html) to see my results on ALK^ATI^ filter cutoff analyses.  
 ![](assets/aticutoffs.png)  
