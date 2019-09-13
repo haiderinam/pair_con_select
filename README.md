@@ -1,5 +1,5 @@
-# pair_con_select
-# The published website showing all the code and results can be accessed [here][https://pritchardlabatpsu.github.io/pairwisecomparisons/].
+# Pairwise Comparisons of Conditional Selection
+# The published website showing all the code and results can be accessed [here]:https://pritchardlabatpsu.github.io/pairwisecomparisons/
 
 A [workflowr][] project.
 
