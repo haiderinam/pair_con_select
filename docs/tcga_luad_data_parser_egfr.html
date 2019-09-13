@@ -26,6 +26,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -75,9 +82,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -195,8 +200,6 @@ $(document).ready(function () {
   menuAnchor.closest('li.dropdown').addClass('active');
 });
 </script>
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -355,6 +358,16 @@ div.tocify {
 
 </style>
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
 <div class="col-xs-12 col-sm-4 col-md-3">
@@ -413,63 +426,168 @@ div.section {
 
 
 <h1 class="title toc-ignore">tcga_luad_data_parser_egfr</h1>
-<h4 class="author"><em>Haider Inam</em></h4>
-<h4 class="date"><em>2/20/2019</em></h4>
+<h4 class="author">Haider Inam</h4>
+<h4 class="date">2/20/2019</h4>
 
 </div>
 
 
-<p><strong>Last updated:</strong> 2019-03-06</p>
-<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
-<ul>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
-</details>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2019-05-21
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>pair_con_select/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.3.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
 <p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20190211)</code> </summary></p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20190211code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20190211)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20190211code" class="panel-collapse collapse">
+<div class="panel-body">
 <p>The command <code>set.seed(20190211)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
 <p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/b7d812d4ab27cd7a70ba750f39a0edd13091bad5" target="_blank">b7d812d</a> </summary></p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhaiderinampairconselecttreecaa231eef19ff52dbc501174ca088f91bca25c09targetblankcaa231ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/caa231eef19ff52dbc501174ca088f91bca25c09" target="_blank">caa231e</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomhaiderinampairconselecttreecaa231eef19ff52dbc501174ca088f91bca25c09targetblankcaa231ea" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
 Untracked files:
+    Untracked:  alk_luad_synonymous.csv
+    Untracked:  analysis/alk_luad_mutation_bias.Rmd
+    Untracked:  analysis/mutation_bias_gist_brca.Rmd
+    Untracked:  bias.brca.csv
+    Untracked:  bias.gist.csv
     Untracked:  code/alldata_compiler.R
     Untracked:  code/contab_maker.R
     Untracked:  code/mut_excl_genes_datapoints.R
     Untracked:  code/mut_excl_genes_generator.R
     Untracked:  code/quadratic_solver.R
     Untracked:  code/simresults_generator.R
+    Untracked:  data/ALKATI_ccle.csv
     Untracked:  data/All_Data_V2.csv
+    Untracked:  data/CCLE_NP24.2009_Drug_data_2015.02.24.csv
     Untracked:  data/alkati_growthcurvedata.csv
     Untracked:  data/alkati_growthcurvedata_popdoublings.csv
     Untracked:  data/alkati_melanoma_vemurafenib_figure_data.csv
+    Untracked:  data/alkati_simulations_compiled_1000_12319.csv
     Untracked:  data/all_data.csv
+    Untracked:  data/gist_expression/
+    Untracked:  data/tcga_brca_expression/
     Untracked:  data/tcga_luad_expression/
     Untracked:  data/tcga_skcm_expression/
     Untracked:  docs/figure/Filteranalysis.Rmd/
-    Untracked:  docs/figure/baf3_alkati_transformations.Rmd/
+    Untracked:  mutation_bias_brca_n.pdf
+    Untracked:  mutation_bias_brca_probabilities.pdf
+    Untracked:  mutation_bias_brca_probabilities2.pdf
+    Untracked:  mutation_bias_gist.pdf
+    Untracked:  mutation_bias_gist_n.pdf
+    Untracked:  mutation_bias_gist_probabilities.pdf
+    Untracked:  mutation_bias_gist_probabilities2.pdf
+    Untracked:  mutation_bias_luad.pdf
+    Untracked:  mutation_bias_luad_deviations.pdf
+    Untracked:  mutation_bias_luad_diagnostic.pdf
+    Untracked:  mutation_probability.csv
+    Untracked:  output/ alkati_subsamplesize_orval_fig1c.pdf
+    Untracked:  output/alkati_ccle_tae684_plot.pdf
     Untracked:  output/alkati_filtercutoff_allfilters.csv
     Untracked:  output/alkati_luad_exonimbalance.pdf
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
     Untracked:  output/alkati_skcm_exonimbalance.pdf
+    Untracked:  output/alkati_subsamplesize_pval_fig.pdf
+    Untracked:  output/alkati_subsamplesize_pval_fig1c.pdf
     Untracked:  output/all_data_luad.csv
     Untracked:  output/all_data_luad_egfr.csv
     Untracked:  output/all_data_skcm.csv
@@ -477,6 +595,7 @@ Untracked files:
     Untracked:  output/baf3_barplot.pdf
     Untracked:  output/baf3_elisa_barplot.pdf
     Untracked:  output/egfr_luad_exonimbalance.pdf
+    Untracked:  output/fig1c_3719_4.pdf
     Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
     Untracked:  output/fig2b_filtercutoff_atibraf.pdf
     Untracked:  output/fig2b_filtercutoff_atinras.pdf
@@ -484,90 +603,133 @@ Untracked files:
     Untracked:  output/luad_egfr_exon_expression.csv
     Untracked:  output/melanoma_vemurafenib_fig.pdf
     Untracked:  output/skcm_alk_exon_expression.csv
+    Untracked:  output/suppfig1..pdf
+    Untracked:  suppfig1..pdf
+
+Unstaged changes:
+    Modified:   analysis/ALKATI_Filter_Cutoff_Analysis.Rmd
+    Modified:   analysis/ALK_ExonImbalance_SKCM_Analysis.Rmd
+    Modified:   analysis/TCGA_luad_data_parser.Rmd
+    Modified:   analysis/alkati_cell_line_tae684_response.Rmd
+    Modified:   analysis/alkati_subsampling_simulations.Rmd
+    Modified:   analysis/baf3_alkati_transformations.Rmd
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/pairwise_comparisons_conditional_selection_simulated_cohorts.Rmd
+    Modified:   analysis/practice.Rmd
+    Modified:   analysis/tcga_luad_data_parser_egfr.Rmd
 
 </code></pre>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
-</li>
-</ul>
-<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
-<ul>
-<table style="border-collapse:separate; border-spacing:5px;">
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th>
 File
 </th>
-<th style="text-align:left;">
+<th>
 Version
 </th>
-<th style="text-align:left;">
+<th>
 Author
 </th>
-<th style="text-align:left;">
+<th>
 Date
 </th>
-<th style="text-align:left;">
+<th>
 Message
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
-Rmd
-</td>
-<td style="text-align:left;">
-<a href="https://github.com/haiderinam/pair_con_select/blob/b7d812d4ab27cd7a70ba750f39a0edd13091bad5/analysis/tcga_luad_data_parser_egfr.Rmd" target="_blank">b7d812d</a>
-</td>
-<td style="text-align:left;">
-haiderinam
-</td>
-<td style="text-align:left;">
-2019-03-06
-</td>
-<td style="text-align:left;">
-Published Fig 4 analysis analysis, added statistical test for fig 3 &amp; 4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
+<td>
 html
 </td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/haiderinam/pair_con_select/aff917b4079ef57366ed90adf6c4b8d4a31383af/docs/tcga_luad_data_parser_egfr.html" target="_blank">aff917b</a>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/6744c50a7c827ccdc3ae5580a1c62edbfb827137/docs/tcga_luad_data_parser_egfr.html" target="_blank">6744c50</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
-2019-02-20
+<td>
+2019-03-06
 </td>
-<td style="text-align:left;">
+<td>
 Build site.
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
-<a href="https://github.com/haiderinam/pair_con_select/blob/6fec6220ee12e0b3a246b129a30ce3c874dc3b51/analysis/tcga_luad_data_parser_egfr.Rmd" target="_blank">6fec622</a>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/b7d812d4ab27cd7a70ba750f39a0edd13091bad5/analysis/tcga_luad_data_parser_egfr.Rmd" target="_blank">b7d812d</a>
 </td>
-<td style="text-align:left;">
+<td>
 haiderinam
 </td>
-<td style="text-align:left;">
+<td>
+2019-03-06
+</td>
+<td>
+Published Fig 4 analysis analysis, added statistical test for fig 3 &amp; 4
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/aff917b4079ef57366ed90adf6c4b8d4a31383af/docs/tcga_luad_data_parser_egfr.html" target="_blank">aff917b</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
 2019-02-20
 </td>
-<td style="text-align:left;">
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/6fec6220ee12e0b3a246b129a30ce3c874dc3b51/analysis/tcga_luad_data_parser_egfr.Rmd" target="_blank">6fec622</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2019-02-20
+</td>
+<td>
 Added EGFR Expression Analysis
 </td>
 </tr>
 </tbody>
 </table>
-</ul>
-<p></details></p>
-<hr />
+</div>
+<hr>
+</div>
+</div>
+</div>
 <p>This code is to look at the EGFR exon imbalance. Therefore, we need the count data, rsem data, and exon data</p>
 <p><strong>LUAD Genes RSEM</strong></p>
 <pre class="r"><code>rsemdatanormalized=read.table(&quot;data/tcga_luad_expression/luadrsemdata/gdac.broadinstitute.org_LUAD.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.Level_3.2016012800.0.0/LUAD.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt&quot;,sep = &quot;\t&quot;,header = T,stringsAsFactors = F)
@@ -688,50 +850,21 @@ write.csv(egfr_merged_data,&quot;output/all_data_luad_egfr.csv&quot;)</code></pr
 <p><strong>Making EGFR Expression the plots:</strong></p>
 <pre class="r"><code>egfr_merged_data=read.csv(&quot;output/all_data_luad_egfr.csv&quot;)
 
-ggplot(egfr_merged_data,aes(x=mean_RPKM_1.17, y=mean_RPKM_18.24))+
+plotly=ggplot(egfr_merged_data,aes(x=mean_RPKM_1.17, y=mean_RPKM_18.24))+
   geom_abline(size=1)+
-  geom_point(size=4)+
+  geom_point(size=1)+
   scale_x_continuous(trans = &quot;log10&quot;,name=&quot;Exon 1:17 RPKM&quot;,breaks=c(1e-2,1e0,1e2),labels = parse(text = c(&quot;10^-2&quot;,&quot;10^0&quot;,&quot;10^2&quot;)),limits = c(1e-3,1e3))+
   scale_y_continuous(trans = &quot;log10&quot;,name=&quot;Exon 20:24 RPKM&quot;,breaks=c(1e-2,1e0,1e2),labels = parse(text = c(&quot;10^-2&quot;,&quot;10^0&quot;,&quot;10^2&quot;)),limits = c(1e-3,1e3))+
   cleanup+
   theme(plot.title = element_text(hjust=.5),
-        text = element_text(size=24,face = &quot;bold&quot;),
-        axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
-        axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;,colour = &quot;black&quot;))+
-  theme(legend.key.size = unit(30,&quot;pt&quot;))</code></pre>
-<pre><code>Warning: Removed 389 rows containing missing values (geom_point).</code></pre>
-<p><img src="figure/tcga_luad_data_parser_egfr.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<details> <summary><em>Expand here to see past versions of unnamed-chunk-6-1.png:</em></summary>
-<table style="border-collapse:separate; border-spacing:5px;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Version
-</th>
-<th style="text-align:left;">
-Author
-</th>
-<th style="text-align:left;">
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<a href="https://github.com/haiderinam/pair_con_select/blob/aff917b4079ef57366ed90adf6c4b8d4a31383af/docs/figure/tcga_luad_data_parser_egfr.Rmd/unnamed-chunk-6-1.png" target="_blank">aff917b</a>
-</td>
-<td style="text-align:left;">
-haiderinam
-</td>
-<td style="text-align:left;">
-2019-02-20
-</td>
-</tr>
-</tbody>
-</table>
-<p></details></p>
-<pre class="r"><code>ggsave(&quot;output/egfr_luad_exonimbalance.pdf&quot;,width =12 ,height =10 ,units = &quot;in&quot;,useDingbats=F)</code></pre>
+        text = element_text(size=11,face = &quot;bold&quot;),
+        axis.title = element_text(face=&quot;bold&quot;,size=&quot;11&quot;),
+        axis.text=element_text(face=&quot;bold&quot;,size=&quot;11&quot;,colour = &quot;black&quot;))+
+  theme(legend.key.size = unit(30,&quot;pt&quot;))
+ggplotly(plotly)</code></pre>
+<div id="htmlwidget-dde3bedc2ca0d058d9c8" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dde3bedc2ca0d058d9c8">{"x":{"data":[{"x":[-3.3,3.3],"y":[-3.3,3.3],"text":"intercept: 0<br />slope: 1","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.923591183630537,0.872397098673194,0.515580690683555,null,null,null,null,null,null,0.15300083344776,1.11198766209007,null,0.208367125892948,null,null,null,0.637569542173031,0.254004959164759,0.28961694927133,0.240965885278699,0.473125245160835,null,0.749360316712353,0.831366320694223,0.362558355732924,0.759988128728799,null,0.59802675059755,-0.184534004651521,0.712718458389199,0.614589634275053,0.120646781159229,0.336741615823257,0.515740112409171,-0.0863366723899447,-0.236985744029118,0.510815540832921,null,0.3433265779765,0.3433265779765,0.472499436000313,0.472499436000313,null,null,null,null,null,null,0.104002615504623,0.104002615504623,null,null,null,0.0538052788238093,0.0538052788238093,0.967682978813679,null,null,1.28488332297759,0.376891518632743,0.376891518632743,0.735842192961874,0.735842192961874,0.421894075362857,0.421894075362857,null,1.09978403331709,1.09978403331709,null,null,-0.172131653184867,-0.172131653184867,0.244973669192652,0.472106677245048,0.589505907903115,0.631372638353308,null,1.02407349804671,1.02407349804671,0.444712028726658,0.444712028726658,0.66729500700157,0.64215709383299,0.64215709383299,0.824886693594324,0.824886693594324,0.912677316843377,0.912677316843377,1.00698715497415,1.00698715497415,0.79791676627176,0.79791676627176,0.933875423717881,0.933875423717881,0.868848742121671,0.868848742121671,null,1.02037452568365,0.438729236752986,0.438729236752986,0.802515140597295,0.802515140597295,1.02471293097663,1.02471293097663,0.625623496083611,0.625623496083611,0.330268928511688,0.330268928511688,0.609979195671899,0.609979195671899,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.664456886758163,0.223460750082256,0.223460750082256,null,null,0.499281218856405,null,-0.469235583705634,null,0.481643399533822,0.481643399533822,0.201787966662819,0.201787966662819,-0.463217040768306,0.153672503901189,0.153672503901189,0.826445516705092,0.826445516705092,0.762315290486054,0.762315290486054,0.589760128147955,0.589760128147955,0.584719314730158,0.584719314730158,1.00085148484864,1.00085148484864,0.936871436114252,0.936871436114252,0.446673044005247,0.446673044005247,1.36600409183149,1.36600409183149,0.515377165748812,null,null,null,null,null,null,null,null,null,null,null,null,-0.52805961616796,null,0.0965237858494217,-0.441302346013414,null,null,null,null,0.513716905742275,0.623779028051085,0.623779028051085,0.452614089140556,0.452614089140556,0.793238943839388,0.793238943839388,1.00653968957135,1.00653968957135,0.874837789628408,0.874837789628408,0.9201922013527,0.9201922013527,0.682628993632452,0.682628993632452,0.942159664878387,0.942159664878387,null,null,null,null,0.839981483053794,1.25287692225361,1.22342318908164,null,null,1.18910085316401,2.02745611819166,0.476863303409536,0.788061332261761,0.48393977472147,1.35260587140787,1.35260587140787,-0.442224916008001,1.55589596293991,null,null,null,null,null,null,null,null,-0.257282328437096,1.9552864411076,0.245441426896611,-0.792575776774611,null,0.860454538348671,null,null,-0.179723358888157,-0.179723358888157,0.467549363003683,0.467549363003683,-0.15151454618296,-0.15151454618296,0.646027574007357,0.646027574007357,0.485003618889634,0.485003618889634,0.639930940862158,0.639930940862158,0.397241354703231,0.397241354703231,0.74737857774415,0.74737857774415,0.687845194861798,0.687845194861798,null,null,0.637456484212363,0.637456484212363,0.696258130655725,0.696258130655725,null,null,null,null,0.798708019632604,0.798708019632604,0.863627962825195,0.863627962825195,0.708862475428196,0.708862475428196,0.278000608411778,0.278000608411778,0.682032065489585,0.682032065489585,0.792516902709379,0.792516902709379,0.546035945565597,0.546035945565597,0.599737305427586,0.599737305427586,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,-0.164822472043735,null,-0.880934458598302,null,0.254073554043617,null,1.00817470023462,0.567540485868028,-0.251877711038499,0.199166793556509,0.192240948965038,0.645353349364395,0.712594196830949,0.21959760831752,0.515998576465183,0.245415054220345,-0.00282075972927401,0.61416500100733,null,0.602915427354909,1.17310006514649,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.681884080945694,null,0.925355174326549,null,null,0.623486882091889,0.133191832526952,0.746487182563565,0.746487182563565,null,null,null,null,0.432279908867525,null,null,0.0287212924598076,null,null,null,null,null,null,null,null,0.815882998124605,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.460554490654963,null,0.179444403905575,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.779820312798713,0.779820312798713,0.752144565941994,0.752144565941994,0.329546481744783,0.329546481744783,0.815938722529973,0.778947940906989,0.778947940906989,1.149166060353,1.149166060353,0.847847367355934,0.847847367355934,0.961574461692495,0.961574461692495,0.698571062386001,0.698571062386001,0.701370077590215,0.635067632707515,0.635067632707515,null,0.777872580676523,0.777872580676523,null,null,null,null,null,null,null,null,null,null,null,null,null,0.62068093327057,0.527714026877018,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"y":[1.21886845079059,1.10786021634815,0.824607756782274,null,null,null,null,null,null,0.336956484447794,1.40313443082519,null,0.444337997566169,null,null,null,0.82204602899038,0.596394996864377,0.571389431592083,0.489651305966864,0.75087670193764,null,1.01609915973598,1.15483078419711,0.665006090832261,0.974361005544345,null,0.896492389166926,0.0202103556603285,0.975475491096056,0.871476456335695,0.394338593549602,0.46127393595001,0.793132048611613,0.218953298223722,0.140095790141547,0.856283415838066,null,0.633157830282054,0.633157830282054,0.758362937025963,0.758362937025963,null,null,null,null,null,null,0.376519731702414,0.376519731702414,null,null,null,0.349885921754793,0.349885921754793,1.23903920242617,null,null,1.62080103738139,0.714448304125291,0.714448304125291,1.00408470036371,1.00408470036371,0.721870209266239,0.721870209266239,null,1.34843606115787,1.34843606115787,null,null,0.218644293872488,0.218644293872488,0.639107580162623,0.82215167937418,0.872107366872904,0.918386367155436,null,1.29059645901464,1.29059645901464,0.728974372460265,0.728974372460265,0.879454686818628,0.85763920513237,0.85763920513237,1.01930045126194,1.01930045126194,1.16155573224652,1.16155573224652,1.24644121671244,1.24644121671244,1.0429778444993,1.0429778444993,1.11358699570029,1.11358699570029,1.11010953822666,1.11010953822666,null,1.24824913359486,0.694632576592694,0.694632576592694,1.02734487999142,1.02734487999142,1.27775580223808,1.27775580223808,0.87404358441822,0.87404358441822,0.495446912159091,0.495446912159091,0.879089712811163,0.879089712811163,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.936602222207502,0.521731937122685,0.521731937122685,null,null,0.841667172830818,null,-0.279582451917077,null,0.934006604555895,0.934006604555895,0.525200346651479,0.525200346651479,-0.448505020119957,0.383598450314106,0.383598450314106,1.09178396552181,1.09178396552181,0.978836766331955,0.978836766331955,0.846483703362859,0.846483703362859,0.877258507227964,0.877258507227964,1.19574739561764,1.19574739561764,1.17861078208275,1.17861078208275,0.691295778798711,0.691295778798711,1.68402325670061,1.68402325670061,0.85918713940082,null,null,null,null,null,null,null,null,null,null,null,null,-0.276061618768651,null,0.340030264062823,-0.159465384228864,null,null,null,null,0.823606413204688,0.825019721222397,0.825019721222397,0.692472828562994,0.692472828562994,0.977110778419105,0.977110778419105,1.23346977297922,1.23346977297922,1.09796946755283,1.09796946755283,1.14510686675726,1.14510686675726,1.01008330146465,1.01008330146465,1.1398854266622,1.1398854266622,null,null,null,null,1.06706660120998,1.48025616872707,1.48399631950999,null,null,1.42595028467255,2.27039042407404,0.692374557686263,1.03049128690996,0.740834239672403,1.65963208784466,1.65963208784466,-0.0688745571948067,1.80506415431787,null,null,null,null,null,null,null,null,0.00139913831191058,2.17978495374596,0.55208038317748,-0.707889492819588,null,1.08758910356341,null,null,0.0694503408141944,0.0694503408141944,0.713088479843213,0.713088479843213,0.144574843446156,0.144574843446156,0.82854520254372,0.82854520254372,0.753563689404797,0.753563689404797,0.907177937908278,0.907177937908278,0.690093377919947,0.690093377919947,0.944323497922039,0.944323497922039,0.928818223598216,0.928818223598216,null,null,0.896420828229514,0.896420828229514,1.00490015344377,1.00490015344377,null,null,null,null,1.04757524018239,1.04757524018239,1.10012397182467,1.10012397182467,0.897312524271105,0.897312524271105,0.519296393963879,0.519296393963879,0.918519199662558,0.918519199662558,1.07704417899426,1.07704417899426,0.737627179281536,0.737627179281536,0.827034882430241,0.827034882430241,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.163129537103733,null,-0.262926434821136,null,0.553127506540078,null,1.26305698753699,0.872129765783698,0.0611403543289008,0.409789247653402,0.415810954916354,0.954326629333963,0.990695644777396,0.455581423709874,0.754797695666038,0.517998330032328,0.324324454802411,0.968313610489099,null,0.879228026070398,1.37714337792006,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.964157176552842,null,1.20298138270912,null,null,0.842380503730362,0.338071257829206,1.03105720599377,1.03105720599377,null,null,null,null,0.715132526213014,null,null,0.324313288186273,null,null,null,null,null,null,null,null,1.02293028936337,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.678922250776458,null,0.385352585621157,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.0044292352117,1.0044292352117,0.989226289823555,0.989226289823555,0.543091815652131,0.543091815652131,1.0446316069759,1.06806375885761,1.06806375885761,1.34382773880654,1.34382773880654,1.04846126154931,1.04846126154931,1.19573867767167,1.19573867767167,0.927265015298439,0.927265015298439,0.994144411708769,0.910437911537344,0.910437911537344,null,0.961483098380805,0.961483098380805,null,null,null,null,null,null,null,null,null,null,null,null,null,0.987949367745118,0.884260360926784,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":["mean_RPKM_1.17:   8.3867015<br />mean_RPKM_18.24:  16.5526850","mean_RPKM_1.17:   7.4541323<br />mean_RPKM_18.24:  12.8191791","mean_RPKM_1.17:   3.2777867<br />mean_RPKM_18.24:   6.6774056","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   1.4223315<br />mean_RPKM_18.24:   2.1724835","mean_RPKM_1.17:  12.9415908<br />mean_RPKM_18.24:  25.3008103","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   1.6157238<br />mean_RPKM_18.24:   2.7818775","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   4.3407977<br />mean_RPKM_18.24:   6.6381342","mean_RPKM_1.17:   1.7947541<br />mean_RPKM_18.24:   3.9481623","mean_RPKM_1.17:   1.9481256<br />mean_RPKM_18.24:   3.7272578","mean_RPKM_1.17:   1.7416701<br />mean_RPKM_18.24:   3.0878152","mean_RPKM_1.17:   2.9725231<br />mean_RPKM_18.24:   5.6347766","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   5.6151365<br />mean_RPKM_18.24:  10.3776534","mean_RPKM_1.17:   6.7821333<br />mean_RPKM_18.24:  14.2833732","mean_RPKM_1.17:   2.3044026<br />mean_RPKM_18.24:   4.6238751","mean_RPKM_1.17:   5.7542421<br />mean_RPKM_18.24:   9.4267286","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   3.9630244<br />mean_RPKM_18.24:   7.8793862","mean_RPKM_1.17:   0.6538317<br />mean_RPKM_18.24:   1.0476359","mean_RPKM_1.17:   5.1608170<br />mean_RPKM_18.24:   9.4509506","mean_RPKM_1.17:   4.1170831<br />mean_RPKM_18.24:   7.4383474","mean_RPKM_1.17:   1.3202214<br />mean_RPKM_18.24:   2.4793543","mean_RPKM_1.17:   2.1714089<br />mean_RPKM_18.24:   2.8925038","mean_RPKM_1.17:   3.2789902<br />mean_RPKM_18.24:   6.2105784","mean_RPKM_1.17:   0.8197158<br />mean_RPKM_18.24:   1.6555919","mean_RPKM_1.17:   0.5794477<br />mean_RPKM_18.24:   1.3806888","mean_RPKM_1.17:   3.2420189<br />mean_RPKM_18.24:   7.1826287","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   2.2045836<br />mean_RPKM_18.24:   4.2969256","mean_RPKM_1.17:   2.2045836<br />mean_RPKM_18.24:   4.2969256","mean_RPKM_1.17:   2.9682429<br />mean_RPKM_18.24:   5.7327491","mean_RPKM_1.17:   2.9682429<br />mean_RPKM_18.24:   5.7327491","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   1.2705818<br />mean_RPKM_18.24:   2.3796864","mean_RPKM_1.17:   1.2705818<br />mean_RPKM_18.24:   2.3796864","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   1.1318928<br />mean_RPKM_18.24:   2.2381332","mean_RPKM_1.17:   1.1318928<br />mean_RPKM_18.24:   2.2381332","mean_RPKM_1.17:   9.2828852<br />mean_RPKM_18.24:  17.3396051","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:  19.2700714<br />mean_RPKM_18.24:  41.7638991","mean_RPKM_1.17:   2.3817245<br />mean_RPKM_18.24:   5.1814141","mean_RPKM_1.17:   2.3817245<br />mean_RPKM_18.24:   5.1814141","mean_RPKM_1.17:   5.4430484<br />mean_RPKM_18.24:  10.0944974","mean_RPKM_1.17:   5.4430484<br />mean_RPKM_18.24:  10.0944974","mean_RPKM_1.17:   2.6417644<br />mean_RPKM_18.24:   5.2707232","mean_RPKM_1.17:   2.6417644<br />mean_RPKM_18.24:   5.2707232","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:  12.5829953<br />mean_RPKM_18.24:  22.3067377","mean_RPKM_1.17:  12.5829953<br />mean_RPKM_18.24:  22.3067377","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   0.6727727<br />mean_RPKM_18.24:   1.6544144","mean_RPKM_1.17:   0.6727727<br />mean_RPKM_18.24:   1.6544144","mean_RPKM_1.17:   1.7578170<br />mean_RPKM_18.24:   4.3561977","mean_RPKM_1.17:   2.9655597<br />mean_RPKM_18.24:   6.6397493","mean_RPKM_1.17:   3.8860278<br />mean_RPKM_18.24:   7.4491611","mean_RPKM_1.17:   4.2792991<br />mean_RPKM_18.24:   8.2867906","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:  10.5699638<br />mean_RPKM_18.24:  19.5252435","mean_RPKM_1.17:  10.5699638<br />mean_RPKM_18.24:  19.5252435","mean_RPKM_1.17:   2.7842744<br />mean_RPKM_18.24:   5.3576504","mean_RPKM_1.17:   2.7842744<br />mean_RPKM_18.24:   5.3576504","mean_RPKM_1.17:   4.6483092<br />mean_RPKM_18.24:   7.5762568","mean_RPKM_1.17:   4.3868935<br />mean_RPKM_18.24:   7.2050866","mean_RPKM_1.17:   4.3868935<br />mean_RPKM_18.24:   7.2050866","mean_RPKM_1.17:   6.6816957<br />mean_RPKM_18.24:  10.4544322","mean_RPKM_1.17:   6.6816957<br />mean_RPKM_18.24:  10.4544322","mean_RPKM_1.17:   8.1785689<br />mean_RPKM_18.24:  14.5062692","mean_RPKM_1.17:   8.1785689<br />mean_RPKM_18.24:  14.5062692","mean_RPKM_1.17:  10.1621864<br />mean_RPKM_18.24:  17.6376702","mean_RPKM_1.17:  10.1621864<br />mean_RPKM_18.24:  17.6376702","mean_RPKM_1.17:   6.2793800<br />mean_RPKM_18.24:  11.0402230","mean_RPKM_1.17:   6.2793800<br />mean_RPKM_18.24:  11.0402230","mean_RPKM_1.17:   8.5876715<br />mean_RPKM_18.24:  12.9893373","mean_RPKM_1.17:   8.5876715<br />mean_RPKM_18.24:  12.9893373","mean_RPKM_1.17:   7.3934773<br />mean_RPKM_18.24:  12.8857452","mean_RPKM_1.17:   7.3934773<br />mean_RPKM_18.24:  12.8857452","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:  10.4803196<br />mean_RPKM_18.24:  17.7112467","mean_RPKM_1.17:   2.7461815<br />mean_RPKM_18.24:   4.9503121","mean_RPKM_1.17:   2.7461815<br />mean_RPKM_18.24:   4.9503121","mean_RPKM_1.17:   6.3462203<br />mean_RPKM_18.24:  10.6498841","mean_RPKM_1.17:   6.3462203<br />mean_RPKM_18.24:  10.6498841","mean_RPKM_1.17:  10.5855379<br />mean_RPKM_18.24:  18.9563973","mean_RPKM_1.17:  10.5855379<br />mean_RPKM_18.24:  18.9563973","mean_RPKM_1.17:   4.2230235<br />mean_RPKM_18.24:   7.4824459","mean_RPKM_1.17:   4.2230235<br />mean_RPKM_18.24:   7.4824459","mean_RPKM_1.17:   2.1392864<br />mean_RPKM_18.24:   3.1292979","mean_RPKM_1.17:   2.1392864<br />mean_RPKM_18.24:   3.1292979","mean_RPKM_1.17:   4.0736076<br />mean_RPKM_18.24:   7.5698925","mean_RPKM_1.17:   4.0736076<br />mean_RPKM_18.24:   7.5698925","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   4.6180315<br />mean_RPKM_18.24:   8.6417604","mean_RPKM_1.17:   1.6728644<br />mean_RPKM_18.24:   3.3245429","mean_RPKM_1.17:   1.6728644<br />mean_RPKM_18.24:   3.3245429","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   3.1570482<br />mean_RPKM_18.24:   6.9449188","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   0.3394411<br />mean_RPKM_18.24:   0.5253123","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   3.0314011<br />mean_RPKM_18.24:   8.5902659","mean_RPKM_1.17:   3.0314011<br />mean_RPKM_18.24:   8.5902659","mean_RPKM_1.17:   1.5914316<br />mean_RPKM_18.24:   3.3512000","mean_RPKM_1.17:   1.5914316<br />mean_RPKM_18.24:   3.3512000","mean_RPKM_1.17:   0.3441779<br />mean_RPKM_18.24:   0.3560369","mean_RPKM_1.17:   1.4245330<br />mean_RPKM_18.24:   2.4187916","mean_RPKM_1.17:   1.4245330<br />mean_RPKM_18.24:   2.4187916","mean_RPKM_1.17:   6.7057216<br />mean_RPKM_18.24:  12.3533278","mean_RPKM_1.17:   6.7057216<br />mean_RPKM_18.24:  12.3533278","mean_RPKM_1.17:   5.7851589<br />mean_RPKM_18.24:   9.5243811","mean_RPKM_1.17:   5.7851589<br />mean_RPKM_18.24:   9.5243811","mean_RPKM_1.17:   3.8883032<br />mean_RPKM_18.24:   7.0223699","mean_RPKM_1.17:   3.8883032<br />mean_RPKM_18.24:   7.0223699","mean_RPKM_1.17:   3.8434330<br />mean_RPKM_18.24:   7.5380412","mean_RPKM_1.17:   3.8434330<br />mean_RPKM_18.24:   7.5380412","mean_RPKM_1.17:  10.0196254<br />mean_RPKM_18.24:  15.6944968","mean_RPKM_1.17:  10.0196254<br />mean_RPKM_18.24:  15.6944968","mean_RPKM_1.17:   8.6471190<br />mean_RPKM_18.24:  15.0872742","mean_RPKM_1.17:   8.6471190<br />mean_RPKM_18.24:  15.0872742","mean_RPKM_1.17:   2.7968749<br />mean_RPKM_18.24:   4.9124233","mean_RPKM_1.17:   2.7968749<br />mean_RPKM_18.24:   4.9124233","mean_RPKM_1.17:  23.2275868<br />mean_RPKM_18.24:  48.3084671","mean_RPKM_1.17:  23.2275868<br />mean_RPKM_18.24:  48.3084671","mean_RPKM_1.17:   3.2762510<br />mean_RPKM_18.24:   7.2308132","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   0.2964424<br />mean_RPKM_18.24:   0.5295883","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   1.2488888<br />mean_RPKM_18.24:   2.1879141","mean_RPKM_1.17:   0.3619909<br />mean_RPKM_18.24:   0.6926831","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   3.2637502<br />mean_RPKM_18.24:   6.6620274","mean_RPKM_1.17:   4.2051261<br />mean_RPKM_18.24:   6.6837427","mean_RPKM_1.17:   4.2051261<br />mean_RPKM_18.24:   6.6837427","mean_RPKM_1.17:   2.8353984<br />mean_RPKM_18.24:   4.9257552","mean_RPKM_1.17:   2.8353984<br />mean_RPKM_18.24:   4.9257552","mean_RPKM_1.17:   6.2121072<br />mean_RPKM_18.24:   9.4866041","mean_RPKM_1.17:   6.2121072<br />mean_RPKM_18.24:   9.4866041","mean_RPKM_1.17:  10.1517214<br />mean_RPKM_18.24:  17.1186603","mean_RPKM_1.17:  10.1517214<br />mean_RPKM_18.24:  17.1186603","mean_RPKM_1.17:   7.4961417<br />mean_RPKM_18.24:  12.5305308","mean_RPKM_1.17:   7.4961417<br />mean_RPKM_18.24:  12.5305308","mean_RPKM_1.17:   8.3213196<br />mean_RPKM_18.24:  13.9671201","mean_RPKM_1.17:   8.3213196<br />mean_RPKM_18.24:  13.9671201","mean_RPKM_1.17:   4.8153626<br />mean_RPKM_18.24:  10.2348929","mean_RPKM_1.17:   4.8153626<br />mean_RPKM_18.24:  10.2348929","mean_RPKM_1.17:   8.7530552<br />mean_RPKM_18.24:  13.8002015","mean_RPKM_1.17:   8.7530552<br />mean_RPKM_18.24:  13.8002015","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   6.9180147<br />mean_RPKM_18.24:  11.6698857","mean_RPKM_1.17:  17.9009847<br />mean_RPKM_18.24:  30.2173357","mean_RPKM_1.17:  16.7271977<br />mean_RPKM_18.24:  30.4786916","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:  15.4561332<br />mean_RPKM_18.24:  26.6655340","mean_RPKM_1.17: 106.5261223<br />mean_RPKM_18.24: 186.3761877","mean_RPKM_1.17:   2.9982187<br />mean_RPKM_18.24:   4.9246408","mean_RPKM_1.17:   6.1384869<br />mean_RPKM_18.24:  10.7273213","mean_RPKM_1.17:   3.0474724<br />mean_RPKM_18.24:   5.5059751","mean_RPKM_1.17:  22.5219439<br />mean_RPKM_18.24:  45.6701132","mean_RPKM_1.17:  22.5219439<br />mean_RPKM_18.24:  45.6701132","mean_RPKM_1.17:   0.3612227<br />mean_RPKM_18.24:   0.8533466","mean_RPKM_1.17:  35.9663166<br />mean_RPKM_18.24:  63.8357778","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   0.5529905<br />mean_RPKM_18.24:   1.0032268","mean_RPKM_1.17:  90.2165970<br />mean_RPKM_18.24: 151.2811975","mean_RPKM_1.17:   1.7597113<br />mean_RPKM_18.24:   3.5651711","mean_RPKM_1.17:   0.1612220<br />mean_RPKM_18.24:   0.1959343","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   7.2519456<br />mean_RPKM_18.24:  12.2345811","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   0.6611144<br />mean_RPKM_18.24:   1.1734115","mean_RPKM_1.17:   0.6611144<br />mean_RPKM_18.24:   1.1734115","mean_RPKM_1.17:   2.9346030<br />mean_RPKM_18.24:   5.1652159","mean_RPKM_1.17:   2.9346030<br />mean_RPKM_18.24:   5.1652159","mean_RPKM_1.17:   0.7054812<br />mean_RPKM_18.24:   1.3950020","mean_RPKM_1.17:   0.7054812<br />mean_RPKM_18.24:   1.3950020","mean_RPKM_1.17:   4.4261647<br />mean_RPKM_18.24:   6.7382203","mean_RPKM_1.17:   4.4261647<br />mean_RPKM_18.24:   6.7382203","mean_RPKM_1.17:   3.0549466<br />mean_RPKM_18.24:   5.6697471","mean_RPKM_1.17:   3.0549466<br />mean_RPKM_18.24:   5.6697471","mean_RPKM_1.17:   4.3644643<br />mean_RPKM_18.24:   8.0756584","mean_RPKM_1.17:   4.3644643<br />mean_RPKM_18.24:   8.0756584","mean_RPKM_1.17:   2.4959815<br />mean_RPKM_18.24:   4.8988414","mean_RPKM_1.17:   2.4959815<br />mean_RPKM_18.24:   4.8988414","mean_RPKM_1.17:   5.5895723<br />mean_RPKM_18.24:   8.7967753","mean_RPKM_1.17:   5.5895723<br />mean_RPKM_18.24:   8.7967753","mean_RPKM_1.17:   4.8735474<br />mean_RPKM_18.24:   8.4882512","mean_RPKM_1.17:   4.8735474<br />mean_RPKM_18.24:   8.4882512","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   4.3396678<br />mean_RPKM_18.24:   7.8780880","mean_RPKM_1.17:   4.3396678<br />mean_RPKM_18.24:   7.8780880","mean_RPKM_1.17:   4.9688757<br />mean_RPKM_18.24:  10.1134691","mean_RPKM_1.17:   4.9688757<br />mean_RPKM_18.24:  10.1134691","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   6.2908310<br />mean_RPKM_18.24:  11.1577144","mean_RPKM_1.17:   6.2908310<br />mean_RPKM_18.24:  11.1577144","mean_RPKM_1.17:   7.3051302<br />mean_RPKM_18.24:  12.5928483","mean_RPKM_1.17:   7.3051302<br />mean_RPKM_18.24:  12.5928483","mean_RPKM_1.17:   5.1151983<br />mean_RPKM_18.24:   7.8942800","mean_RPKM_1.17:   5.1151983<br />mean_RPKM_18.24:   7.8942800","mean_RPKM_1.17:   1.8967086<br />mean_RPKM_18.24:   3.3059509","mean_RPKM_1.17:   1.8967086<br />mean_RPKM_18.24:   3.3059509","mean_RPKM_1.17:   4.8087485<br />mean_RPKM_18.24:   8.2893256","mean_RPKM_1.17:   4.8087485<br />mean_RPKM_18.24:   8.2893256","mean_RPKM_1.17:   6.2017878<br />mean_RPKM_18.24:  11.9410957","mean_RPKM_1.17:   6.2017878<br />mean_RPKM_18.24:  11.9410957","mean_RPKM_1.17:   3.5158954<br />mean_RPKM_18.24:   5.4654658","mean_RPKM_1.17:   3.5158954<br />mean_RPKM_18.24:   5.4654658","mean_RPKM_1.17:   3.9786644<br />mean_RPKM_18.24:   6.7148278","mean_RPKM_1.17:   3.9786644<br />mean_RPKM_18.24:   6.7148278","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   0.6841913<br />mean_RPKM_18.24:   1.4558933","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   0.1315423<br />mean_RPKM_18.24:   0.5458503","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   1.7950376<br />mean_RPKM_18.24:   3.5737775","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:  10.1900121<br />mean_RPKM_18.24:  18.3255487","mean_RPKM_1.17:   3.6943708<br />mean_RPKM_18.24:   7.4495453","mean_RPKM_1.17:   0.5599152<br />mean_RPKM_18.24:   1.1511724","mean_RPKM_1.17:   1.5818554<br />mean_RPKM_18.24:   2.5691487","mean_RPKM_1.17:   1.5568291<br />mean_RPKM_18.24:   2.6050194","mean_RPKM_1.17:   4.4192986<br />mean_RPKM_18.24:   9.0017434","mean_RPKM_1.17:   5.1593406<br />mean_RPKM_18.24:   9.7880380","mean_RPKM_1.17:   1.6580499<br />mean_RPKM_18.24:   2.8548377","mean_RPKM_1.17:   3.2809422<br />mean_RPKM_18.24:   5.6858801","mean_RPKM_1.17:   1.7596045<br />mean_RPKM_18.24:   3.2960844","mean_RPKM_1.17:   0.9935260<br />mean_RPKM_18.24:   2.1102041","mean_RPKM_1.17:   4.1130596<br />mean_RPKM_18.24:   9.2963745","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   4.0078866<br />mean_RPKM_18.24:   7.5723037","mean_RPKM_1.17:  14.8970428<br />mean_RPKM_18.24:  23.8310610","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   4.8071102<br />mean_RPKM_18.24:   9.2078275","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   8.4208353<br />mean_RPKM_18.24:  15.9581074","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   4.2022983<br />mean_RPKM_18.24:   6.9563352","mean_RPKM_1.17:   1.3589136<br />mean_RPKM_18.24:   2.1780671","mean_RPKM_1.17:   5.5781114<br />mean_RPKM_18.24:  10.7413089","mean_RPKM_1.17:   5.5781114<br />mean_RPKM_18.24:  10.7413089","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   2.7057017<br />mean_RPKM_18.24:   5.1895838","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   1.0683690<br />mean_RPKM_18.24:   2.1101498","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   6.5445983<br />mean_RPKM_18.24:  10.5421767","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   2.8877161<br />mean_RPKM_18.24:   4.7744379","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   1.5116262<br />mean_RPKM_18.24:   2.4285810","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   6.0231033<br />mean_RPKM_18.24:  10.1025087","mean_RPKM_1.17:   6.0231033<br />mean_RPKM_18.24:  10.1025087","mean_RPKM_1.17:   5.6512506<br />mean_RPKM_18.24:   9.7549779","mean_RPKM_1.17:   5.6512506<br />mean_RPKM_18.24:   9.7549779","mean_RPKM_1.17:   2.1357307<br />mean_RPKM_18.24:   3.4921414","mean_RPKM_1.17:   2.1357307<br />mean_RPKM_18.24:   3.4921414","mean_RPKM_1.17:   6.5454381<br />mean_RPKM_18.24:  11.0823435","mean_RPKM_1.17:   6.0110168<br />mean_RPKM_18.24:  11.6967110","mean_RPKM_1.17:   6.0110168<br />mean_RPKM_18.24:  11.6967110","mean_RPKM_1.17:  14.0982777<br />mean_RPKM_18.24:  22.0712911","mean_RPKM_1.17:  14.0982777<br />mean_RPKM_18.24:  22.0712911","mean_RPKM_1.17:   7.0444545<br />mean_RPKM_18.24:  11.1805009","mean_RPKM_1.17:   7.0444545<br />mean_RPKM_18.24:  11.1805009","mean_RPKM_1.17:   9.1532318<br />mean_RPKM_18.24:  15.6941817","mean_RPKM_1.17:   9.1532318<br />mean_RPKM_18.24:  15.6941817","mean_RPKM_1.17:   4.9954091<br />mean_RPKM_18.24:   8.4579481","mean_RPKM_1.17:   4.9954091<br />mean_RPKM_18.24:   8.4579481","mean_RPKM_1.17:   5.0277084<br />mean_RPKM_18.24:   9.8660750","mean_RPKM_1.17:   4.3158628<br />mean_RPKM_18.24:   8.1365053","mean_RPKM_1.17:   4.3158628<br />mean_RPKM_18.24:   8.1365053","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   5.9961513<br />mean_RPKM_18.24:   9.1513064","mean_RPKM_1.17:   5.9961513<br />mean_RPKM_18.24:   9.1513064","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:   4.1752351<br />mean_RPKM_18.24:   9.7263382","mean_RPKM_1.17:   3.3706529<br />mean_RPKM_18.24:   7.6605572","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA","mean_RPKM_1.17:          NA<br />mean_RPKM_18.24:          NA"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":43.1050228310502,"l":62.1004566210046},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.3,3.3],"tickmode":"array","ticktext":{},"tickvals":[-2,0,2],"categoryorder":"array","categoryarray":{},"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"<b> Exon 1:17 RPKM <\/b>","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.3,3.3],"tickmode":"array","ticktext":{},"tickvals":[-2,0,2],"categoryorder":"array","categoryarray":{},"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"<b> Exon 20:24 RPKM <\/b>","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"14345e255f8":{"intercept":{},"slope":{},"type":"scatter"},"14344e7a0fcc":{"x":{},"y":{}}},"cur_data":"14345e255f8","visdat":{"14345e255f8":["function (y) ","x"],"14344e7a0fcc":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>ggsave(&quot;output/egfr_luad_exonimbalance.pdf&quot;,width =3 ,height =2.5 ,units = &quot;in&quot;,useDingbats=F)</code></pre>
 <pre><code>Warning: Removed 389 rows containing missing values (geom_point).</code></pre>
 <pre class="r"><code>###We observed an insignificant difference between the distribution for the 1-17 exons and the 20-24 exons.</code></pre>
 </div>
@@ -765,13 +898,17 @@ chisq.test(overexpression)</code></pre>
 
 data:  overexpression
 X-squared = 18.24, df = 1, p-value = 1.947e-05</code></pre>
-</div>
-<div id="session-information" class="section level2">
-<h2>Session information</h2>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 3.5.2 (2018-12-20)
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
-Running under: macOS Mojave 10.14.3
+Running under: macOS Mojave 10.14.5
 
 Matrix products: default
 BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
@@ -785,32 +922,38 @@ attached base packages:
 [8] methods   base     
 
 other attached packages:
- [1] ggsignif_0.4.0      usethis_1.4.0       devtools_2.0.1     
- [4] RColorBrewer_1.1-2  reshape2_1.4.3      ggplot2_3.1.0      
- [7] doParallel_1.0.14   iterators_1.0.10    foreach_1.4.4      
-[10] dplyr_0.7.8         VennDiagram_1.6.20  futile.logger_1.4.3
-[13] workflowr_1.1.1     tictoc_1.0          knitr_1.21         
+ [1] ggsignif_0.5.0      usethis_1.5.0       devtools_2.0.2     
+ [4] RColorBrewer_1.1-2  reshape2_1.4.3      doParallel_1.0.14  
+ [7] iterators_1.0.10    foreach_1.4.4       dplyr_0.8.1        
+[10] VennDiagram_1.6.20  futile.logger_1.4.3 workflowr_1.3.0    
+[13] tictoc_1.0          knitr_1.23          plotly_4.9.0       
+[16] ggplot2_3.1.1      
 
 loaded via a namespace (and not attached):
- [1] tidyselect_0.2.5     xfun_0.4             remotes_2.0.2       
- [4] purrr_0.3.0          colorspace_1.4-0     htmltools_0.3.6     
- [7] yaml_2.2.0           rlang_0.3.1          pkgbuild_1.0.2      
-[10] R.oo_1.22.0          pillar_1.3.1         glue_1.3.0          
-[13] withr_2.1.2          R.utils_2.7.0        sessioninfo_1.1.1   
-[16] lambda.r_1.2.3       bindrcpp_0.2.2       bindr_0.1.1         
-[19] plyr_1.8.4           stringr_1.3.1        munsell_0.5.0       
-[22] gtable_0.2.0         R.methodsS3_1.7.1    codetools_0.2-16    
-[25] evaluate_0.12        memoise_1.1.0        callr_3.1.1         
-[28] ps_1.3.0             Rcpp_1.0.0           backports_1.1.3     
-[31] scales_1.0.0         formatR_1.5          desc_1.2.0          
-[34] pkgload_1.0.2        fs_1.2.6             digest_0.6.18       
-[37] stringi_1.2.4        processx_3.2.1       rprojroot_1.3-2     
-[40] cli_1.0.1            tools_3.5.2          magrittr_1.5        
-[43] lazyeval_0.2.1       tibble_2.0.1         futile.options_1.0.1
-[46] crayon_1.3.4         whisker_0.3-2        pkgconfig_2.0.2     
-[49] prettyunits_1.0.2    assertthat_0.2.0     rmarkdown_1.11      
-[52] R6_2.3.0             git2r_0.24.0         compiler_3.5.2      </code></pre>
+ [1] Rcpp_1.0.1           tidyr_0.8.3          prettyunits_1.0.2   
+ [4] ps_1.3.0             assertthat_0.2.1     rprojroot_1.3-2     
+ [7] digest_0.6.19        mime_0.6             R6_2.4.0            
+[10] plyr_1.8.4           futile.options_1.0.1 backports_1.1.4     
+[13] evaluate_0.13        httr_1.4.0           pillar_1.4.0        
+[16] rlang_0.3.4          lazyeval_0.2.2       data.table_1.12.2   
+[19] whisker_0.3-2        callr_3.2.0          rmarkdown_1.12      
+[22] desc_1.2.0           stringr_1.4.0        htmlwidgets_1.3     
+[25] munsell_0.5.0        shiny_1.3.2          httpuv_1.5.1        
+[28] compiler_3.5.2       xfun_0.7             pkgconfig_2.0.2     
+[31] pkgbuild_1.0.3       htmltools_0.3.6      tidyselect_0.2.5    
+[34] tibble_2.1.1         codetools_0.2-16     viridisLite_0.3.0   
+[37] later_0.8.0          crayon_1.3.4         withr_2.1.2         
+[40] xtable_1.8-4         jsonlite_1.6         gtable_0.3.0        
+[43] git2r_0.25.2         magrittr_1.5         formatR_1.6         
+[46] scales_1.0.0         cli_1.1.0            stringi_1.4.3       
+[49] promises_1.0.1       fs_1.3.1             remotes_2.0.4       
+[52] lambda.r_1.2.3       tools_3.5.2          glue_1.3.1          
+[55] purrr_0.3.2          crosstalk_1.0.0      processx_3.3.1      
+[58] pkgload_1.0.2        yaml_2.2.0           colorspace_1.4-1    
+[61] sessioninfo_1.1.1    memoise_1.1.0       </code></pre>
 </div>
+</div>
+
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
@@ -823,14 +966,6 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
-
-<hr>
-<p>
-  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
-  analysis was created with
-  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
-</p>
-<hr>
 
 
 </div>
