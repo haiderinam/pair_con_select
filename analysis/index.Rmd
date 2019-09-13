@@ -10,29 +10,31 @@ output:
 # **Pairwise Comparisons of Conditional Selection**  
 
 * ###Click [here](pairwise_comparisons_conditional_selection_simulated_cohorts.html) to see pairwise comparisons of conditional selection applied to simulated cohorts
-![](assets/atisubsamplingsims.png)
+<img src="assets/atisubsamplingsims.png" width="600" height="300"  alt="">
 
 
 * ###Click [here](alkati_subsampling_simulations.html) to see subsampling simulations on ALK^ATI^ data.  
-![](assets/alkati_subsampling_simulations.png)  
+<img src="assets/alkati_subsampling_simulations.png" width="600" height="300"  alt="">
   
 * ###Click [here](ALKATI_Filter_Cutoff_Analysis.html) to see my results on ALK^ATI^ filter cutoff analyses.  
-![](assets/aticutoffs.png)  
+<img src="assets/aticutoffs.png" width="400" height="400"  alt="">
   
 * ###Click [here](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression in SKCM.  
 * ###Or click [here](tcga_skcm_data_parser.html) to see my analysis code for ALK-expression in SKCM.  
-![](assets/atiskcmexpression.png)   
+<img src="assets/atiskcmexpression.png" width="300" height="300"  alt="">
 * ###Click [here](TCGA_luad_data_parser.html) to see my results on ALK expression in lung cancer.
-![](assets/atiluadexpression.png)   
+<img src="assets/atiluadexpression.png" width="300" height="300"  alt="">
+
   
 * ###Click [here](tcga_luad_data_parser_egfr.html) to see my results on EGFR expression in lung cancer
-![](assets/egfrluadexpression.png)   
+<img src="assets/egfrluadexpression.png" width="300" height="300"  alt="">
+
   
 * ###Click [here](baf3_alkati_transformations.html) to see ALK^ATI^ transformation data in Ba/F3s showing that it is not sufficient in melanoma.
-![](assets/baf3_alkati_transformations.png)   
+<img src="assets/baf3_alkati_transformations.png" width="300" height="300"  alt="">
 
-* ###Click [here](alkati_cell_line_tae684_response.html) to see ALK^ATI^ melanoma cell line expression data analysis showing that ALK^ATI^ is necessary in melanoma.
-![](assets/ccle.png)
+
+* ###Click [here](alkati_cell_line_tae684_response.html) to see ALK^ATI^ melanoma cell line expression data analysis showing that ALK^ATI^ is necessary in melanoma. <img src="assets/ccle.png" width="300" height="300"  alt="">
   
 #### Click [here](https://github.com/pritchardlabatpsu/pair_con_select) to be redirected to the github page that contains all my data.  
 What is in each directory:  
