@@ -35,7 +35,7 @@ output:
 ![](assets/ccle.png)
   
 #### Click [here](https://github.com/pritchardlabatpsu/pair_con_select) to be redirected to the github page that contains all my data.  
-What’s in each directory:  
+What is in each directory:  
   
 * __Data__: contains data downloaded from internet  
 * __Output__: contains data that your code makes  
