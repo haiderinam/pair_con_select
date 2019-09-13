@@ -44,4 +44,4 @@ What is in each directory:
 * __Output__: contains data that the code makes  
 * __Analysis__: contains your Rmarkdown files with the code.  
 * __Docs__: contain the html output from the Rmd files in the analysis directory.  
-* __Code__: contains .R files that are functions that the Rmd files in the analysis folder use.  
+* __Code__: contains .R files that are functions that the Rmd files in the analysis folder use. 
