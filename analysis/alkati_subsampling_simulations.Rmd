@@ -120,7 +120,7 @@ for(subsample_number in c(seq(5,25,5))){
 simresults_concat=simresults_comb%>%
   filter(exp_num%in%c(4))
 # simresults_concat=simresults_comb
-ggplot(simresults_concat,aes(x=factor(subsample_size),y=log10(p_val)))+
+plotly=ggplot(simresults_concat,aes(x=factor(subsample_size),y=log10(p_val)))+
   geom_boxplot()+
   cleanup+
   guides(fill=F)+
@@ -131,6 +131,7 @@ ggplot(simresults_concat,aes(x=factor(subsample_size),y=log10(p_val)))+
       text = element_text(size=11,face="bold"),
       axis.title = element_text(face="bold",size="12",color="black"),
       axis.text=element_text(face="bold",size="11",color="black"))
+ggplotly(plotly)
 # font_import()
 # windowsFonts(Arial = windowsFont("Arial"))
 # ggsave("output/alkati_subsamplesize_pval_fig1c.pdf",width = 3,height = 2,units = "in",useDingbats=F)
@@ -207,7 +208,7 @@ simresults$mtn_tag=factor(simresults$mtn_tag,levels=c("Non mutation-specific","M
 simresults_concat=simresults%>%
   filter(exp_num==c(1,3,4))
 
-ggplot(simresults_concat,aes(x=factor(exp_name),y=log10(p_val)))+
+plotly=ggplot(simresults_concat,aes(x=factor(exp_name),y=log10(p_val)))+
   geom_boxplot(aes(fill=factor(exp_name)))+
   facet_wrap(~factor(mtn_tag))+
   cleanup+
@@ -220,7 +221,8 @@ ggplot(simresults_concat,aes(x=factor(exp_name),y=log10(p_val)))+
       axis.title = element_text(face="bold",size="13",color="black"),
       axis.text.x=element_text(angle=15,hjust=.5,vjust=.5),
       axis.text=element_text(face="bold",size="9",color="black"))
-ggsave("output/alkati_mtn_pval_fig2B.pdf",width = 6,height = 4,units = "in",useDingbats=F)
+ggplotly(plotly)
+# ggsave("output/alkati_mtn_pval_fig2B.pdf",width = 6,height = 4,units = "in",useDingbats=F)
 
 
 ###Performing the KS. test on these to show that the distribtutions of BRAF NRAS and BRAF ALKATI/NRAS ALKATI are significantly different .
