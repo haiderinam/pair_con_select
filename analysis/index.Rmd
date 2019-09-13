@@ -25,7 +25,7 @@ output:
 * ###Click [here](TCGA_luad_data_parser.html) to see my results on ALK expression in lung cancer.
 ![](assets/atiluadexpression.png)   
   
-* ###Click [here](tcga_luad_data_parser_egfr.html) to see my results on EGFR expression in LUAD.
+* ###Click [here](tcga_luad_data_parser_egfr.html) to see my results on EGFR expression in lung cancer
 ![](assets/egfrluadexpression.png)   
   
 * ###Click [here](baf3_alkati_transformations.html) to see ALK^ATI^ transformation data in Ba/F3s showing that it is not sufficient in melanoma.
