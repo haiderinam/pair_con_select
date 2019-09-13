@@ -8,7 +8,7 @@ output:
 
 #Made by Haider Inam  
 ####PhD student at Penn State University  
-####[Justin Pritchard Lab](https://sites.psu.edu/pritchardlab/)
+####[Pritchard Lab Website](https://sites.psu.edu/pritchardlab/)
 
 
 ## Members of the Prichard lab {.tabset .tabset-fade .tabset-pills}
@@ -22,6 +22,11 @@ output:
 ### Scott Leighow  
 ![](https://sites.psu.edu/pritchardlab/files/2018/01/scott-v2-22793tk.png)  
 
+
+
+## Prichard lab alum: {.tabset .tabset-fade .tabset-pills}
 ### Chuan Liu
 ![](https://sites.psu.edu/pritchardlab/files/2018/01/Chuan-v2-25r7fkc.png)
 
+### Kelly Hartsough
+![]https://sites.psu.edu/pritchardlab/files/2017/10/kelly_pritchard_lab-25uvqyq.png
