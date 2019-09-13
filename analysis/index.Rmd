@@ -22,7 +22,7 @@ output:
 * ###Click [here](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression in SKCM.  
 * ###Or click [here](tcga_skcm_data_parser.html) to see my analysis code for ALK-expression in SKCM.  
 ![](assets/atiskcmexpression.png)   
-* ###Click [here](TCGA_luad_data_parser.html) to see my results on ALK expression in LUAD.
+* ###Click [here](TCGA_luad_data_parser.html) to see my results on ALK expression in lung cancer.
 ![](assets/atiluadexpression.png)   
   
 * ###Click [here](tcga_luad_data_parser_egfr.html) to see my results on EGFR expression in LUAD.
