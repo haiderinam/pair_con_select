@@ -34,12 +34,14 @@ output:
 <img src="assets/baf3_alkati_transformations.png" width="300" height="300"  alt="">
 
 
-* ###Click [here](alkati_cell_line_tae684_response.html) to see ALK^ATI^ melanoma cell line expression data analysis showing that ALK^ATI^ is necessary in melanoma. <img src="assets/ccle.png" width="300" height="300"  alt="">
+* ###Click [here](alkati_cell_line_tae684_response.html) to see ALK^ATI^ melanoma cell line expression data analysis showing that ALK^ATI^ is does not confer a strong single agent therapeutic dependence.
+<img src="assets/ccle.png" width="300" height="300"  alt=""> 
   
 #### Click [here](https://github.com/pritchardlabatpsu/pair_con_select) to be redirected to the github page that contains all my data.  
 What is in each directory:  
   
-* __Data__: contains data downloaded from internet  
-* __Output__: contains data that your code makes  
-* __Analysis__: contains your Rmarkdown files that are converted to PDFs  
-* __Code__: contains .R files  that are functions that your Rmd files in the analysis folder goes off of.  
+* __Data__: contains data downloaded prior to analyses.  
+* __Output__: contains data that the code makes  
+* __Analysis__: contains your Rmarkdown files with the code.  
+* __Docs__: contain the html output from the Rmd files in the analysis directory.  
+* __Code__: contains .R files that are functions that the Rmd files in the analysis folder use.  
