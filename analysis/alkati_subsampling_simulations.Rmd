@@ -11,6 +11,7 @@ knitr::opts_knit$set(root.dir = "..")
 ```
 
 ```{r,include=F}
+library(plotly)
 library(knitr)
 library(tictoc)
 library(workflowr)
@@ -23,6 +24,7 @@ library(reshape2)
 library(RColorBrewer)
 library(devtools)
 library(ggsignif)
+library(extrafont)
 source("code/contab_maker.R")
 source("code/alldata_compiler.R")
 source("code/quadratic_solver.R")
@@ -83,9 +85,9 @@ colnames(alkati_me_summary)=c("P.value","Odds.Ratio")
 alkati_me_summary
 ```
 
-###P-value distribution plots for Figure 1C:
+###P-value distribution plots for Figure 1B:
 ```{r}
-nsubsamples=12 # maybe this can be removed and instead calculated later.
+nsubsamples=50 # maybe this can be removed and instead calculated later.
   nsims<-100 #
   #Positive control 1
   nameposctrl1<-'BRAF'
@@ -105,7 +107,7 @@ nsubsamples=12 # maybe this can be removed and instead calculated later.
 alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[2]]
 genex_replication_prop=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,mtn,"N/A","N/A")[[1]]
 simresults_comb=data.frame()
-for(subsample_number in c(1:12)){
+for(subsample_number in c(seq(5,25,5))){
   nsubsamples=subsample_number
   simresults=simresults_generator(alldata_comp,7)
   simresults_comb=rbind(simresults_comb,simresults) ##iterative rbind this is not the most efficient way to do this
@@ -119,17 +121,37 @@ simresults_concat=simresults_comb%>%
   filter(exp_num%in%c(4))
 # simresults_concat=simresults_comb
 ggplot(simresults_concat,aes(x=factor(subsample_size),y=log10(p_val)))+
-  geom_boxplot(aes(fill=factor(exp_num)))+
+  geom_boxplot()+
   cleanup+
   guides(fill=F)+
-  scale_y_continuous(name="log(P-Value)")+
+  scale_y_continuous(name="log P-Value")+
   scale_x_discrete(name="Subsample size")+
   # scale_color_manual(values="#E78AC3")+
   theme(plot.title = element_text(hjust=.5),
-      text = element_text(size=26,face="bold"),
-      axis.title = element_text(face="bold",size="26",color="black"),
-      axis.text=element_text(face="bold",size="24",color="black"))
-# ggsave("output/ alkati_subsamplesize_pval_fig1c.pdf",width = 10,height = 10,units = "in",useDingbats=F)
+      text = element_text(size=11,face="bold"),
+      axis.title = element_text(face="bold",size="12",color="black"),
+      axis.text=element_text(face="bold",size="11",color="black"))
+# font_import()
+# windowsFonts(Arial = windowsFont("Arial"))
+# ggsave("output/alkati_subsamplesize_pval_fig1c.pdf",width = 3,height = 2,units = "in",useDingbats=F)
+
+max(simresults_concat$OR_val)
+plotly=ggplot(simresults_concat,aes(x=factor(subsample_size),y=(OR_val)))+
+  geom_boxplot()+
+  cleanup+
+  guides(fill=F)+
+  scale_y_continuous(name="log OR")+
+  scale_x_discrete(name="Subsample size")+
+  # scale_color_manual(values="#E78AC3")+
+  theme(plot.title = element_text(hjust=.5),
+      text = element_text(size=12,face="bold"),
+      axis.title = element_text(face="bold",size="12",color="black"),
+      axis.text=element_text(face="bold",size="12",color="black"))
+
+ggplotly(plotly)
+# ggsave("output/alkati_subsamplesize_orval_fig1c.pdf",width = 3,height = 2,units = "in",useDingbats=F)
+  # geom_hline(yintercept=-1.59,size=1)
+
 
 ```
 
@@ -190,15 +212,33 @@ ggplot(simresults_concat,aes(x=factor(exp_name),y=log10(p_val)))+
   facet_wrap(~factor(mtn_tag))+
   cleanup+
   guides(fill=F)+
-  scale_y_continuous(name="log(P-Value)")+
+  scale_y_continuous(name="log P-Value",limits = c(NA,1.5))+
   scale_x_discrete(name="Gene Pair")+
   scale_fill_brewer(palette = "Set2",name="Gene Pair")+
   theme(plot.title = element_text(hjust=.5),
-      text = element_text(size=26,face="bold"),
-      axis.title = element_text(face="bold",size="26",color="black"),
-      axis.text=element_text(face="bold",size="20",color="black"))
+      text = element_text(size=12,face="bold"),
+      axis.title = element_text(face="bold",size="13",color="black"),
+      axis.text.x=element_text(angle=15,hjust=.5,vjust=.5),
+      axis.text=element_text(face="bold",size="9",color="black"))
+ggsave("output/alkati_mtn_pval_fig2B.pdf",width = 6,height = 4,units = "in",useDingbats=F)
 
-# ggsave("output/alkati_mtn_pval_fig2B.pdf",width = 16,height = 10,units = "in",useDingbats=F)
 
+###Performing the KS. test on these to show that the distribtutions of BRAF NRAS and BRAF ALKATI/NRAS ALKATI are significantly different .
+# Mutation-specific
+brafati=simresults_concat%>%filter(mtn_tag=="Mutation-specific",exp_num==1)
+nrasati=simresults_concat%>%filter(mtn_tag=="Mutation-specific",exp_num==3)
+brafnras=simresults_concat%>%filter(mtn_tag=="Mutation-specific",exp_num==4)
+
+ks.test(brafati$p_val,brafnras$p_val)$p.value
+ks.test(nrasati$p_val,brafnras$p_val)$p.value
+ks.test(brafati$p_val,nrasati$p_val)$p.value
+# Non-mutation-specific
+brafati=simresults_concat%>%filter(mtn_tag=="Non mutation-specific",exp_num==1)
+nrasati=simresults_concat%>%filter(mtn_tag=="Non mutation-specific",exp_num==3)
+brafnras=simresults_concat%>%filter(mtn_tag=="Non mutation-specific",exp_num==4)
+
+ks.test(brafati$p_val,brafnras$p_val)$p.value
+ks.test(nrasati$p_val,brafnras$p_val)$p.value
+ks.test(brafati$p_val,nrasati$p_val)$p.value
 ```
 
