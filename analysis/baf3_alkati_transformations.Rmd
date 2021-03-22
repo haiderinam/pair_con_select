@@ -12,6 +12,7 @@ knitr::opts_knit$set(root.dir = "..") #To change the root directory from Analysi
 
 
 ```{r}
+library(reshape2)
 library(ggsignif)
 library(ggplot2)
 library(knitr)
@@ -27,7 +28,11 @@ cleanup=theme_bw() +
         panel.grid.major = element_blank(),
         panel.grid.major.y = element_blank(),
         panel.background = element_blank(),
-        axis.line = element_line(color = "black"))
+        # axis.line = element_line(color = "black"),
+        axis.text = element_text(face="bold",color="black",size="11"),
+        text=element_text(size=11,face="bold"),
+        axis.title=element_text(face="bold",size="11"))
+# rm(list=ls())
 ```
 ##ALKATI does not seem to be sufficient to make Baf3s growth factor independent
 ###Displaying the population doublings of ALKATI, EML4ALK, and Vector over time
@@ -53,42 +58,41 @@ baf3data=baf3data[,c(1:11)]
 # baf3data=baf3data[,c(1:8)]
 
 #
-baf3data2=melt(baf3data,id.vars = c("Time","Infection"))
+baf3data2=melt(baf3data,id.vars = c("Time","Infection"),variable.name ="infnum" ,value.name = "doublings")
 
 baf3data2=baf3data2 %>%
-  filter(value>=-10)
+  filter(doublings>=-10)
 
 
 baf3data2=na.omit(baf3data2)
 
-baf3data2$variable=as.character(baf3data2$variable)
+baf3data2$infnum=as.character(baf3data2$infnum)
 ###Transforming counts into actual numbers because these counts represent x1000s
 # baf3data2$value=baf3data2$value*1000
 ###Creating a boolean for Type of infection
 baf3data2$type="EML4ALK"
-baf3data2$type[grep("alkati",baf3data2$variable,ignore.case = T)]="ALKATI"
-baf3data2$type[grep("vector",baf3data2$variable,ignore.case = T)]="VECTOR"
+baf3data2$type[grep("alkati",baf3data2$infnum,ignore.case = T)]="ALKATI"
+baf3data2$type[grep("vector",baf3data2$infnum,ignore.case = T)]="VECTOR"
 #
 #
 
-ggplot(baf3data2,aes(x=Time,y=value,color=type,fill=Infection,shape=variable))+
-  geom_line(size=3)+
-  geom_point(size=5,shape=16)+
+ggplot(baf3data2,aes(x=Time,y=doublings,color=type,fill=Infection,shape=infnum))+
+  geom_line(size=1)+
+  geom_point(size=2,shape=16)+
   # scale_y_continuous(limits = c(1,1e8))+
-  ggtitle("ALK-ATI sporadically promotes growth-factor-independent proliferation")+
   xlab("Days after Transduction")+
   ylab("Number of Cell Doublings")+
   cleanup+
   theme(plot.title = element_text(hjust=.5),
-        text = element_text(size=24,face = "bold"),
-        axis.title = element_text(face="bold",size="24"),
-        axis.text=element_text(face="bold",size="24"))+
+        text = element_text(size=11,face = "bold"),
+        axis.title = element_text(face="bold",size="11"),
+        axis.text=element_text(face="bold",color="black",size="11"))+
   theme(legend.position="none")+
   xlim(0,14)+
   scale_colour_brewer(palette="Set2")
 
 #Can also make your own palette and color manually. Obtained from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
-ggsave("output/baf3_alkati_figure_deltaadjusted_doublings.pdf",width = 16, height = 12, units = "in")
+ggsave("output/baf3_alkati_figure_deltaadjusted_doublings.pdf",width = 3, height = 2.25, units = "in",useDingbats=F)
 
 # Mean and standard deviation to grow out:
 #Our criteria for cells "growing out" was when they reached two population doublings
@@ -100,6 +104,95 @@ sd(c(9,10,11))
 #Eml4ALK grew out in 6,6,6,6,6, and 5 days
 mean(c(6,6,6,6,6,10))
 sd(c(6,6,6,6,6,5))
+
+###Adding data for F1174 mutants that were generated on top of plvx-ALKATI-IRES-Puro using SDM
+f1174data=read.table("data/alkati_growthcurvedata_popdoublings_f1174mutants.csv",header=T,stringsAsFactors = F,sep = ",")
+
+
+f1174data2=melt(f1174data,id.vars = c("Time","Replicate","Condition"),value.name = "doublings",variable.name = "CellLine")
+
+f1174data2=f1174data2 %>%
+  filter(doublings>=-10)
+
+# f1174data2=na.omit(f1174data2)
+
+f1174data2$CellLine=as.character(f1174data2$CellLine)
+f1174data2=f1174data2%>%mutate(type=case_when(
+  CellLine%in%c("ALKATI")~"ALKATI",
+  CellLine%in%c("F1174C","F1174V","F1174I")~"ALKATIMutant",
+  CellLine%in%c("Vector")~"VECTOR",
+  CellLine%in%c("EML4ALK")~"EML4ALK"
+))
+f1174data2=f1174data2%>%
+  mutate(type_forplot=case_when(type%in%"ALKATIMutant"~"ALKATI",
+                                                      TRUE~type))
+ggplot(f1174data2%>%filter(!Condition%in%"Growth"),aes(x=Time/24,y=doublings,color=type_forplot,fill=CellLine,shape=factor(Replicate)))+
+  geom_line(size=1)+
+  geom_point(size=2,shape=16)+cleanup+
+theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=11,face = "bold"),
+        axis.title = element_text(face="bold",size="11"),
+        axis.text=element_text(face="bold",color="black",size="11"))+
+  scale_x_continuous(name="Time")+
+  scale_y_continuous(name="Number of Cell Doublings")+
+  # theme(legend.position="none")+
+  # xlim(0,14)+
+  scale_colour_brewer(palette="Set2")+
+  xlim(0,11)+
+  theme(legend.position="none")
+
+ggsave("output/baf3_f1174_figure_deltaadjusted_doublings.pdf",width = 3, height = 2.25, units = "in",useDingbats=F)
+
+###Combining the F1174C transformants dataframe and the Baf3 ALKATI WT transformants dataframe. Numbering the ALKATI infection numbers so that they match better with the format that I used for the BaF3 transformations last year.
+f1174data2=f1174data2%>%
+  mutate(infnum=CellLine,
+         infnum=case_when(CellLine%in%"ALKATI"
+                          &Condition%in%"IL3Sele"
+                          &Replicate%in%1~"ALKATI4",
+                          CellLine%in%"ALKATI"
+                          &Condition%in%"IL3Sele"
+                          &Replicate%in%2~"ALKATI5",
+                          CellLine%in%"EML4ALK"
+                          &Condition%in%"IL3Sele"
+                          &Replicate%in%1~"Eml4Alk.4",
+                          CellLine%in%"EML4ALK"
+                          &Condition%in%"IL3Sele"
+                          &Replicate%in%2~"Eml4Alk.5",
+                          CellLine%in%"Vector"
+                          &Condition%in%"IL3Sele"
+                          &Replicate%in%1~"Vector4",
+                          CellLine%in%"Vector"
+                          &Condition%in%"IL3Sele"
+                          &Replicate%in%2~"Vector5",
+                          TRUE~paste(CellLine,Replicate,sep="")))
+a=f1174data2%>%mutate(Time=Time/24)%>%dplyr::select(Time,Infection=CellLine,infnum,doublings,type,Condition)
+baf3data2$Condition="IL3Sele"
+brafdata_combined=rbind(baf3data2,a)
+
+brafdata_combined=brafdata_combined%>%filter(!(Condition%in%"Growth"&Time>=9))
+# c=brafdata_combined
+# c=brafdata_combined%>%filter(!(Condition%in%"Growth" & Time>=6))
+
+
+
+ggplot(brafdata_combined%>%filter(!type%in%"ALKATIMutant"),aes(x=Time,y=doublings,color=type,fill=Infection,shape=infnum,alpha=factor(Condition)))+
+  geom_line(size=1)+
+  geom_point(size=2,shape=16)+
+  # geom_point()
+  # scale_y_continuous(limits = c(1,1e8))+
+  xlab("Days after Transduction")+
+  ylab("Number of Cell Doublings")+
+  cleanup+
+  theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=11,face = "bold"),
+        axis.title = element_text(face="bold",size="11"),
+        axis.text=element_text(face="bold",color="black",size="11"))+
+  theme(legend.position="none")+
+  xlim(0,13)+
+  # ylim(-6,14)+
+  scale_colour_brewer(palette="Set2")
+
+ggsave("output/baf3_alkati_figure_deltaadjusted_doublings_updated.pdf",width = 3, height = 2.25, units = "in",useDingbats=F)
 ```
 
 
@@ -112,18 +205,18 @@ baf3_alkati_infections$Infection_efficiency=as.numeric(as.character(baf3_alkati_
 ggplot(baf3_alkati_infections,aes(x=Infection_Type,y=Infection_efficiency))+
   geom_col(aes(fill=Infection_Type))+
   scale_fill_brewer(palette="Set2")+
-  scale_y_continuous(limits = c(0,110),name = "% Infections conferring GF-independence")+
+  scale_y_continuous(limits = c(0,110),name = "GF independent infections %")+
   xlab("")+
   cleanup+
   theme(plot.title = element_text(hjust=.5),
-      text = element_text(size=24,face = "bold"),
-      axis.title = element_text(face="bold",size="24"),
-      axis.text=element_text(face="bold",size="24"))+
+      text = element_text(size=10,face = "bold"),
+      axis.title = element_text(face="bold",size="10"),
+      axis.text=element_text(face="bold",size="10",color="black"))+
   theme(legend.position="none")+
-  geom_text(label = c("48/48","18/48","8/48"),size=10,nudge_y = -10)+
-  geom_signif(annotations = '*', y_position = 90 ,xmin="ALKATI", xmax="EML4ALK",size = 1,textsize = 10,nudge_y=-10)+
-  geom_signif(annotations = '*', y_position = 100 ,xmin="ALKATI", xmax="VECTOR",size = 1,textsize = 10,nudge_y=-10)
-ggsave("output/baf3_barplot.pdf",width = 10,height = 8,units = "in")
+  geom_text(label = c("48/48","18/48","8/48"),size=5,nudge_y = -10)+
+  geom_signif(annotations = '*', y_position = 90 ,xmin="ALKATI", xmax="EML4ALK",size = 1,textsize = 7,nudge_y=-10)+
+  geom_signif(annotations = '*', y_position = 100 ,xmin="ALKATI", xmax="VECTOR",size = 1,textsize = 7,nudge_y=-10)
+ggsave("output/baf3_barplot.pdf",width = 3,height = 2.25,units = "in",useDingbats=F)
 ###Since meeting successful infection vs unsuccesfful infection are categorical variables, I will use the Chi-Sq test
 #ALKATI vs EML4ALK Pvalue= 1.707e-10:
 chisq.test(data.frame(rbind(c(18,30),c(48,0))))
@@ -147,11 +240,11 @@ ggplot(baf3_alkati_elisa,aes(x=Infection_Date,y=Lentivirus_Particles))+
   xlab("Infection Date")+
   cleanup+
   theme(plot.title = element_text(hjust=.5),
-        text = element_text(size=24,face = "bold"),
-        axis.title = element_text(face="bold",size="24"),
-        axis.text=element_text(face="bold",size="24",colour = "black"))+
+        text = element_text(size=10,face = "bold"),
+        axis.title = element_text(face="bold",size="10"),
+        axis.text=element_text(face="bold",size="10",colour = "black"))+
   scale_y_continuous(trans = "log",breaks=c(1e2,1e4,1e6,1e8),labels = parse(text = c("10^2","10^4","10^6","10^8")))
-ggsave("output/baf3_elisa_barplot.pdf",width = 12,height = 8,units = "in")
+ggsave("output/baf3_elisa_barplot.pdf",width = 4,height = 3,units = "in",useDingbats=F)
 ```
 
 ####Another way of displaying Fig 4a using unn 
@@ -165,19 +258,19 @@ baf3data=baf3data[,c(1:11)]
 # # baf3data=baf3data[,c(1:8)]
 # 
 # 
-baf3data2=melt(baf3data,id.vars = c("Time","Infection"))
+baf3data2=melt(baf3data,id.vars = c("Time","Infection"),variable.name = "infnum",value.name = "doublings")
 baf3data2=na.omit(baf3data2)
-baf3data2$variable=as.character(baf3data2$variable)
+baf3data2$infnum=as.character(baf3data2$infnum)
 # ###Transforming counts into actual numbers because these counts represent x1000s
-baf3data2$value=baf3data2$value*1000
+baf3data2$doublings=baf3data2$doublings*1000
 # ###Creating a boolean for Type of infection
 baf3data2$type="EML4ALK"
-baf3data2$type[grep("alkati",baf3data2$variable,ignore.case = T)]="ALKATI"
-baf3data2$type[grep("vector",baf3data2$variable,ignore.case = T)]="VECTOR"
+baf3data2$type[grep("alkati",baf3data2$infnum,ignore.case = T)]="ALKATI"
+baf3data2$type[grep("vector",baf3data2$infnum,ignore.case = T)]="VECTOR"
 # ###We will use the log2 ratio of the starting population to the pop of interest to get the number of doubling of a population
 # ###These are called pseudo counts
 # ###To avoid the problem of undefined regions when the populations go to 0, we have 
-ggplot(baf3data2,aes(x=Time,y=value,color=type,fill=Infection,shape=variable))+
+ggplot(baf3data2,aes(x=Time,y=doublings,color=type,fill=Infection,shape=infnum))+
   geom_line(size=3)+
   geom_point(size=5,shape=16)+
   scale_y_continuous(trans = "log10")+
@@ -195,6 +288,7 @@ ggplot(baf3data2,aes(x=Time,y=value,color=type,fill=Infection,shape=variable))+
 ##ALKATI is not sufficient to rescue melanoma form a vemurafenib challenge
 ```{r}
 melanoma_data=read.table("data/alkati_melanoma_vemurafenib_figure_data.csv",header = T,stringsAsFactors = F,sep=",")
+# melanoma_data=read.table("../data/alkati_melanoma_vemurafenib_figure_data.csv",header = T,stringsAsFactors = F,sep=",")
 
 # colnames(melanoma_data)=c("dose","skmel_pig","skmel_alkati","g361_pig","g361_alkati")
 # colnames(melanoma_data)
@@ -205,20 +299,20 @@ melanoma_data2$variable[grep("Skmel28.AlkAti",melanoma_data2$variable)]="Skmel28
 melanoma_data2$variable[grep("G361.PIG",melanoma_data2$variable)]="G361.PIG"
 melanoma_data2$variable[grep("G361.AlkAti",melanoma_data2$variable)]="G361.AlkAti"
 
-  ggplot(melanoma_data2,aes(Dose,value,color=variable))+
-    stat_summary(fun.y=mean,
-                 geom="point",size=10) +
-    scale_x_continuous(trans = "log10") +
-    stat_summary(fun.data = mean_cl_normal,
-                 geom="errorbar",
-                 width=.05)+
-    xlab("Vemurafenib Dose (uM)") +
-    ylab("Live Cell Fraction")+
-    ggtitle("Dose-Response of ALK-ATI \nin Melanoma to BRAF inhibitor")+
-    scale_color_manual(name="Cell Line", labels=c("\nSkmel-28 PIG","\nSkmel-28 ALKATI","\nG361 PIG","\nG361 ALKATI"),values=c("#efbc04","red","#19a4ef","#3a1aef"))+
-    cleanup+
-  theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26",color="Black"),axis.text=element_text(face="bold",size="26",color="Black"))
-ggsave("output/melanoma_vemurafenib_fig.pdf",width = 16, height = 12, units = "in")
+ggplot(melanoma_data2,aes(Dose,value,color=variable))+
+  stat_summary(fun.y=mean,
+               geom="point",size=2.5) +
+  scale_x_continuous(trans = "log10") +
+  stat_summary(fun.data = mean_cl_normal,
+               geom="errorbar",
+               width=.05)+
+  xlab("Vemurafenib Dose (uM)") +
+  ylab("Live Cell Fraction")+
+  scale_color_manual(name="Cell Line", labels=c("\nSkmel-28 PIG","\nSkmel-28 ALKATI","\nG361 PIG","\nG361 ALKATI"),values=c("#efbc04","red","#19a4ef","#3a1aef"))+
+  cleanup+
+theme(plot.title = element_text(hjust=.5),text = element_text(size=10,face="bold"),axis.title = element_text(face="bold",size="10",color="Black"),axis.text=element_text(face="bold",size="10",color="Black"),
+      legend.position = "bottom")
+# ggsave("output/melanoma_vemurafenib_fig.pdf",width = 3, height = 3, units = "in",useDingbats=F)
 
 ###Testing whether ALKATI has a different IC50 than vector
 ks.test(melanoma_data2$value[melanoma_data2$variable=="Skmel28.AlkAti"],melanoma_data2$value[melanoma_data2$variable=="Skmel28.PIG"])
@@ -227,7 +321,86 @@ ks.test(melanoma_data2$value[melanoma_data2$variable=="G361.AlkAti"],melanoma_da
 
 #As a proof of principle showing that my test works, if I increase the dose response of G361.PIG by 25% gives my significant p.values
 ks.test(melanoma_data2$value[melanoma_data2$variable=="G361.AlkAti"],melanoma_data2$value[melanoma_data2$variable=="G361.PIG"]+.25)
-
+means=melanoma_data2%>%group_by(Dose,variable)%>%dplyr::summarize(value=mean(value))
+t.test(means$value[means$variable=="G361.AlkAti"],means$value[means$variable=="G361.PIG"],paired=T,alternative = "greater")
+t.test(means$value[means$variable=="Skmel28.AlkAti"],means$value[means$variable=="Skmel28.PIG"],paired=T)
+t.test(means$value[means$variable=="Skmel28.AlkAti"],means$value[means$variable=="G361.PIG"],paired=T)
+# wilcox.test(means$value[means$variable=="G361.AlkAti"],means$value[means$variable=="G361.PIG"],paired=T,alternative = "greater")
+# wilcox.test(means$value[means$variable=="Skmel28.AlkAti"],means$value[means$variable=="Skmel28.PIG"],paired=T,alternative = "greater")
 ###P-Values: 0.99 for Skmel28, and 0.75 for G361s, showing that the ALKATI distributions were not significantly different.
+
+#Plotting each cell line individually
+melanoma_data_g361=melanoma_data2%>%filter(variable%in%c("G361.PIG","G361.AlkAti"))
+ggplot(melanoma_data_g361,aes(Dose,value,color=variable))+
+  stat_summary(fun.y=mean,
+               geom="point",size=2.5) +
+  scale_x_continuous(trans = "log10") +
+  stat_summary(fun.data = mean_cl_normal,
+               geom="errorbar",
+               width=.05)+
+  xlab("Vemurafenib Dose (uM)") +
+  ylab("Live Cell Fraction")+
+  scale_color_manual(name="Cell Line", labels=c("\nG361 PIG","\nG361 ALKATI"),values=c("#19a4ef","#3a1aef"))+
+  cleanup+
+theme(plot.title = element_text(hjust=.5),text = element_text(size=10,face="bold"),axis.title = element_text(face="bold",size="10",color="Black"),axis.text=element_text(face="bold",size="10",color="Black"),
+      legend.position = "none")
+# ggsave("output/melanoma_vemurafenib_fig_top.pdf",width = 3, height = 1.5, units = "in",useDingbats=F)
+
+melanoma_data_skmel28=melanoma_data2%>%filter(variable%in%c("Skmel28.PIG","Skmel28.AlkAti"))
+ggplot(melanoma_data_skmel28,aes(Dose,value,color=variable))+
+  stat_summary(fun.y=mean,
+               geom="point",size=2.5) +
+  scale_x_continuous(trans = "log10") +
+  stat_summary(fun.data = mean_cl_normal,
+               geom="errorbar",
+               width=.05)+
+  xlab("Vemurafenib Dose (uM)") +
+  ylab("Live Cell Fraction")+
+  scale_color_manual(name="Cell Line", labels=c("\nSkmel28 PIG","\nSkmel28 ALKATI"),values=c("#efbc04","red"))+
+  cleanup+
+theme(plot.title = element_text(hjust=.5),text = element_text(size=10,face="bold"),axis.title = element_text(face="bold",size="10",color="Black"),axis.text=element_text(face="bold",size="10",color="Black"),
+      legend.position = "none")
+# ggsave("output/melanoma_vemurafenib_fig_bottom.pdf",width = 3, height = 1.5, units = "in",useDingbats=F)
+
+```
+SOS1Wt, SOS1E846K, MEKQ56P Comparisons:
+```{r}
+melanoma_data=read.table("data/skmel28_sos1_mekq56p_vemurafenib.csv",header = T,stringsAsFactors = F,sep=",")
+melanoma_data_long=melt(melanoma_data,id.vars = "dose",na.rm = T)
+melanoma_data_long$variable[grep("SOS1_E846K",melanoma_data_long$variable)]="SOS1_E846K"
+melanoma_data_long$variable[grep("MEK_Q56P",melanoma_data_long$variable)]="MEK_Q56P"
+melanoma_data_long$variable[grep("SOS1_WT",melanoma_data_long$variable)]="SOS1_WT"
+ggplot(data = melanoma_data_long,aes(x=log(dose),y=value,color=variable))+geom_point()
+
+ggplot(melanoma_data_long,aes(x=dose,y=value,color=variable))+geom_point(position = position_dodge(width=.01))+scale_x_continuous(trans = "log10") +cleanup+scale_colour_brewer(palette="Set2")+geom_smooth()
+
+ggplot(melanoma_data_long,aes(dose,value,color=variable))+
+    stat_summary(fun.y=mean,
+               geom="point",size=2.5) +
+  scale_x_continuous(trans = "log10") +
+  stat_summary(fun.data = mean_cl_normal,
+               geom="errorbar",
+               width=.01)+
+  xlab("Vemurafenib Dose (uM)") +
+  ylab("Live Cell Fraction")+
+  scale_color_manual(name="Cell Line", labels=c("\nSkmel-28 SOS1 E846K","\nSkmel-28 MEK Q56P","\nSkmel-28 SOS1 Wt"),values=c("#efbc04","red","#19a4ef"))+
+  cleanup+
+theme(plot.title = element_text(hjust=.5),text = element_text(size=10,face="bold"),axis.title = element_text(face="bold",size="10",color="Black"),axis.text=element_text(face="bold",size="10",color="Black"),
+      legend.position = "bottom")
+
+melanoma_data$sos1e846kmean=data.frame(rowMeans(melanoma_data[,c(2:5)],na.rm = T))
+sos1e846kmean=data.frame(rowMeans(melanoma_data[,c(2:5)],na.rm = T))
+melanoma_data$mekq56pmean=data.frame(rowMeans(melanoma_data[,c(6:9)],na.rm = T))
+melanoma_data$sos1wtmean=data.frame(rowMeans(melanoma_data[,c(10:13)],na.rm = T))
+sos1wtmean=data.frame(rowMeans(melanoma_data[,c(10:13)],na.rm = T))
+
+# dose=c(3,2.69897,2.39794,2.09691,1.79588,1.49485,1.19382,1)
+sos1wt=c(0.3431612,0.3592412,0.4586017,0.63938425,0.8648814,1.0462746,0.9195364,1.0000002)
+sos1e846k=c(0.346128,0.421477,0.5529085,0.74714375,0.89843925,1.0010455,0.999104,1)
+mekq56p=c(0.489114,0.566946,0.6174875,0.75007625,0.949546,1.02564,1.050715,1)
+t.test(sos1e846k,sos1wt,paired=T,alternative = "greater")
+t.test(mekq56p,sos1wt,paired=T,alternative = "greater")
+
+
 ```
 
