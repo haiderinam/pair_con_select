@@ -25,19 +25,21 @@ output:
 * ###Click [here](ALK_ExonImbalance_SKCM_Analysis.html) to see my results on ALK-expression in SKCM.  
 * ###Or click [here](tcga_skcm_data_parser.html) to see my analysis code for ALK-expression in SKCM.  
 <img src="assets/atiskcmexpression.png" width="300" height="300"  alt="">
-* ###Click [here](TCGA_luad_data_parser.html) to see my results on ALK expression in lung cancer.
+* ###Click [here](TCGA_luad_data_parser.html) to see my results on ALK expression in lung cancer.  
 <img src="assets/atiluadexpression.png" width="300" height="300"  alt="">
 
   
-* ###Click [here](tcga_luad_data_parser_egfr.html) to see my results on EGFR expression in lung cancer
+* ###Click [here](tcga_luad_data_parser_egfr.html) to see my results on EGFR expression in lung cancer  
 <img src="assets/egfrluadexpression.png" width="300" height="300"  alt="">
 
   
-* ###Click [here](baf3_alkati_transformations.html) to see ALK^ATI^ transformation data in Ba/F3s showing that it is not sufficient for transformation or growth.
+* ###Click [here](baf3_alkati_transformations.html) to see ALK^ATI^ transformation data in Ba/F3s showing that it is not sufficient for transformation or growth.  
 <img src="assets/baf3_alkati_transformations.png" width="300" height="300"  alt="">
 
+* ###Click [here](alkati_crizotinib_ic50s.html) to see ALK IC50s of the ALK^ATI^ variants that grew out in Ba/F3s.  
+<img src="assets/alkati_transformants_ic50s.png" width="300" height="300"  alt="">
 
-* ###Click [here](alkati_cell_line_tae684_response.html) to see ALK^ATI^ melanoma cell line expression data analysis showing that ALK^ATI^ is does not confer a strong single agent therapeutic dependence.
+* ###Click [here](alkati_cell_line_tae684_response.html) to see ALK^ATI^ melanoma cell line expression data analysis showing that ALK^ATI^ is does not confer a strong single agent therapeutic dependence.  
 <img src="assets/ccle.png" width="300" height="300"  alt=""> 
   
 #### Click [here](https://github.com/pritchardlabatpsu/pair_con_select) to be redirected to the github page that contains all my data.  
