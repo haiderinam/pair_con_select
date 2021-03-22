@@ -1,0 +1,144 @@
+---
+title: "alkati_crizotinib_ic50s"
+author: "Haider Inam"
+date: "1/25/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir=rprojroot::find_rstudio_root_file())
+
+```
+
+```{r}
+library(plotly)
+library(knitr)
+library(tictoc)
+library(workflowr)
+library(VennDiagram)
+library(dplyr)
+library(foreach)
+library(doParallel)
+library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+library(devtools)
+library(ggsignif)
+library(plotly)
+library(BiocManager)
+library(drc)
+
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        # axis.line = element_line(color = "black"),
+        axis.text = element_text(face="bold",color="black",size="11"),
+        text=element_text(size=11,face="bold"),
+        axis.title=element_text(face="bold",size="11"))
+
+```
+
+
+```{r}
+# rm(list=ls())
+
+# ic50_all=read.csv("../data/alkati_baf3_ic50s_heatmap.csv",header = T,stringsAsFactors = F)
+ic50_all=read.csv("data/alkati_baf3_ic50s_heatmap.csv",header = T,stringsAsFactors = F)
+ic50_all=ic50_all%>%
+  mutate(transgene=case_when(CellLine%in%c("ALK-ATI-2018-1",
+                                           "ALK-ATI-2018-2",
+                                           "ALK-ATI-2018-3",
+                                           "ALK-ATI-2017-1",
+                                           "ALK-ATI-2017-2",
+                                           "ALK-ATI-2017-3")~"ALKATI",
+                             CellLine%in%c("EML4-ALK 2017",
+                                           "EML4-ALK 2018")~"EML4ALK",
+                             CellLine%in%"BaF3 PIG"~"PIG"))
+
+ic50_all_melt=melt(ic50_all,id.vars = c("Drug","Date","transgene","CellLine","Replicate"),measure.vars =c("X500","X250","X125","X62.5","X31.25","X15.625","X7.8125","X3.90625","X1.953125"),variable.name = "conc" ,value.name = "doseresponse")
+
+ic50_all_melt=ic50_all_melt%>%mutate(conc=as.numeric(gsub("X","",conc)))
+
+ic50_sum_byreplicate=ic50_all_melt%>%
+  group_by(Drug,Date,transgene,CellLine,conc)%>%
+  summarize(doseresponse_mean=mean(doseresponse),doseresponse_sd=sd(doseresponse))
+
+
+plotly=
+  ggplot(ic50_sum_byreplicate%>%filter(Drug=="crizotinib"),aes(x=conc,y=doseresponse_mean,color=transgene,fill=CellLine,shape=Date))+
+  geom_point()+
+  geom_line()+
+  facet_wrap(~transgene)+
+  scale_y_continuous(name="Response")+
+  scale_x_continuous(trans = "log10",name="Dose(nM)")+
+  cleanup
+ggplotly(plotly)
+
+ic50_sum_bydate=ic50_sum_byreplicate%>%
+  group_by(Drug,transgene,CellLine,conc)%>%
+  summarize(doseresponse_mean_acrossdates=mean(doseresponse_mean),doseresponse_sd_bydate=sd(doseresponse_mean))
+
+###Crizotinib###
+ggplot(ic50_sum_bydate%>%filter(Drug=="crizotinib"),aes(x=conc,y=doseresponse_mean_acrossdates,color=transgene,fill=CellLine))+
+geom_point()+
+geom_line()+
+# facet_wrap(~transgene)+
+scale_y_continuous(name="Response")+
+scale_x_continuous(trans = "log10",name="Dose(nM)")+
+cleanup
+
+###Brigatinib###
+ggplot(ic50_sum_bydate%>%filter(Drug=="brigatinib"),aes(x=conc,y=doseresponse_mean_acrossdates,color=transgene,fill=CellLine))+
+geom_point()+
+geom_line()+
+# facet_wrap(~transgene)+
+scale_y_continuous(name="Response")+
+scale_x_continuous(trans = "log10",name="Dose(nM)")+
+cleanup
+
+####Looking at variation of dose responses across ALKATI lines
+ggplot(ic50_sum_bydate%>%filter(transgene=="ALKATI",Drug=="crizotinib"),aes(x=conc,y=doseresponse_mean_acrossdates,fill=CellLine))+
+geom_point()+
+geom_line()+
+geom_ribbon(aes(ymin=doseresponse_mean_acrossdates-doseresponse_sd_bydate,ymax=doseresponse_mean_acrossdates+doseresponse_sd_bydate,alpha=.3))+
+scale_y_continuous(name="Response")+
+scale_x_continuous(trans = "log10",name="Dose(nM)")+
+  cleanup+
+theme(legend.position = "none")
+
+
+ic50_sum_bydate_byCellLine=ic50_sum_byreplicate%>%
+  group_by(Drug,transgene,conc)%>%
+  summarize(doseresponse_sd=sd(doseresponse_mean),
+            doseresponse_mean=mean(doseresponse_mean))
+
+
+
+ggplot(ic50_sum_bydate_byCellLine%>%filter(Drug=="crizotinib"),aes(x=conc,y=doseresponse_mean,fill=transgene))+
+  geom_ribbon(aes(ymin=doseresponse_mean-doseresponse_sd,ymax=doseresponse_mean+doseresponse_sd,alpha=.3))+
+  geom_line()+
+  geom_point(color="black",shape=21,size=3,aes(fill=factor(transgene)))+
+  scale_y_continuous(name="Dose Response")+
+  scale_x_continuous(trans = "log10",name="Dose (nM)")+
+  cleanup+
+  scale_fill_brewer(palette="Set2")+
+  theme(legend.position = "none")
+
+# ggsave("baf3_alkati_criz.pdf",width=3,height=2.5,units="in",useDingbats=F)
+
+ggplot(ic50_sum_bydate_byCellLine%>%filter(Drug=="brigatinib"),aes(x=conc,y=doseresponse_mean,fill=transgene))+
+  geom_ribbon(aes(ymin=doseresponse_mean-doseresponse_sd,ymax=doseresponse_mean+doseresponse_sd,alpha=.3))+
+  geom_line()+
+  geom_point(color="black",shape=21,size=3,aes(fill=factor(transgene)))+
+  scale_y_continuous(name="Dose Response")+
+  scale_x_continuous(trans = "log10",name="Dose (nM)")+
+  cleanup+
+  scale_fill_brewer(palette="Set2")+
+  theme(legend.position = "none")
+# ggsave("baf3_alkati_brig.pdf",width=3,height=2.5,units="in",useDingbats=F)
+
+```
+
