@@ -43,6 +43,10 @@ simresults_generator=function(alldata_comp,nexperiments,nsims,nsubsamples,genex_
       ###
       con_tab_sample_genex_pctrl1=contab_maker(sample_genex_comb$Positive_Ctrl1,sample_genex_comb$genex,sample_pc1_comb) #change this to genex_comb
       p_s_p1_genex=fisher.test(con_tab_sample_pctrl1_genex)
+<<<<<<< HEAD
+
+=======
+>>>>>>> e1172b5e60517ce9f5d64dfcf0d1a5033a0231fa
       p_s_genex_p1=fisher.test(con_tab_sample_genex_pctrl1)
       # p_s_p1_genex$p.value
       # p_s_genex_p1$p.value
