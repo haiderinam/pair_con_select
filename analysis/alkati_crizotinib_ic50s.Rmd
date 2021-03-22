@@ -116,7 +116,6 @@ ic50_sum_bydate_byCellLine=ic50_sum_byreplicate%>%
             doseresponse_mean=mean(doseresponse_mean))
 
 
-
 ggplot(ic50_sum_bydate_byCellLine%>%filter(Drug=="crizotinib"),aes(x=conc,y=doseresponse_mean,fill=transgene))+
   geom_ribbon(aes(ymin=doseresponse_mean-doseresponse_sd,ymax=doseresponse_mean+doseresponse_sd,alpha=.3))+
   geom_line()+
