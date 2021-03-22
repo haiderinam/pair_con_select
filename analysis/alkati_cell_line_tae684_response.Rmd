@@ -45,10 +45,11 @@ cleanup=theme_bw() +
 The inputs here are 3 .csv files.  
   
 * alldata.csv contains SKCM mutation data for BRAF,NRAS and expression data for ALK  
-* CCLE_NP24.2009_Drug_data_2015.02.24.csv contains SKCM dose responses for different drugs for many cell lines. Of these drugs, only TAE684 targets ALK. There are 504 cell lines with dose repsonses for drug. We had expression data for only 54 of these 504 cell lines.  
+* CCLE_NP24.2009_Drug_data_2015.02.24.csv contains SKCM dose responses for different drugs for many cell lines. Of these drugs, only TAE684 targets ALK. There are 504 cell lines with dose repsonses for drug. We had expression data for only 54 of these 504 cell lines.
 * ALKATI_ccle.csv contains ALK exon expression RPKMs for 54 cell lines. Obtained from crownbio    
 ```{r}
-ccle_drug=read.csv("data/CCLE_NP24.2009_Drug_data_2015.02.24.csv",sep=",",header=T,stringsAsFactors=F)
+    ccle_drug=read.csv("data/CCLE_NP24.2009_Drug_data_2015.02.24.csv",sep=",",header=T,stringsAsFactors=F)
+sort(unique(ccle_drug$Compound))
 ccle_alk=ccle_drug[ccle_drug$Target=="ALK",]
 rm(ccle_drug)
 
@@ -108,8 +109,8 @@ ggplot()+geom_point(data=skcm_comp,aes(x=Ratio_ALK_Exons20_29vsExons1_19, y=Tota
 # ggsave("cellline,IC50.png",width=10,length=10)
 # ggplot()+geom_point(data=skcm_comp,aes(x=Ratio_ALK_Exons20_29vsExons1_19, y=Total_RPKM,color=is.mutant))+geom_point(data=data_mat_rpkm,aes(x=alldata.Avg20_29RPKM.alldata.Avg1_19RPKM,y=SumRPKM,size=IC50..uM.))+scale_x_log10()+scale_y_log10()
 # ggsave("cellline_clinical_all.png",width=10,length=10)
-ggplot()+
-  geom_point(data=skcm_comp,aes(x=Ratio_ALK_Exons20_29vsExons1_19, y=Total_RPKM,color=factor(skcm_comp$is.mutant,levels = c("DoubleNegative","BRAF Mutant","NRAS Mutant")),size=2.5))+
+
+ggplot()+geom_point(data=skcm_comp,aes(x=Ratio_ALK_Exons20_29vsExons1_19, y=Total_RPKM,color=factor(skcm_comp$is.mutant,levels = c("DoubleNegative","BRAF Mutant","NRAS Mutant"))))+
   geom_point(data=alldata,aes(x=alldata.Avg20_29RPKM.alldata.Avg1_19RPKM,y=SumRPKM,size=IC50..uM.))+
   annotate("rect", xmin = 10, xmax = Inf, ymin = 10, ymax = Inf,fill="#66C2A5",alpha = .4)+
   scale_x_log10()+
@@ -117,18 +118,39 @@ ggplot()+
   cleanup+
   # scale_color_brewer(palette="Set2",name="Mutation")+
   scale_color_manual(values =c("#FFD92F","#E78AC3","#8DA0CB"),name="Mutation")+
-  scale_size_continuous("Cell Line IC50[uM]")+
+  scale_size_continuous("Cell Line \nIC50 (uM)",range = (c(.1,2.5)))+
   xlab("Ratio ALK Ex20-29 to Ex1-19")+
   ylab("Total RPKM")+
   theme(plot.title = element_text(hjust=.5),
-      text = element_text(size=26,face="bold"),
-      axis.title = element_text(face="bold",size="26",color="black"),
-      axis.text=element_text(face="bold",size="24",color="black"))
-ggsave("output/alkati_ccle_tae684_plot.pdf",height=8,width=12, useDingbats=FALSE)
+      text = element_text(size=10,face="bold"),
+      axis.title = element_text(face="bold",size="10",color="black"),
+      axis.text=element_text(face="bold",size="10",color="black"),
+      legend.position = "bottom")
+# ggsave("output/alkati_ccle_tae684_plot.pdf",height=3,width=3, useDingbats=FALSE)
+
+#Looking at which 3 cell lines are the most ALKATI-like
+  ggplot()+
+    geom_text(data=alldata,aes(x=alldata.Avg20_29RPKM.alldata.Avg1_19RPKM,y=SumRPKM,label=rownames.data_mat.,size=IC50..uM.))+
+    annotate("rect", xmin = 10, xmax = Inf, ymin = 10, ymax = Inf,fill="#66C2A5",alpha = .4)+
+    scale_x_log10()+
+    scale_y_log10()+
+    cleanup+
+    # scale_color_brewer(palette="Set2",name="Mutation")+
+    scale_color_manual(values =c("#FFD92F","#E78AC3","#8DA0CB"),name="Mutation")+
+    scale_size_continuous("Cell Line \nIC50 (uM)",range = (c(.1,2.5)))+
+    xlab("Ratio ALK Ex20-29 to Ex1-19")+
+    ylab("Total RPKM")+
+    theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=10,face="bold"),
+        axis.title = element_text(face="bold",size="10",color="black"),
+        axis.text=element_text(face="bold",size="10",color="black"),
+        legend.position = "bottom")
+
 ```
 
 ### __Logistic regression to see if IC50 can predict ALKATI or Overexpression__
-```{r}
+#### Didn't end up using logistic regression. Used linear regression.
+```{r,include=F,eval=F}
 #Notice that we are keeping the EML4ALK translocation from the supm2 lung cancer cell line. These improving IC50's predictive power, if anything.
 
 #Since we only have two ALK
@@ -150,6 +172,13 @@ alldata$alkati=as.factor(alldata$alkati)
 #Predictive power of IC50 in a logistic regression model
 logistic=glm(alkati~IC50..uM.,data = alldata,family = "binomial")
 summary(logistic)
+```
 
+### __Linear regression to see if IC50 can predict ALKATI or Overexpression__
+#Linear regression of total RPKM and 20-29/1-19 ratio predicting IC50 yielded a p-value of .06 when 
+```{r}
+alldata=alldata%>%filter(rownames.data_mat.!="SUPM2")
+alkati_lm=lm(IC50..uM.~alldata.Avg20_29RPKM.alldata.Avg1_19RPKM+SumRPKM,data = alldata)
+summary(alkati_lm)
 ```
 

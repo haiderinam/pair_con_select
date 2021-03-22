@@ -12,7 +12,7 @@ knitr::opts_knit$set(root.dir = "..")
 
 ```{r,include=F}
 # install.packages(c("knitr","tictoc","workflowr","VennDiagram","dplyr","foreach","doParallel","ggplot2","reshape2","RColorBrewer","devtools","ggsignif"))
-
+library(plotly)
 library(knitr)
 library(tictoc)
 library(workflowr)
@@ -25,6 +25,7 @@ library(reshape2)
 library(RColorBrewer)
 library(devtools)
 library(ggsignif)
+
 source("code/contab_maker.R")
 source("code/alldata_compiler.R")
 source("code/quadratic_solver.R")
@@ -118,6 +119,7 @@ maxsubsamplesize_2=min(c(genex_replication_prop*length(alldata_comp$Positive_Ctr
 nsubsamples=min(c(maxsubsamplesize_1,maxsubsamplesize_2)) #minimum of either of the subsamples.
 nexperiments=7
 
+
 #####If Cohort size is greater than gene1total, run simresults_generator for that simulation####
 
     if(cohort_size_vals[k]>gene1_total_vals[j]){
@@ -162,7 +164,8 @@ toc()
 # a=rbind(a,aaa)
 # toc()
 # write.csv(simresults_compiled2,"alkati_simulations_compiled_12219.csv")
-write.csv(simresults_compiled2,"data/alkati_simulations_compiled_1000_3719.csv")
+# write.csv(simresults_compiled2,"data/alkati_simulations_compiled_1000_3719.csv")
+write.csv(simresults_compiled2,"data/alkati_simulations_compiled_1000_3721.csv")
 # simresults_compiled[[5]]
 #Looking at which conditions didn't yield a maxsimnumber of 1000 revealed that at a subsample size of 1, the max simnum was 35.
 # a=simresults_compiled2%>%
@@ -175,6 +178,7 @@ write.csv(simresults_compiled2,"data/alkati_simulations_compiled_1000_3719.csv")
 ##Part 2: Performing pairwise comparisons between gene pairs using KS-test  
 ```{r,warning=F}
 simresults_compiled2=read.csv("data/alkati_simulations_compiled_1000_12319.csv",header = T)
+simresults_compiled2=read.csv("../data/alkati_simulations_compiled_1000_12319.csv",header = T)
 # simresults_compiled2=read.csv("alkati_simulations_compiled_testrun_10000.csv",header = T) 
 # simresults_compiled2=read.csv("alkati_simulations_compiled.csv",header = T)
 simresults_stored=simresults_compiled2
@@ -187,6 +191,7 @@ simresults_compiled2=simresults_compiled2[,c(1,2,5,6,4,9,11,3,12,10,13,7,8)] ###
 datapoints_reshape=dcast(simresults_compiled2,exp_name+sim_num+gene1_total+subsample_size+cohort_size+true_OR+or_pair2~gene_pair,fun.aggregate = mean,value.var="p_val") 
 colnames(datapoints_reshape)[8]="pair1_pval"
 colnames(datapoints_reshape)[9]="pair2_pval"
+
 
 ###Performing KS test on the ps_p1_genex for genepair1 vs gene2
 ks_results=datapoints_reshape%>%
@@ -238,11 +243,11 @@ ggplot(simresults_test,aes(x=factor(gene1_total),y=log10(p_val),fill=factor(gene
                      limits = c(-3,0))+
   scale_x_discrete(name="Incidence of GOI in simulated cohort",limits=c("5","10","15","20","25"))+
   theme(plot.title = element_text(hjust=.5),
-        text = element_text(size=26,face="bold"),
-        axis.title = element_text(face="bold",size="26",color="black"),
-        axis.text=element_text(face="bold",size="24",color="black"))
+        text = element_text(size=11,face="bold"),
+        axis.title = element_text(face="bold",size="11",color="black"),
+        axis.text=element_text(face="bold",size="11",color="black"))
     
-# ggsave("output/fig1c_3719_4.pdf",height = 8,width = 20,units = "in")
+# ggsave("output/fig1c_3719_4.pdf",height = 8,width = 20,units = "in",)
 
 # +xlab("Subsample Size")+ylab("P-value")+theme_bw()+theme(plot.title = element_text(hjust=.5),text = element_text(size=26,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",size="26"))
 # +scale_color_discrete(name="Pairwise \nComparison\n",labels=c("OR 0.1 to 1\n","OR 0.1 to 0.01"))
@@ -253,8 +258,29 @@ ggplot(simresults_test,aes(x=factor(gene1_total),y=log10(p_val),fill=factor(gene
 # ggplot(simresults_test,aes(x=factor(true_OR),y=p_val,fill=factor(gene_pair)))+
 #   geom_boxplot(position = position_dodge(1))+
 #   facet_wrap(~factor(gene1_total))
-
+write.csv(a,"ks_results_forshiny.csv")
 ```
 
+####Plotting across a big range of mutual exclusivities for the GOI gene pair
+```{r}
+sort(unique(simresults_compiled2$true_OR))
+simresults_test=simresults_compiled2%>%
+  filter(cohort_size==300,or_pair2==.01,gene1_total%in%seq(4,25,1))
+simresults_test$true_OR=paste('OR of ',simresults_test$true_OR)
 
-##Part 3: Data Analysis and Plotting  
+ggplot(simresults_test,aes(x=factor(gene1_total),y=log10(p_val),fill=factor(gene_pair)))+
+  geom_boxplot(position = position_dodge(1))+
+  facet_wrap(~true_OR,ncol=4)+
+  # geom_text(data = label.df, label = "*",size=15,color="black")+
+  scale_fill_brewer(palette = "Set2",name="Gene Pair",labels=c("GOI", "Positive Control"),direction = -1)+
+  cleanup+
+  scale_y_continuous(name="Log(P-Value from Fisher's Test)",
+                     limits = c(-3,0))+
+  scale_x_discrete(name="Abundance of GOI in simulated cohort",limits=c("5","10","15","20","25"))+
+  theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=11,face="bold"),
+        axis.title = element_text(face="bold",size="11",color="black"),
+        axis.text=element_text(face="bold",size="11",color="black"))
+# ggsave("output/suppfig1..pdf",width = 16,height = 12,units = "in",useDingbats=F)
+```
+

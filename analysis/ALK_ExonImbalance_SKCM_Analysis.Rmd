@@ -46,21 +46,23 @@ alkati_merged_data$alkati=0
 alkati_merged_data$alkati[alkati_merged_data$Ratio>=10&alkati_merged_data$mRNA_count>=500&alkati_merged_data$RSEM_normalized>=100]=1
 alkati_merged_data$alkati=factor(alkati_merged_data$alkati,levels=c("1","0"))
 
-  ggplot(alkati_merged_data,aes(x=mean_RPKM_1.19, y=mean_RPKM_20.29,color=factor(alkati)))+
+plotly=  ggplot(alkati_merged_data,aes(x=mean_RPKM_1.19, y=mean_RPKM_20.29,color=factor(alkati)))+
     geom_abline(size=1)+
-    geom_point(size=4)+
+    geom_point(size=1)+
     ####Had to add this line to not overplot the alkati datapoint- Haider 1/31/19
-    geom_point(data=alkati_merged_data[alkati_merged_data$alkati==1,],aes(x=mean_RPKM_1.19, y=mean_RPKM_20.29,color=factor(alkati)),size=4)+
+    geom_point(data=alkati_merged_data[alkati_merged_data$alkati==1,],aes(x=mean_RPKM_1.19, y=mean_RPKM_20.29,color=factor(alkati)),size=1)+
     scale_x_continuous(trans = "log10",name="Exon 1:19 RPKM",breaks=c(1e-2,1e0,1e2),labels = parse(text = c("10^-2","10^0","10^2")),limits = c(1e-3,1e3))+
     scale_y_continuous(trans = "log10",name="Exon 20:29 RPKM",breaks=c(1e-2,1e0,1e2),labels = parse(text = c("10^-2","10^0","10^2")),limits = c(1e-3,1e3))+
     scale_color_brewer(palette="Set1",name="ALKATI",labels=c("Yes", "No"))+
     cleanup+
     theme(plot.title = element_text(hjust=.5),
-          text = element_text(size=24,face = "bold"),
-          axis.title = element_text(face="bold",size="24"),
-          axis.text=element_text(face="bold",size="24",colour = "black"))+
+          text = element_text(size=11,face = "bold"),
+          axis.title = element_text(face="bold",size="11"),
+          axis.text=element_text(face="bold",size="11",colour = "black"))+
     theme(legend.key.size = unit(30,"pt"))
-# ggsave("output/alkati_skcm_exonimbalance.pdf",width =12 ,height =10 ,units = "in",useDingbats=F)
+
+ggplotly(plotly)
+ggsave("output/alkati_skcm_exonimbalance.pdf",width =4 ,height =3 ,units = "in",useDingbats=F)
 ```
 
 ###Statistical test to see if ALK kinase domain expression was significantly higher than other domains

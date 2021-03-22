@@ -13,6 +13,7 @@ knitr::opts_knit$set(root.dir = "..") #To change the root directory from Analysi
 ```
 
 ```{r,include=F}
+library(plotly)
 library(knitr)
 library(tictoc)
 library(workflowr)
@@ -178,26 +179,42 @@ write.csv(egfr_merged_data,"output/all_data_luad_egfr.csv")
 **Making EGFR Expression the plots:**
 ```{r}
 egfr_merged_data=read.csv("output/all_data_luad_egfr.csv")
-
-ggplot(egfr_merged_data,aes(x=mean_RPKM_1.17, y=mean_RPKM_18.24))+
+plotly=ggplot(egfr_merged_data,aes(x=mean_RPKM_1.17, y=mean_RPKM_18.24))+
   geom_abline(size=1)+
-  geom_point(size=4)+
+  geom_point(size=1)+
   scale_x_continuous(trans = "log10",name="Exon 1:17 RPKM",breaks=c(1e-2,1e0,1e2),labels = parse(text = c("10^-2","10^0","10^2")),limits = c(1e-3,1e3))+
   scale_y_continuous(trans = "log10",name="Exon 20:24 RPKM",breaks=c(1e-2,1e0,1e2),labels = parse(text = c("10^-2","10^0","10^2")),limits = c(1e-3,1e3))+
   cleanup+
   theme(plot.title = element_text(hjust=.5),
-        text = element_text(size=24,face = "bold"),
-        axis.title = element_text(face="bold",size="24"),
-        axis.text=element_text(face="bold",size="24",colour = "black"))+
-  theme(legend.key.size = unit(30,"pt"))
-ggsave("output/egfr_luad_exonimbalance.pdf",width =12 ,height =10 ,units = "in",useDingbats=F)
+        text = element_text(size=11,face = "bold"),
+        axis.title = element_text(face="bold",size="11"),
+        axis.text=element_text(face="bold",size="11",colour = "black"))+
+  theme(legend.key.size = unit(11,"pt"))
+ggplotly(plotly)
+ggsave("output/egfr_luad_exonimbalance.pdf",width =3 ,height =2.5 ,units = "in",useDingbats=F)
 
 ###We observed an insignificant difference between the distribution for the 1-17 exons and the 20-24 exons.
+
+# (egfr_merged_data$mean_RPKM_18.24/mean)
+
+plotly=ggplot(egfr_merged_data,aes(x=mean_RPKM_1.17, y=mean_RPKM_18.24))+
+  geom_abline(size=1)+
+  geom_point(size=1)+
+  scale_x_continuous(trans = "log10",name="Exon 1:17 RPKM",breaks=c(1e-2,1e0,1e2),labels = parse(text = c("10^-2","10^0","10^2")),limits = c(1e-3,1e3))+
+  scale_y_continuous(trans = "log10",name="Exon 20:24 RPKM",breaks=c(1e-2,1e0,1e2),labels = parse(text = c("10^-2","10^0","10^2")),limits = c(1e-3,1e3))+
+  cleanup+
+  theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=11,face = "bold"),
+        axis.title = element_text(face="bold",size="11"),
+        axis.text=element_text(face="bold",size="11",colour = "black"))+
+  theme(legend.key.size = unit(11,"pt"))
+ggplotly(plotly)
+
 ```
 ###Statistical test to see if ALK kinase domain expression was significantly higher than other domains
 ```{r}
 #Testing if both kinase and ALK expression are different
-ks.test(egfr_merged_data$mean_RPKM_1.17,egfr_merged_data$mean_RPKM_18.24)
+ks.test(egfr_merged_data$mean_RPKM_1.17,egfr_merged_data$mean_RPKM_18.24,alternative="greater")
 ###We observed a significant difference between the distribution for the 20-29 exons and the 1-19 exons The reported p-value was 2-16.
 ###The p-value from a Chi-sq test was 2.2e-16 too
     #for all ALK data, not ALKATI
@@ -209,4 +226,8 @@ overexpression=data.frame(rbind(ov_expr_obs,ov_expr_expected))
 # overexpression=data.frame(rbind(c(338,13),c(176,176)))
 colnames(overexpression)=c("Yes","No")
 chisq.test(overexpression)
+
+#Normalizing the RSEM of all exon distributions to their mean lets us see that the kinase domain, on average, is not significantly greater in expression than the rest. P.value=0.6558
+ks.test(egfr_merged_data$mean_RPKM_1.17/mean(egfr_merged_data$mean_RPKM_1.17,na.rm = T),egfr_merged_data$mean_RPKM_18.24/mean(egfr_merged_data$mean_RPKM_18.24,na.rm = T),alternative="greater")
 ```
+

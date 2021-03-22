@@ -1,0 +1,297 @@
+---
+title: "alk_luad_mutation_bias"
+author: "Haider Inam"
+date: "3/12/2019"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "..") #To change the root directory from Analysis to myproject
+```
+
+```{r,include=F}
+library(knitr)
+library(tictoc)
+library(workflowr)
+library(VennDiagram)
+library(dplyr)
+library(foreach)
+library(doParallel)
+library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+library(devtools)
+library(ggsignif)
+source("code/contab_maker.R")
+source("code/alldata_compiler.R")
+source("code/quadratic_solver.R")
+source("code/mut_excl_genes_generator.R")
+source("code/mut_excl_genes_datapoints.R")
+source("code/simresults_generator.R")
+
+######################Cleanup for GGPlot2#########################################
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = "black"))
+```
+
+
+#Getting ALK mutations for 340 patients in LUAD
+#I will just keep all the synonymous mutations for all the patients
+#idea: use ref_context to get teh contect of the dna sequence
+#5/14/19 Update: You shouldn't be filtering the data by whether they are tagged synonymous. This is because you wanna look at the trinucleotide context and not the codon context
+```{r}
+head(patdat$ref_context)
+# patdat_a=head(patdat)
+# a=data.frame(patdat$ref_context)
+# class(a)
+x1=list.dirs("data/tcga_luad_expression/luad_mutation_data",full.names=TRUE)#Lists all files in the current working directory x
+
+Data_list=list.files(x1[1],pattern="^TCGA-[A-Za-z0-9]{2}-[A-Za-z0-9]{4}-[A-Za-z0-9]{2}.hg19.oncotator.hugo_entrez_remapped.maf.txt*", ignore.case=F)#lists the files in the folder
+
+  patmat=matrix(nrow=length(Data_list),ncol=6)# This initializes the storage matrix
+  for (i in 1:length(Data_list)){
+  patdat=read.table(paste(x1,"/",Data_list[i],sep=""),stringsAsFactors=FALSE,header=TRUE, sep="\t",fill=TRUE,quote = "")#opens each file as the loop progresses
+    
+    alk=patdat%>%filter(Hugo_Symbol=="ALK",Variant_Classification=="Silent")
+
+    #This essentially says that if you can't find the mutant, enter NaN. If you find two mutants, then search for the major transforming mutation (e.g. BrafV600E). Non of the >1 mutations are the transforming mutation, just select the first one
+    # j=1
+    if(nrow(alk)>0){
+    # while(j<=nrow(alk)){
+      alk$Genome_Change_1=alk$Genome_Change[1]
+      alk$Genome_Change_2=alk$Genome_Change[2]
+      alk$Genome_Change_3=alk$Genome_Change[3]
+      alk$Genome_Change_4=alk$Genome_Change[4]
+      alk$Genome_Change_5=alk$Genome_Change[5]
+      alk=alk[1,]
+    }
+    
+    # if(nrow(alk)>=2){
+    #       # alk=alk[1,]
+    #       alk$Genome_Change='Multiple'
+    #   } else if(nrow(alk)==0){
+    #     alk[1,]="p.NaN"
+    #   }
+    if(nrow(alk)==0){
+          alk[1,]="p.NaN"
+          alk$Genome_Change_1="p.NaN"
+          alk$Genome_Change_2="p.NaN"
+          alk$Genome_Change_3="p.NaN"
+          alk$Genome_Change_4="p.NaN"
+          alk$Genome_Change_5="p.NaN"
+      }
+
+    # missense=nrow(patdat[patdat$Variant_Classification=="Missense_Mutation",])#counts missense mutations by identifying the number of rows in a   
+    patmat[i,1]=Data_list[i]#Record the Patient ID from the file name
+    patmat[i,2]=alk$Genome_Change_1
+    patmat[i,3]=alk$Genome_Change_2
+    patmat[i,4]=alk$Genome_Change_3
+    patmat[i,5]=alk$Genome_Change_4
+    patmat[i,6]=alk$Genome_Change_5
+    # patmat[i,3]=alk$Variant_Classification
+    }
+patframe=data.frame(patmat)#Turn storage matrix into data frame
+colnames(patframe)[1:5]=c("Patid","Genome_Change_1","Genome_Change_2","Genome_Change_3","Genome_Change_4","Genome_Change_5")#Rename the columns
+# write.csv(patframe,"patients_tally_muttype2.csv")# Record data frame as a CSV and write to the working directory
+
+#Grabbing Patient Names so that they can be used to merge with exon data later
+alk_mutated_data=patframe
+alk_mutated_data$Patid=substring(alk_mutated_data$Patid,first = 1,last = 12)
+###Removing "p." from names of mutants:
+alk_mutated_data$Genome_Change_1=unlist(sub("p.","",alk_mutated_data$Genome_Change_1))
+alk_mutated_data$Genome_Change_2=unlist(sub("p.","",alk_mutated_data$Genome_Change_2))
+alk_mutated_data$Genome_Change_3=unlist(sub("p.","",alk_mutated_data$Genome_Change_3))
+alk_mutated_data$Genome_Change_4=unlist(sub("p.","",alk_mutated_data$Genome_Change_4))
+alk_mutated_data$Genome_Change_5=unlist(sub("p.","",alk_mutated_data$Genome_Change_5))
+write.csv(alk_mutated_data,"alk_luad_synonymous.csv")
+
+```
+
+Pulling all mutaitons for all patients
+```{r}
+library(Biostrings)
+x1=list.dirs("data/tcga_luad_expression/luad_mutation_data",full.names=TRUE)#Lists all files in the current working directory x
+
+Data_list=list.files(x1[1],pattern="^TCGA-[A-Za-z0-9]{2}-[A-Za-z0-9]{4}-[A-Za-z0-9]{2}.hg19.oncotator.hugo_entrez_remapped.maf.txt*", ignore.case=F)#lists the files in the folder
+
+patmat=matrix(nrow=length(Data_list),ncol=6)# This initializes the storage matrix
+patdat_compiled=data.frame()
+for (i in 1:length(Data_list)){
+  patdat=read.table(paste(x1,"/",Data_list[i],sep=""),stringsAsFactors=FALSE,header=TRUE, sep="\t",fill=TRUE,quote = "")#opens each file as the loop progresses
+  patdat_compiled=rbind(patdat,patdat_compiled)
+}
+#Since 70k of the 72K mutations have a reference context of length 21 and are made up of A,T,C,Gs, I'm only gonna take those
+patdat_compiled=data.frame(patdat_compiled[grep("[A|T|C|G]{21}",patdat_compiled$ref_context),])
+# head(patdat_compiled$ref_context)
+#Filtering by silent/synonymous mutations
+patdat_compiled_sil=patdat_compiled%>%filter(Variant_Classification=="Silent")
+patdat_concat=patdat_compiled_sil[,c(16,1,12,40,13,37,66)]
+patdat_concat$ref_codon=substr(patdat_concat$ref_context,10,12)
+patdat_concat$alt_codon=patdat_concat$ref_codon
+substr(patdat_concat$alt_codon,2,2)=patdat_concat$Tumor_Seq_Allele2
+
+#Note, I'm assuming that when AAC mutates to AGC on the negative strand, that is taken as an GTT mutating to GCT and so on. If you don't want this assumption, you can filter for +ive strand only. You can't really filter by +ive strand only because by definition, the pyrimidines from either the mutated compartment are taken
+
+# patdat_concat$ref_codon_pyrimidines=
+#   a=reverseComplement(DNAString(patdat_concat$ref_codon))
+# DNAString(patdat_concat$ref_codon[1])
+# a=lapply(patdat_concat$ref_codon[1],DNAString)
+# b=lapply(a,reverseComplement)
+
+patdat_concat$mutation=paste(substr(patdat_concat$ref_codon,start = 2,stop = 2),substr(patdat_concat$alt_codon,start = 2,stop = 2),sep="")
+
+#Getting the reverse complement of codons. Test run
+patdat_concat$rc_ref_codon=unlist(lapply(lapply(lapply(patdat_concat$ref_codon,DNAString),reverseComplement),as.character))
+patdat_concat$rc_alt_codon=unlist(lapply(lapply(lapply(patdat_concat$alt_codon,DNAString),reverseComplement),as.character))
+#If the middle base is a purine (A or G), then replace with codon with the reverse complement and replace the "resulting nucleotide" to it's reverse complement as well
+patdat_concat$rc_tag=0
+patdat_concat$rc_tag[grepl("^[A|G]{1}",patdat_concat$mutation)]=1
+
+# When the reverse complement tag is 1, RC the codon
+patdat_concat$codon_pyrimidine=patdat_concat$ref_codon
+patdat_concat$codon_pyrimidine[patdat_concat$rc_tag==1]=patdat_concat$rc_ref_codon[patdat_concat$rc_tag==1]
+patdat_concat$alt_codon_pyrimidine=patdat_concat$alt_codon
+patdat_concat$alt_codon_pyrimidine[patdat_concat$rc_tag==1]=patdat_concat$rc_alt_codon[patdat_concat$rc_tag==1]
+
+# patdat_concat$mutation_pyrimidine=paste(substr(patdat_concat$codon_pyrimidine,start = 2,stop = 2),substr(patdat_concat$alt_codon,start = 2,stop = 2),sep="")
+
+patdat_concat$mutation_pyrimidine=0
+patdat_concat$mutation_pyrimidine[patdat_concat$rc_tag==0]=paste(substr(patdat_concat$codon_pyrimidine[patdat_concat$rc_tag==0],start = 2,stop = 2),substr(patdat_concat$alt_codon_pyrimidine[patdat_concat$rc_tag==0],start = 2,stop = 2),sep="")
+
+patdat_concat$mutation_pyrimidine[patdat_concat$rc_tag==1]=paste(substr(patdat_concat$codon_pyrimidine[patdat_concat$rc_tag==1],start = 2,stop = 2),substr(patdat_concat$alt_codon_pyrimidine[patdat_concat$rc_tag==1],start = 2,stop = 2),sep="")
+
+#Check to make sure there are no C to C mutations and T to T mutations haha
+
+# sort(unique(patdat_concat$mutation_pyrimidine))
+# sort(unique(patdat_concat$codon_pyrimidine))
+
+ggplot(data=patdat_concat,aes(x=factor(codon_pyrimidine),fill=factor(mutation_pyrimidine)))+geom_bar()+facet_wrap(~factor(mutation_pyrimidine),ncol = 6)+cleanup+theme(axis.text.x = element_text(angle = 90, hjust = 1))+scale_fill_manual(values=c("#22BFF0","#070A0B","#E42827","#CBCACB","#A1CF64","#EEC8C6"))
+# ggplotly(plotlyplot)
+ggsave('mutation_bias_luad.pdf',width = 20,height = 3,units = "in")
+
+# sort(unique(patdat_concat$codon_pyrimidine))
+
+
+
+bias_luad=patdat_concat%>%
+  group_by(codon_pyrimidine,mutation_pyrimidine)%>%
+  summarize(n=n())%>%
+  mutate(freq = n / sum(n),probability=n / (sum(n)*32))
+write.csv(bias_luad,"mutation_probability.csv")
+sum(bias_luad$probability)
+# patdat_concat$mutation_pyrimidine2[grepl("^T{1}",patdat_concat$mutation_pyrimidine)]=unlist(lapply(lapply(lapply(patdat_concat$ref_codon,DNAString),reverseComplement),as.character))
+patdat_concat$mutation_pyrimidine=patdat_concat$mutation
+patdat_concat$mutation_pyrimidine[grepl("^T{1}",patdat_concat$mutation_pyrimidine)]='AA'
+
+lengths=unlist(lapply(patdat_compiled$ref_context,nchar))
+hist(lengths,breaks = c(21:30))
+
+
+```
+Troubleshooting the problem with the 92 codons instead of 96
+```{r}
+library(Biostrings)
+x1=list.dirs("data/tcga_luad_expression/luad_mutation_data",full.names=TRUE)#Lists all files in the current working directory x
+
+Data_list=list.files(x1[1],pattern="^TCGA-[A-Za-z0-9]{2}-[A-Za-z0-9]{4}-[A-Za-z0-9]{2}.hg19.oncotator.hugo_entrez_remapped.maf.txt*", ignore.case=F)#lists the files in the folder
+
+patmat=matrix(nrow=length(Data_list),ncol=6)# This initializes the storage matrix
+patdat_compiled=data.frame()
+for (i in 1:length(Data_list)){
+  patdat=read.table(paste(x1,"/",Data_list[i],sep=""),stringsAsFactors=FALSE,header=TRUE, sep="\t",fill=TRUE,quote = "")#opens each file as the loop progresses
+  patdat_compiled=rbind(patdat,patdat_compiled)
+}
+#Since 70k of the 72K mutations have a reference context of length 21 and are made up of A,T,C,Gs, I'm only gonna take those
+patdat_compiled=data.frame(patdat_compiled[grep("[A|T|C|G]{21}",patdat_compiled$ref_context),])
+# head(patdat_compiled$ref_context)
+#Filtering by silent/synonymous mutations
+patdat_compiled_sil=patdat_compiled%>%filter(Variant_Classification=="Silent")
+patdat_concat=patdat_compiled_sil[,c(16,1,12,40,13,37,66)]
+patdat_concat$ref_codon=substr(patdat_concat$ref_context,10,12)
+patdat_concat$alt_codon=patdat_concat$ref_codon
+substr(patdat_concat$alt_codon,2,2)=patdat_concat$Tumor_Seq_Allele2
+
+patdat_concat$mutation=paste(substr(patdat_concat$ref_codon,start = 2,stop = 2),substr(patdat_concat$alt_codon,start = 2,stop = 2),sep="")
+
+x=patdat_concat%>%filter(ref_codon=="ATC")
+sort(unique(x$mutation))
+sort(x$mutation)
+
+```
+
+```{r}
+# patdat_compiled_temp=patdat_compiled
+patdat_compiled=patdat
+patdat_compiled_sil=patdat_compiled%>%filter(Variant_Classification=="Silent")
+patdat_concat=patdat_compiled_sil[,c(16,1,12,40,13,37,66)]
+patdat_concat$ref_codon=substr(patdat_concat$ref_context,10,12)
+patdat_concat$alt_codon=patdat_concat$ref_codon
+substr(patdat_concat$alt_codon,2,2)=patdat_concat$Tumor_Seq_Allele2
+
+#Note, I'm assuming that when AAC mutates to AGC on the negative strand, that is taken as an GTT mutating to GCT and so on. If you don't want this assumption, you can filter for +ive strand only. You can't really filter by +ive strand only because by definition, the pyrimidines from either the mutated compartment are taken
+
+# patdat_concat$ref_codon_pyrimidines=
+#   a=reverseComplement(DNAString(patdat_concat$ref_codon))
+# DNAString(patdat_concat$ref_codon[1])
+# a=lapply(patdat_concat$ref_codon[1],DNAString)
+# b=lapply(a,reverseComplement)
+
+patdat_concat$mutation=paste(substr(patdat_concat$ref_codon,start = 2,stop = 2),substr(patdat_concat$alt_codon,start = 2,stop = 2),sep="")
+
+#Getting the reverse complement of codons. Test run
+patdat_concat$rc_ref_codon=unlist(lapply(lapply(lapply(patdat_concat$ref_codon,DNAString),reverseComplement),as.character))
+patdat_concat$rc_alt_codon=unlist(lapply(lapply(lapply(patdat_concat$alt_codon,DNAString),reverseComplement),as.character))
+#If the middle base is a purine (A or G), then replace with codon with the reverse complement and replace the "resulting nucleotide" to it's reverse complement as well
+patdat_concat$rc_tag=0
+patdat_concat$rc_tag[grepl("^[A|G]{1}",patdat_concat$mutation)]=1
+
+# When the reverse complement tag is 1, RC the codon
+patdat_concat$codon_pyrimidine=patdat_concat$ref_codon
+patdat_concat$codon_pyrimidine[patdat_concat$rc_tag==1]=patdat_concat$rc_ref_codon[patdat_concat$rc_tag==1]
+patdat_concat$alt_codon_pyrimidine=patdat_concat$alt_codon
+patdat_concat$alt_codon_pyrimidine[patdat_concat$rc_tag==1]=patdat_concat$rc_alt_codon[patdat_concat$rc_tag==1]
+
+# patdat_concat$mutation_pyrimidine=paste(substr(patdat_concat$codon_pyrimidine,start = 2,stop = 2),substr(patdat_concat$alt_codon,start = 2,stop = 2),sep="")
+
+patdat_concat$mutation_pyrimidine=0
+patdat_concat$mutation_pyrimidine[patdat_concat$rc_tag==0]=paste(substr(patdat_concat$codon_pyrimidine[patdat_concat$rc_tag==0],start = 2,stop = 2),substr(patdat_concat$alt_codon_pyrimidine[patdat_concat$rc_tag==0],start = 2,stop = 2),sep="")
+
+patdat_concat$mutation_pyrimidine[patdat_concat$rc_tag==1]=paste(substr(patdat_concat$codon_pyrimidine[patdat_concat$rc_tag==1],start = 2,stop = 2),substr(patdat_concat$alt_codon_pyrimidine[patdat_concat$rc_tag==1],start = 2,stop = 2),sep="")
+
+#Check to make sure there are no C to C mutations and T to T mutations haha
+
+# sort(unique(patdat_concat$mutation_pyrimidine))
+# sort(unique(patdat_concat$codon_pyrimidine))
+
+ggplot(data=patdat_concat,aes(x=factor(codon_pyrimidine),fill=factor(mutation_pyrimidine)))+geom_bar()+facet_wrap(~factor(mutation_pyrimidine),ncol = 6)+cleanup+theme(axis.text.x = element_text(angle = 90, hjust = 1))+scale_fill_manual(values=c("#22BFF0","#070A0B","#E42827","#CBCACB","#A1CF64","#EEC8C6"))
+
+patdat_concat2=patdat_concat%>%filter(codon_pyrimidine=="CCA",mutation_pyrimidine=="CA")
+sort(unique(patdat_concat2$Tumor_Sample_Barcode))
+ggplot(data=patdat_concat2,aes(x=factor(codon_pyrimidine),fill=factor(mutation_pyrimidine)))+geom_bar()+facet_wrap(~factor(mutation_pyrimidine),ncol = 6)
+
+patdat_concat2_summarized=patdat_concat2%>%group_by(Tumor_Seq_Allele1,cDNA_Change,Tumor_Seq_Allele2,Transcript_Strand,ref_codon,alt_codon,rc_tag,codon_pyrimidine,alt_codon_pyrimidine,mutation_pyrimidine)%>%summarize(count=n())
+
+patdat_concat2_summarized=patdat_concat2%>%
+  group_by(Tumor_Sample_Barcode,codon_pyrimidine,mutation_pyrimidine)%>%
+  summarize(n=n())%>%
+  mutate(freq = n / sum(n),probability=n / (sum(n)*32))
+x=ggplot(patdat_concat2_summarized,aes(x=factor(codon_pyrimidine),y=probability,color=factor(mutation_pyrimidine)))+geom_boxplot()+facet_wrap(~factor(mutation_pyrimidine),nrow=1)+cleanup+theme(axis.text.x = element_text(angle = 90, hjust = 1))+scale_color_manual(values=c("#22BFF0","#070A0B","#E42827","#CBCACB","#A1CF64","#EEC8C6"))
+ggplotly(x)
+ggsave('mutation_bias_luad_deviations.pdf',width = 20,height = 3,units = "in")
+
+
+bias_luad=patdat_concat%>%
+  group_by(codon_pyrimidine,mutation_pyrimidine)%>%
+  summarise(n=n())%>%
+  mutate(freq = n / sum(n),probability=n / (sum(n)*32))
+x=ggplot(bias_luad,aes(x=factor(codon_pyrimidine),y=probability,fill=factor(mutation_pyrimidine)))+geom_col()+facet_wrap(~factor(mutation_pyrimidine),nrow=1)+cleanup+theme(axis.text.x = element_text(angle = 90, hjust = 1))+scale_fill_manual(values=c("#22BFF0","#070A0B","#E42827","#CBCACB","#A1CF64","#EEC8C6"))
+ggplotly(x)
+ggsave('mutation_bias_luad_diagnostic.pdf',width = 20,height = 6,units = "in")
+```
+
