@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Haider Inam" />
@@ -28,6 +28,14 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -75,9 +83,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -91,7 +97,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -196,8 +201,6 @@ $(document).ready(function () {
 });
 </script>
 
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
 
 <style type="text/css">
@@ -242,6 +245,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -254,48 +258,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -309,6 +274,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -344,8 +315,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -354,6 +323,16 @@ div.tocify {
 
 
 </style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
@@ -401,97 +380,325 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<!-- Add a small amount of space between sections. -->
-<style type="text/css">
-div.section {
-  padding-top: 12px;
-}
-</style>
-
 <div class="fluid-row" id="header">
 
 
 
 <h1 class="title toc-ignore">baf3_alkati_transformations</h1>
-<h4 class="author"><em>Haider Inam</em></h4>
-<h4 class="date"><em>3/4/2019</em></h4>
+<h4 class="author">Haider Inam</h4>
+<h4 class="date">3/4/2019</h4>
 
 </div>
 
 
-<p><strong>Last updated:</strong> 2019-03-06</p>
-<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
-<ul>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-03-21
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>~/Box/RProjects/pair_con_select/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
 <p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
 <p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20190211)</code> </summary></p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20190211code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20190211)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20190211code" class="panel-collapse collapse">
+<div class="panel-body">
 <p>The command <code>set.seed(20190211)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
 <p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/b7d812d4ab27cd7a70ba750f39a0edd13091bad5" target="_blank">b7d812d</a> </summary></p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhaiderinampairconselecttreec4277ef86c6823c4c482b4139290353e9db95563targetblankc4277efa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/pair_con_select/tree/c4277ef86c6823c4c482b4139290353e9db95563" target="_blank">c4277ef</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomhaiderinampairconselecttreec4277ef86c6823c4c482b4139290353e9db95563targetblankc4277efa" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/haiderinam/pair_con_select/tree/c4277ef86c6823c4c482b4139290353e9db95563" target="_blank">c4277ef</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/.RData
+    Ignored:    analysis/.Rhistory
+    Ignored:    analysis/.Rproj.user/
+    Ignored:    data/skmel28_sos1_mekq56p_vemurafenib.csv.sb-ea24b981-dvFz4V/
 
 Untracked files:
+    Untracked:  analysis/ForYiyun.csv
+    Untracked:  analysis/alk_luad_mutation_bias.Rmd
+    Untracked:  analysis/alkati_crizotinib_ic50s.Rmd
+    Untracked:  analysis/analysis.Rproj
+    Untracked:  analysis/baf3_alkati_brig.pdf
+    Untracked:  analysis/baf3_alkati_criz.pdf
+    Untracked:  analysis/ks_results_forshiny.csv
+    Untracked:  baf3_alkati_brig.pdf
     Untracked:  code/alldata_compiler.R
     Untracked:  code/contab_maker.R
     Untracked:  code/mut_excl_genes_datapoints.R
     Untracked:  code/mut_excl_genes_generator.R
     Untracked:  code/quadratic_solver.R
+    Untracked:  code/shinyfunc.R
     Untracked:  code/simresults_generator.R
+    Untracked:  data/ALKATI_ccle.csv
     Untracked:  data/All_Data_V2.csv
+    Untracked:  data/CCLE_NP24.2009_Drug_data_2015.02.24.csv
+    Untracked:  data/alkati_baf3_ic50s_heatmap.csv
     Untracked:  data/alkati_growthcurvedata.csv
+    Untracked:  data/alkati_growthcurvedata_f1174mutants_raw.xlsx
     Untracked:  data/alkati_growthcurvedata_popdoublings.csv
+    Untracked:  data/alkati_growthcurvedata_popdoublings_f1174mutants.csv
     Untracked:  data/alkati_melanoma_vemurafenib_figure_data.csv
+    Untracked:  data/alkati_simulations_compiled_1000_12319.csv
     Untracked:  data/all_data.csv
+    Untracked:  data/skmel28_sos1_mekq56p_vemurafenib.csv
+    Untracked:  data/tcga_brca_expression/
     Untracked:  data/tcga_luad_expression/
     Untracked:  data/tcga_skcm_expression/
-    Untracked:  docs/figure/Filteranalysis.Rmd/
+    Untracked:  output/ alkati_subsamplesize_orval_fig1c.pdf
+    Untracked:  output/alkati_ccle_tae684_plot.pdf
     Untracked:  output/alkati_filtercutoff_allfilters.csv
     Untracked:  output/alkati_luad_exonimbalance.pdf
     Untracked:  output/alkati_mtn_pval_fig2B.pdf
     Untracked:  output/alkati_skcm_exonimbalance.pdf
+    Untracked:  output/alkati_subsamplesize_pval_fig.pdf
+    Untracked:  output/alkati_subsamplesize_pval_fig1c.pdf
     Untracked:  output/all_data_luad.csv
     Untracked:  output/all_data_luad_egfr.csv
     Untracked:  output/all_data_skcm.csv
     Untracked:  output/baf3_alkati_figure_deltaadjusted_doublings.pdf
+    Untracked:  output/baf3_alkati_figure_deltaadjusted_doublings_updated.pdf
     Untracked:  output/baf3_barplot.pdf
     Untracked:  output/baf3_elisa_barplot.pdf
+    Untracked:  output/baf3_f1174_figure_deltaadjusted_doublings.pdf
     Untracked:  output/egfr_luad_exonimbalance.pdf
+    Untracked:  output/fig1c_3719_4.pdf
+    Untracked:  output/fig1c_52219.pdf
     Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
     Untracked:  output/fig2b_filtercutoff_atibraf.pdf
     Untracked:  output/fig2b_filtercutoff_atinras.pdf
     Untracked:  output/luad_alk_exon_expression.csv
     Untracked:  output/luad_egfr_exon_expression.csv
     Untracked:  output/melanoma_vemurafenib_fig.pdf
+    Untracked:  output/melanoma_vemurafenib_fig_bottom.pdf
+    Untracked:  output/melanoma_vemurafenib_fig_top.pdf
     Untracked:  output/skcm_alk_exon_expression.csv
+    Untracked:  output/suppfig1..pdf
+    Untracked:  output/suppfig1_52219.pdf
+    Untracked:  shinyapp/
+    Untracked:  suppfig1..pdf
+
+Unstaged changes:
+    Modified:   analysis/ALKATI_Filter_Cutoff_Analysis.Rmd
+    Modified:   analysis/ALK_ExonImbalance_SKCM_Analysis.Rmd
+    Modified:   analysis/TCGA_luad_data_parser.Rmd
+    Modified:   analysis/alkati_cell_line_tae684_response.Rmd
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/pairwise_comparisons_conditional_selection_simulated_cohorts.Rmd
+    Deleted:    analysis/practice.Rmd
+    Modified:   analysis/tcga_luad_data_parser_egfr.Rmd
 
 </code></pre>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
-</li>
-</ul>
-<hr />
-<pre class="r"><code>library(ggsignif)
-library(ggplot2)
-library(knitr)
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/baf3_alkati_transformations.Rmd</code>) and HTML (<code>docs/baf3_alkati_transformations.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/c4277ef86c6823c4c482b4139290353e9db95563/analysis/baf3_alkati_transformations.Rmd" target="_blank">c4277ef</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2021-03-21
+</td>
+<td>
+wflow_publish(“analysis/baf3_alkati_transformations.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/haiderinam/pair_con_select/6744c50a7c827ccdc3ae5580a1c62edbfb827137/docs/baf3_alkati_transformations.html" target="_blank">6744c50</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2019-03-06
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/b7d812d4ab27cd7a70ba750f39a0edd13091bad5/analysis/baf3_alkati_transformations.Rmd" target="_blank">b7d812d</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2019-03-06
+</td>
+<td>
+Published Fig 4 analysis analysis, added statistical test for fig 3 &amp; 4
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(reshape2)
+library(ggsignif)
+library(ggplot2)</code></pre>
+<pre><code>Warning: package &#39;ggplot2&#39; was built under R version 4.0.2</code></pre>
+<pre class="r"><code>library(knitr)
 library(dplyr)</code></pre>
 <pre><code>
 Attaching package: &#39;dplyr&#39;</code></pre>
@@ -514,19 +721,20 @@ cleanup=theme_bw() +
         panel.grid.major = element_blank(),
         panel.grid.major.y = element_blank(),
         panel.background = element_blank(),
-        axis.line = element_line(color = &quot;black&quot;))</code></pre>
-<div id="alkati-does-not-seem-to-be-sufficient-to-make-baf3s-growth-factor-independent" class="section level2">
-<h2>ALKATI does not seem to be sufficient to make Baf3s growth factor independent</h2>
-<div id="displaying-the-population-doublings-of-alkati-eml4alk-and-vector-over-time" class="section level3">
-<h3>Displaying the population doublings of ALKATI, EML4ALK, and Vector over time</h3>
-<div id="please-not-that-while-we-performed-a-total-of-48-alkati-transductions-we-only-counted-the-first-9-transductions." class="section level4">
-<h4>Please not that while we performed a total of 48 ALKATI transductions, we only counted the first 9 transductions.</h4>
+        # axis.line = element_line(color = &quot;black&quot;),
+        axis.text = element_text(face=&quot;bold&quot;,color=&quot;black&quot;,size=&quot;11&quot;),
+        text=element_text(size=11,face=&quot;bold&quot;),
+        axis.title=element_text(face=&quot;bold&quot;,size=&quot;11&quot;))
+# rm(list=ls())</code></pre>
+<p>##ALKATI does not seem to be sufficient to make Baf3s growth factor independent ###Displaying the population doublings of ALKATI, EML4ALK, and Vector over time ####Please not that while we performed a total of 48 ALKATI transductions, we only counted the first 9 transductions.</p>
 <pre class="r"><code>library(ggplot2)
 library(reshape2)
 library(Hmisc)</code></pre>
+<pre><code>Warning: package &#39;Hmisc&#39; was built under R version 4.0.2</code></pre>
 <pre><code>Loading required package: lattice</code></pre>
 <pre><code>Loading required package: survival</code></pre>
 <pre><code>Loading required package: Formula</code></pre>
+<pre><code>Warning: package &#39;Formula&#39; was built under R version 4.0.2</code></pre>
 <pre><code>
 Attaching package: &#39;Hmisc&#39;</code></pre>
 <pre><code>The following objects are masked from &#39;package:dplyr&#39;:
@@ -552,63 +760,99 @@ baf3data=baf3data[,c(1:11)]
 # baf3data=baf3data[,c(1:8)]
 
 #
-baf3data2=melt(baf3data,id.vars = c(&quot;Time&quot;,&quot;Infection&quot;))
+baf3data2=melt(baf3data,id.vars = c(&quot;Time&quot;,&quot;Infection&quot;),variable.name =&quot;infnum&quot; ,value.name = &quot;doublings&quot;)
 
 baf3data2=baf3data2 %&gt;%
-  filter(value&gt;=-10)
+  filter(doublings&gt;=-10)
 
 
 baf3data2=na.omit(baf3data2)
 
-baf3data2$variable=as.character(baf3data2$variable)
+baf3data2$infnum=as.character(baf3data2$infnum)
 ###Transforming counts into actual numbers because these counts represent x1000s
 # baf3data2$value=baf3data2$value*1000
 ###Creating a boolean for Type of infection
 baf3data2$type=&quot;EML4ALK&quot;
-baf3data2$type[grep(&quot;alkati&quot;,baf3data2$variable,ignore.case = T)]=&quot;ALKATI&quot;
-baf3data2$type[grep(&quot;vector&quot;,baf3data2$variable,ignore.case = T)]=&quot;VECTOR&quot;
+baf3data2$type[grep(&quot;alkati&quot;,baf3data2$infnum,ignore.case = T)]=&quot;ALKATI&quot;
+baf3data2$type[grep(&quot;vector&quot;,baf3data2$infnum,ignore.case = T)]=&quot;VECTOR&quot;
 #
 #
 
-ggplot(baf3data2,aes(x=Time,y=value,color=type,fill=Infection,shape=variable))+
-  geom_line(size=3)+
-  geom_point(size=5,shape=16)+
+ggplot(baf3data2,aes(x=Time,y=doublings,color=type,fill=Infection,shape=infnum))+
+  geom_line(size=1)+
+  geom_point(size=2,shape=16)+
   # scale_y_continuous(limits = c(1,1e8))+
-  ggtitle(&quot;ALK-ATI sporadically promotes growth-factor-independent proliferation&quot;)+
   xlab(&quot;Days after Transduction&quot;)+
   ylab(&quot;Number of Cell Doublings&quot;)+
   cleanup+
   theme(plot.title = element_text(hjust=.5),
-        text = element_text(size=24,face = &quot;bold&quot;),
-        axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
-        axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;))+
+        text = element_text(size=11,face = &quot;bold&quot;),
+        axis.title = element_text(face=&quot;bold&quot;,size=&quot;11&quot;),
+        axis.text=element_text(face=&quot;bold&quot;,color=&quot;black&quot;,size=&quot;11&quot;))+
   theme(legend.position=&quot;none&quot;)+
   xlim(0,14)+
   scale_colour_brewer(palette=&quot;Set2&quot;)</code></pre>
-<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values
-because more than 6 becomes difficult to discriminate; you have 9.
-Consider specifying shapes manually if you must have them.</code></pre>
-<pre><code>Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
+<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values because
+more than 6 becomes difficult to discriminate; you have 9. Consider
+specifying shapes manually if you must have them.</code></pre>
+<pre><code>Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
 <pre><code>Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
 <p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/6744c50a7c827ccdc3ae5580a1c62edbfb827137/docs/figure/baf3_alkati_transformations.Rmd/unnamed-chunk-2-1.png" target="_blank">6744c50</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2019-03-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Can also make your own palette and color manually. Obtained from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
-ggsave(&quot;output/baf3_alkati_figure_deltaadjusted_doublings.pdf&quot;,width = 16, height = 12, units = &quot;in&quot;)</code></pre>
-<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values
-because more than 6 becomes difficult to discriminate; you have 9.
-Consider specifying shapes manually if you must have them.</code></pre>
-<pre><code>Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
+ggsave(&quot;output/baf3_alkati_figure_deltaadjusted_doublings.pdf&quot;,width = 3, height = 2.25, units = &quot;in&quot;,useDingbats=F)</code></pre>
+<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values because
+more than 6 becomes difficult to discriminate; you have 9. Consider
+specifying shapes manually if you must have them.</code></pre>
+<pre><code>Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
 <pre><code>Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
 <pre class="r"><code># Mean and standard deviation to grow out:
 #Our criteria for cells &quot;growing out&quot; was when they reached two population doublings
 #I extracted the number of days it took for ALKATI and EML4ALK samples to reach 2 population doublings by looking at the data of cells growing out.
 head(baf3data2)</code></pre>
-<pre><code>  Time Infection variable     value   type
-1  1.0    24-Nov  ALKATI1 0.0000000 ALKATI
-2  2.0    24-Nov  ALKATI1 0.6918777 ALKATI
-3  3.5    24-Nov  ALKATI1 0.9142701 ALKATI
-4  5.0    24-Nov  ALKATI1 0.7589919 ALKATI
-5  6.0    24-Nov  ALKATI1 0.4694853 ALKATI
-6  9.0    24-Nov  ALKATI1 2.8387191 ALKATI</code></pre>
+<pre><code>  Time Infection  infnum doublings   type
+1  1.0    24-Nov ALKATI1 0.0000000 ALKATI
+2  2.0    24-Nov ALKATI1 0.6918777 ALKATI
+3  3.5    24-Nov ALKATI1 0.9142701 ALKATI
+4  5.0    24-Nov ALKATI1 0.7589919 ALKATI
+5  6.0    24-Nov ALKATI1 0.4694853 ALKATI
+6  9.0    24-Nov ALKATI1 2.8387191 ALKATI</code></pre>
 <pre class="r"><code>#ALKATI grew out in 9,10, and 11 days.
 mean(c(9,10,11))</code></pre>
 <pre><code>[1] 10</code></pre>
@@ -619,10 +863,109 @@ mean(c(6,6,6,6,6,10))</code></pre>
 <pre><code>[1] 6.666667</code></pre>
 <pre class="r"><code>sd(c(6,6,6,6,6,5))</code></pre>
 <pre><code>[1] 0.4082483</code></pre>
-</div>
-</div>
-<div id="converting-the-number-of-infections-growing-out-to-a-barplot" class="section level3">
-<h3>Converting the number of infections growing out to a barplot</h3>
+<pre class="r"><code>###Adding data for F1174 mutants that were generated on top of plvx-ALKATI-IRES-Puro using SDM
+f1174data=read.table(&quot;data/alkati_growthcurvedata_popdoublings_f1174mutants.csv&quot;,header=T,stringsAsFactors = F,sep = &quot;,&quot;)
+
+
+f1174data2=melt(f1174data,id.vars = c(&quot;Time&quot;,&quot;Replicate&quot;,&quot;Condition&quot;),value.name = &quot;doublings&quot;,variable.name = &quot;CellLine&quot;)
+
+f1174data2=f1174data2 %&gt;%
+  filter(doublings&gt;=-10)
+
+# f1174data2=na.omit(f1174data2)
+
+f1174data2$CellLine=as.character(f1174data2$CellLine)
+f1174data2=f1174data2%&gt;%mutate(type=case_when(
+  CellLine%in%c(&quot;ALKATI&quot;)~&quot;ALKATI&quot;,
+  CellLine%in%c(&quot;F1174C&quot;,&quot;F1174V&quot;,&quot;F1174I&quot;)~&quot;ALKATIMutant&quot;,
+  CellLine%in%c(&quot;Vector&quot;)~&quot;VECTOR&quot;,
+  CellLine%in%c(&quot;EML4ALK&quot;)~&quot;EML4ALK&quot;
+))
+f1174data2=f1174data2%&gt;%
+  mutate(type_forplot=case_when(type%in%&quot;ALKATIMutant&quot;~&quot;ALKATI&quot;,
+                                                      TRUE~type))
+ggplot(f1174data2%&gt;%filter(!Condition%in%&quot;Growth&quot;),aes(x=Time/24,y=doublings,color=type_forplot,fill=CellLine,shape=factor(Replicate)))+
+  geom_line(size=1)+
+  geom_point(size=2,shape=16)+cleanup+
+theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=11,face = &quot;bold&quot;),
+        axis.title = element_text(face=&quot;bold&quot;,size=&quot;11&quot;),
+        axis.text=element_text(face=&quot;bold&quot;,color=&quot;black&quot;,size=&quot;11&quot;))+
+  scale_x_continuous(name=&quot;Time&quot;)+
+  scale_y_continuous(name=&quot;Number of Cell Doublings&quot;)+
+  # theme(legend.position=&quot;none&quot;)+
+  # xlim(0,14)+
+  scale_colour_brewer(palette=&quot;Set2&quot;)+
+  xlim(0,11)+
+  theme(legend.position=&quot;none&quot;)</code></pre>
+<pre><code>Scale for &#39;x&#39; is already present. Adding another scale for &#39;x&#39;, which will
+replace the existing scale.</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-2-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(&quot;output/baf3_f1174_figure_deltaadjusted_doublings.pdf&quot;,width = 3, height = 2.25, units = &quot;in&quot;,useDingbats=F)
+
+###Combining the F1174C transformants dataframe and the Baf3 ALKATI WT transformants dataframe. Numbering the ALKATI infection numbers so that they match better with the format that I used for the BaF3 transformations last year.
+f1174data2=f1174data2%&gt;%
+  mutate(infnum=CellLine,
+         infnum=case_when(CellLine%in%&quot;ALKATI&quot;
+                          &amp;Condition%in%&quot;IL3Sele&quot;
+                          &amp;Replicate%in%1~&quot;ALKATI4&quot;,
+                          CellLine%in%&quot;ALKATI&quot;
+                          &amp;Condition%in%&quot;IL3Sele&quot;
+                          &amp;Replicate%in%2~&quot;ALKATI5&quot;,
+                          CellLine%in%&quot;EML4ALK&quot;
+                          &amp;Condition%in%&quot;IL3Sele&quot;
+                          &amp;Replicate%in%1~&quot;Eml4Alk.4&quot;,
+                          CellLine%in%&quot;EML4ALK&quot;
+                          &amp;Condition%in%&quot;IL3Sele&quot;
+                          &amp;Replicate%in%2~&quot;Eml4Alk.5&quot;,
+                          CellLine%in%&quot;Vector&quot;
+                          &amp;Condition%in%&quot;IL3Sele&quot;
+                          &amp;Replicate%in%1~&quot;Vector4&quot;,
+                          CellLine%in%&quot;Vector&quot;
+                          &amp;Condition%in%&quot;IL3Sele&quot;
+                          &amp;Replicate%in%2~&quot;Vector5&quot;,
+                          TRUE~paste(CellLine,Replicate,sep=&quot;&quot;)))
+a=f1174data2%&gt;%mutate(Time=Time/24)%&gt;%dplyr::select(Time,Infection=CellLine,infnum,doublings,type,Condition)
+baf3data2$Condition=&quot;IL3Sele&quot;
+brafdata_combined=rbind(baf3data2,a)
+
+brafdata_combined=brafdata_combined%&gt;%filter(!(Condition%in%&quot;Growth&quot;&amp;Time&gt;=9))
+# c=brafdata_combined
+# c=brafdata_combined%&gt;%filter(!(Condition%in%&quot;Growth&quot; &amp; Time&gt;=6))
+
+
+
+ggplot(brafdata_combined%&gt;%filter(!type%in%&quot;ALKATIMutant&quot;),aes(x=Time,y=doublings,color=type,fill=Infection,shape=infnum,alpha=factor(Condition)))+
+  geom_line(size=1)+
+  geom_point(size=2,shape=16)+
+  # geom_point()
+  # scale_y_continuous(limits = c(1,1e8))+
+  xlab(&quot;Days after Transduction&quot;)+
+  ylab(&quot;Number of Cell Doublings&quot;)+
+  cleanup+
+  theme(plot.title = element_text(hjust=.5),
+        text = element_text(size=11,face = &quot;bold&quot;),
+        axis.title = element_text(face=&quot;bold&quot;,size=&quot;11&quot;),
+        axis.text=element_text(face=&quot;bold&quot;,color=&quot;black&quot;,size=&quot;11&quot;))+
+  theme(legend.position=&quot;none&quot;)+
+  xlim(0,13)+
+  # ylim(-6,14)+
+  scale_colour_brewer(palette=&quot;Set2&quot;)</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values because
+more than 6 becomes difficult to discriminate; you have 16. Consider
+specifying shapes manually if you must have them.</code></pre>
+<pre><code>Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-2-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(&quot;output/baf3_alkati_figure_deltaadjusted_doublings_updated.pdf&quot;,width = 3, height = 2.25, units = &quot;in&quot;,useDingbats=F)</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values because
+more than 6 becomes difficult to discriminate; you have 16. Consider
+specifying shapes manually if you must have them.</code></pre>
+<pre><code>Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p>###Converting the number of infections growing out to a barplot</p>
 <pre class="r"><code>baf3_alkati_infections=data.frame(cbind(c(&quot;EML4ALK&quot;,&quot;ALKATI&quot;,&quot;VECTOR&quot;),c(48/48*100,18/48*100,8/48*100)))
 colnames(baf3_alkati_infections)=c(&quot;Infection_Type&quot;,&quot;Infection_efficiency&quot;)
 baf3_alkati_infections$Infection_efficiency=as.numeric(as.character(baf3_alkati_infections$Infection_efficiency))
@@ -630,22 +973,59 @@ baf3_alkati_infections$Infection_efficiency=as.numeric(as.character(baf3_alkati_
 ggplot(baf3_alkati_infections,aes(x=Infection_Type,y=Infection_efficiency))+
   geom_col(aes(fill=Infection_Type))+
   scale_fill_brewer(palette=&quot;Set2&quot;)+
-  scale_y_continuous(limits = c(0,110),name = &quot;% Infections conferring GF-independence&quot;)+
+  scale_y_continuous(limits = c(0,110),name = &quot;GF independent infections %&quot;)+
   xlab(&quot;&quot;)+
   cleanup+
   theme(plot.title = element_text(hjust=.5),
-      text = element_text(size=24,face = &quot;bold&quot;),
-      axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
-      axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;))+
+      text = element_text(size=10,face = &quot;bold&quot;),
+      axis.title = element_text(face=&quot;bold&quot;,size=&quot;10&quot;),
+      axis.text=element_text(face=&quot;bold&quot;,size=&quot;10&quot;,color=&quot;black&quot;))+
   theme(legend.position=&quot;none&quot;)+
-  geom_text(label = c(&quot;48/48&quot;,&quot;18/48&quot;,&quot;8/48&quot;),size=10,nudge_y = -10)+
-  geom_signif(annotations = &#39;*&#39;, y_position = 90 ,xmin=&quot;ALKATI&quot;, xmax=&quot;EML4ALK&quot;,size = 1,textsize = 10,nudge_y=-10)+
-  geom_signif(annotations = &#39;*&#39;, y_position = 100 ,xmin=&quot;ALKATI&quot;, xmax=&quot;VECTOR&quot;,size = 1,textsize = 10,nudge_y=-10)</code></pre>
+  geom_text(label = c(&quot;48/48&quot;,&quot;18/48&quot;,&quot;8/48&quot;),size=5,nudge_y = -10)+
+  geom_signif(annotations = &#39;*&#39;, y_position = 90 ,xmin=&quot;ALKATI&quot;, xmax=&quot;EML4ALK&quot;,size = 1,textsize = 7,nudge_y=-10)+
+  geom_signif(annotations = &#39;*&#39;, y_position = 100 ,xmin=&quot;ALKATI&quot;, xmax=&quot;VECTOR&quot;,size = 1,textsize = 7,nudge_y=-10)</code></pre>
 <pre><code>Warning: Ignoring unknown parameters: nudge_y
 
 Warning: Ignoring unknown parameters: nudge_y</code></pre>
 <p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>ggsave(&quot;output/baf3_barplot.pdf&quot;,width = 10,height = 8,units = &quot;in&quot;)
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/6744c50a7c827ccdc3ae5580a1c62edbfb827137/docs/figure/baf3_alkati_transformations.Rmd/unnamed-chunk-3-1.png" target="_blank">6744c50</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2019-03-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>ggsave(&quot;output/baf3_barplot.pdf&quot;,width = 3,height = 2.25,units = &quot;in&quot;,useDingbats=F)
 ###Since meeting successful infection vs unsuccesfful infection are categorical variables, I will use the Chi-Sq test
 #ALKATI vs EML4ALK Pvalue= 1.707e-10:
 chisq.test(data.frame(rbind(c(18,30),c(48,0))))</code></pre>
@@ -661,9 +1041,7 @@ chisq.test(data.frame(rbind(c(18,30),c(8,40))))</code></pre>
 
 data:  data.frame(rbind(c(18, 30), c(8, 40)))
 X-squared = 4.2725, df = 1, p-value = 0.03873</code></pre>
-</div>
-<div id="barplot-for-p24-eliza" class="section level3">
-<h3>Barplot for P24 Eliza</h3>
+<p>###Barplot for P24 Eliza</p>
 <pre class="r"><code>#####################Barplot for P24 Elisa########################
 #Inputting the lenitivirus particles that were calculated using the P24 Eliza
 baf3_alkati_elisa=data.frame(cbind(c(&quot;EML4ALK&quot;,&quot;EML4ALK&quot;,&quot;EML4ALK&quot;,&quot;EML4ALK&quot;,&quot;ALKATI&quot;,&quot;ALKATI&quot;,&quot;ALKATI&quot;,&quot;ALKATI&quot;),c(&quot;6-Nov&quot;,&quot;21-Nov&quot;,&quot;6-Jul&quot;,&quot;26-Jul&quot;,&quot;6-Nov&quot;,&quot;21-Nov&quot;,&quot;6-Jul&quot;,&quot;26-Jul&quot;),c(590346562.5,118892812.5,46836562.5,172420312.5,744238125,410720625,46836563,75659063)))
@@ -677,14 +1055,50 @@ ggplot(baf3_alkati_elisa,aes(x=Infection_Date,y=Lentivirus_Particles))+
   xlab(&quot;Infection Date&quot;)+
   cleanup+
   theme(plot.title = element_text(hjust=.5),
-        text = element_text(size=24,face = &quot;bold&quot;),
-        axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
-        axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;,colour = &quot;black&quot;))+
+        text = element_text(size=10,face = &quot;bold&quot;),
+        axis.title = element_text(face=&quot;bold&quot;,size=&quot;10&quot;),
+        axis.text=element_text(face=&quot;bold&quot;,size=&quot;10&quot;,colour = &quot;black&quot;))+
   scale_y_continuous(trans = &quot;log&quot;,breaks=c(1e2,1e4,1e6,1e8),labels = parse(text = c(&quot;10^2&quot;,&quot;10^4&quot;,&quot;10^6&quot;,&quot;10^8&quot;)))</code></pre>
 <p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>ggsave(&quot;output/baf3_elisa_barplot.pdf&quot;,width = 12,height = 8,units = &quot;in&quot;)</code></pre>
-<div id="another-way-of-displaying-fig-4a-using-unn" class="section level4">
-<h4>Another way of displaying Fig 4a using unn</h4>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/6744c50a7c827ccdc3ae5580a1c62edbfb827137/docs/figure/baf3_alkati_transformations.Rmd/unnamed-chunk-4-1.png" target="_blank">6744c50</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2019-03-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>ggsave(&quot;output/baf3_elisa_barplot.pdf&quot;,width = 4,height = 3,units = &quot;in&quot;,useDingbats=F)</code></pre>
+<p>####Another way of displaying Fig 4a using unn</p>
 <pre class="r"><code>##################Baf3 figure based on raw numbers  
 baf3data=read.table(&quot;data/alkati_growthcurvedata.csv&quot;,header=T,stringsAsFactors = F,sep = &quot;,&quot;)
 # ###Removing 7th march data because the cells grew a lot in the first day post selection
@@ -694,19 +1108,19 @@ baf3data=baf3data[,c(1:11)]
 # # baf3data=baf3data[,c(1:8)]
 # 
 # 
-baf3data2=melt(baf3data,id.vars = c(&quot;Time&quot;,&quot;Infection&quot;))
+baf3data2=melt(baf3data,id.vars = c(&quot;Time&quot;,&quot;Infection&quot;),variable.name = &quot;infnum&quot;,value.name = &quot;doublings&quot;)
 baf3data2=na.omit(baf3data2)
-baf3data2$variable=as.character(baf3data2$variable)
+baf3data2$infnum=as.character(baf3data2$infnum)
 # ###Transforming counts into actual numbers because these counts represent x1000s
-baf3data2$value=baf3data2$value*1000
+baf3data2$doublings=baf3data2$doublings*1000
 # ###Creating a boolean for Type of infection
 baf3data2$type=&quot;EML4ALK&quot;
-baf3data2$type[grep(&quot;alkati&quot;,baf3data2$variable,ignore.case = T)]=&quot;ALKATI&quot;
-baf3data2$type[grep(&quot;vector&quot;,baf3data2$variable,ignore.case = T)]=&quot;VECTOR&quot;
+baf3data2$type[grep(&quot;alkati&quot;,baf3data2$infnum,ignore.case = T)]=&quot;ALKATI&quot;
+baf3data2$type[grep(&quot;vector&quot;,baf3data2$infnum,ignore.case = T)]=&quot;VECTOR&quot;
 # ###We will use the log2 ratio of the starting population to the pop of interest to get the number of doubling of a population
 # ###These are called pseudo counts
 # ###To avoid the problem of undefined regions when the populations go to 0, we have 
-ggplot(baf3data2,aes(x=Time,y=value,color=type,fill=Infection,shape=variable))+
+ggplot(baf3data2,aes(x=Time,y=doublings,color=type,fill=Infection,shape=infnum))+
   geom_line(size=3)+
   geom_point(size=5,shape=16)+
   scale_y_continuous(trans = &quot;log10&quot;)+
@@ -719,16 +1133,50 @@ ggplot(baf3data2,aes(x=Time,y=value,color=type,fill=Infection,shape=variable))+
        axis.title = element_text(face=&quot;bold&quot;,size=&quot;24&quot;),
        axis.text=element_text(face=&quot;bold&quot;,size=&quot;24&quot;))+
   theme(legend.position=&quot;none&quot;)</code></pre>
-<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values
-because more than 6 becomes difficult to discriminate; you have 9.
-Consider specifying shapes manually if you must have them.</code></pre>
+<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values because
+more than 6 becomes difficult to discriminate; you have 9. Consider
+specifying shapes manually if you must have them.</code></pre>
 <p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/6744c50a7c827ccdc3ae5580a1c62edbfb827137/docs/figure/baf3_alkati_transformations.Rmd/unnamed-chunk-5-1.png" target="_blank">6744c50</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2019-03-06
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
-<div id="alkati-is-not-sufficient-to-rescue-melanoma-form-a-vemurafenib-challenge" class="section level2">
-<h2>ALKATI is not sufficient to rescue melanoma form a vemurafenib challenge</h2>
+<p>##ALKATI is not sufficient to rescue melanoma form a vemurafenib challenge</p>
 <pre class="r"><code>melanoma_data=read.table(&quot;data/alkati_melanoma_vemurafenib_figure_data.csv&quot;,header = T,stringsAsFactors = F,sep=&quot;,&quot;)
+# melanoma_data=read.table(&quot;../data/alkati_melanoma_vemurafenib_figure_data.csv&quot;,header = T,stringsAsFactors = F,sep=&quot;,&quot;)
 
 # colnames(melanoma_data)=c(&quot;dose&quot;,&quot;skmel_pig&quot;,&quot;skmel_alkati&quot;,&quot;g361_pig&quot;,&quot;g361_alkati&quot;)
 # colnames(melanoma_data)
@@ -739,21 +1187,59 @@ melanoma_data2$variable[grep(&quot;Skmel28.AlkAti&quot;,melanoma_data2$variable)
 melanoma_data2$variable[grep(&quot;G361.PIG&quot;,melanoma_data2$variable)]=&quot;G361.PIG&quot;
 melanoma_data2$variable[grep(&quot;G361.AlkAti&quot;,melanoma_data2$variable)]=&quot;G361.AlkAti&quot;
 
-  ggplot(melanoma_data2,aes(Dose,value,color=variable))+
-    stat_summary(fun.y=mean,
-                 geom=&quot;point&quot;,size=10) +
-    scale_x_continuous(trans = &quot;log10&quot;) +
-    stat_summary(fun.data = mean_cl_normal,
-                 geom=&quot;errorbar&quot;,
-                 width=.05)+
-    xlab(&quot;Vemurafenib Dose (uM)&quot;) +
-    ylab(&quot;Live Cell Fraction&quot;)+
-    ggtitle(&quot;Dose-Response of ALK-ATI \nin Melanoma to BRAF inhibitor&quot;)+
-    scale_color_manual(name=&quot;Cell Line&quot;, labels=c(&quot;\nSkmel-28 PIG&quot;,&quot;\nSkmel-28 ALKATI&quot;,&quot;\nG361 PIG&quot;,&quot;\nG361 ALKATI&quot;),values=c(&quot;#efbc04&quot;,&quot;red&quot;,&quot;#19a4ef&quot;,&quot;#3a1aef&quot;))+
-    cleanup+
-  theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;Black&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;26&quot;,color=&quot;Black&quot;))</code></pre>
+ggplot(melanoma_data2,aes(Dose,value,color=variable))+
+  stat_summary(fun.y=mean,
+               geom=&quot;point&quot;,size=2.5) +
+  scale_x_continuous(trans = &quot;log10&quot;) +
+  stat_summary(fun.data = mean_cl_normal,
+               geom=&quot;errorbar&quot;,
+               width=.05)+
+  xlab(&quot;Vemurafenib Dose (uM)&quot;) +
+  ylab(&quot;Live Cell Fraction&quot;)+
+  scale_color_manual(name=&quot;Cell Line&quot;, labels=c(&quot;\nSkmel-28 PIG&quot;,&quot;\nSkmel-28 ALKATI&quot;,&quot;\nG361 PIG&quot;,&quot;\nG361 ALKATI&quot;),values=c(&quot;#efbc04&quot;,&quot;red&quot;,&quot;#19a4ef&quot;,&quot;#3a1aef&quot;))+
+  cleanup+
+theme(plot.title = element_text(hjust=.5),text = element_text(size=10,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;10&quot;,color=&quot;Black&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;10&quot;,color=&quot;Black&quot;),
+      legend.position = &quot;bottom&quot;)</code></pre>
+<pre><code>Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
 <p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>ggsave(&quot;output/melanoma_vemurafenib_fig.pdf&quot;,width = 16, height = 12, units = &quot;in&quot;)
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/haiderinam/pair_con_select/blob/6744c50a7c827ccdc3ae5580a1c62edbfb827137/docs/figure/baf3_alkati_transformations.Rmd/unnamed-chunk-6-1.png" target="_blank">6744c50</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2019-03-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># ggsave(&quot;output/melanoma_vemurafenib_fig.pdf&quot;,width = 3, height = 3, units = &quot;in&quot;,useDingbats=F)
 
 ###Testing whether ALKATI has a different IC50 than vector
 ks.test(melanoma_data2$value[melanoma_data2$variable==&quot;Skmel28.AlkAti&quot;],melanoma_data2$value[melanoma_data2$variable==&quot;Skmel28.PIG&quot;])</code></pre>
@@ -775,21 +1261,161 @@ ks.test(melanoma_data2$value[melanoma_data2$variable==&quot;G361.AlkAti&quot;],m
 <pre><code>
     Two-sample Kolmogorov-Smirnov test
 
-data:  melanoma_data2$value[melanoma_data2$variable == &quot;G361.AlkAti&quot;] and melanoma_data2$value[melanoma_data2$variable == &quot;G361.PIG&quot;] + melanoma_data2$value[melanoma_data2$variable == &quot;G361.AlkAti&quot;] and     0.25
+data:  melanoma_data2$value[melanoma_data2$variable == &quot;G361.AlkAti&quot;] and melanoma_data2$value[melanoma_data2$variable == &quot;G361.PIG&quot;] + 0.25
 D = 0.40741, p-value = 0.02167
 alternative hypothesis: two-sided</code></pre>
-<pre class="r"><code>###P-Values: 0.99 for Skmel28, and 0.75 for G361s, showing that the ALKATI distributions were not significantly different.</code></pre>
-</div>
-<div id="session-information" class="section level2">
-<h2>Session information</h2>
+<pre class="r"><code>means=melanoma_data2%&gt;%group_by(Dose,variable)%&gt;%dplyr::summarize(value=mean(value))
+t.test(means$value[means$variable==&quot;G361.AlkAti&quot;],means$value[means$variable==&quot;G361.PIG&quot;],paired=T,alternative = &quot;greater&quot;)</code></pre>
+<pre><code>
+    Paired t-test
+
+data:  means$value[means$variable == &quot;G361.AlkAti&quot;] and means$value[means$variable == &quot;G361.PIG&quot;]
+t = -3.5152, df = 8, p-value = 0.996
+alternative hypothesis: true difference in means is greater than 0
+95 percent confidence interval:
+ -0.07251598         Inf
+sample estimates:
+mean of the differences 
+              -0.047427 </code></pre>
+<pre class="r"><code>t.test(means$value[means$variable==&quot;Skmel28.AlkAti&quot;],means$value[means$variable==&quot;Skmel28.PIG&quot;],paired=T)</code></pre>
+<pre><code>
+    Paired t-test
+
+data:  means$value[means$variable == &quot;Skmel28.AlkAti&quot;] and means$value[means$variable == &quot;Skmel28.PIG&quot;]
+t = 0.70871, df = 8, p-value = 0.4986
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.01593089  0.03006765
+sample estimates:
+mean of the differences 
+            0.007068381 </code></pre>
+<pre class="r"><code>t.test(means$value[means$variable==&quot;Skmel28.AlkAti&quot;],means$value[means$variable==&quot;G361.PIG&quot;],paired=T)</code></pre>
+<pre><code>
+    Paired t-test
+
+data:  means$value[means$variable == &quot;Skmel28.AlkAti&quot;] and means$value[means$variable == &quot;G361.PIG&quot;]
+t = -0.4426, df = 8, p-value = 0.6698
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.1525738  0.1034370
+sample estimates:
+mean of the differences 
+            -0.02456842 </code></pre>
+<pre class="r"><code># wilcox.test(means$value[means$variable==&quot;G361.AlkAti&quot;],means$value[means$variable==&quot;G361.PIG&quot;],paired=T,alternative = &quot;greater&quot;)
+# wilcox.test(means$value[means$variable==&quot;Skmel28.AlkAti&quot;],means$value[means$variable==&quot;Skmel28.PIG&quot;],paired=T,alternative = &quot;greater&quot;)
+###P-Values: 0.99 for Skmel28, and 0.75 for G361s, showing that the ALKATI distributions were not significantly different.
+
+#Plotting each cell line individually
+melanoma_data_g361=melanoma_data2%&gt;%filter(variable%in%c(&quot;G361.PIG&quot;,&quot;G361.AlkAti&quot;))
+ggplot(melanoma_data_g361,aes(Dose,value,color=variable))+
+  stat_summary(fun.y=mean,
+               geom=&quot;point&quot;,size=2.5) +
+  scale_x_continuous(trans = &quot;log10&quot;) +
+  stat_summary(fun.data = mean_cl_normal,
+               geom=&quot;errorbar&quot;,
+               width=.05)+
+  xlab(&quot;Vemurafenib Dose (uM)&quot;) +
+  ylab(&quot;Live Cell Fraction&quot;)+
+  scale_color_manual(name=&quot;Cell Line&quot;, labels=c(&quot;\nG361 PIG&quot;,&quot;\nG361 ALKATI&quot;),values=c(&quot;#19a4ef&quot;,&quot;#3a1aef&quot;))+
+  cleanup+
+theme(plot.title = element_text(hjust=.5),text = element_text(size=10,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;10&quot;,color=&quot;Black&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;10&quot;,color=&quot;Black&quot;),
+      legend.position = &quot;none&quot;)</code></pre>
+<pre><code>Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;output/melanoma_vemurafenib_fig_top.pdf&quot;,width = 3, height = 1.5, units = &quot;in&quot;,useDingbats=F)
+
+melanoma_data_skmel28=melanoma_data2%&gt;%filter(variable%in%c(&quot;Skmel28.PIG&quot;,&quot;Skmel28.AlkAti&quot;))
+ggplot(melanoma_data_skmel28,aes(Dose,value,color=variable))+
+  stat_summary(fun.y=mean,
+               geom=&quot;point&quot;,size=2.5) +
+  scale_x_continuous(trans = &quot;log10&quot;) +
+  stat_summary(fun.data = mean_cl_normal,
+               geom=&quot;errorbar&quot;,
+               width=.05)+
+  xlab(&quot;Vemurafenib Dose (uM)&quot;) +
+  ylab(&quot;Live Cell Fraction&quot;)+
+  scale_color_manual(name=&quot;Cell Line&quot;, labels=c(&quot;\nSkmel28 PIG&quot;,&quot;\nSkmel28 ALKATI&quot;),values=c(&quot;#efbc04&quot;,&quot;red&quot;))+
+  cleanup+
+theme(plot.title = element_text(hjust=.5),text = element_text(size=10,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;10&quot;,color=&quot;Black&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;10&quot;,color=&quot;Black&quot;),
+      legend.position = &quot;none&quot;)</code></pre>
+<pre><code>Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-6-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;output/melanoma_vemurafenib_fig_bottom.pdf&quot;,width = 3, height = 1.5, units = &quot;in&quot;,useDingbats=F)</code></pre>
+<p>SOS1Wt, SOS1E846K, MEKQ56P Comparisons:</p>
+<pre class="r"><code>melanoma_data=read.table(&quot;data/skmel28_sos1_mekq56p_vemurafenib.csv&quot;,header = T,stringsAsFactors = F,sep=&quot;,&quot;)
+melanoma_data_long=melt(melanoma_data,id.vars = &quot;dose&quot;,na.rm = T)
+melanoma_data_long$variable[grep(&quot;SOS1_E846K&quot;,melanoma_data_long$variable)]=&quot;SOS1_E846K&quot;
+melanoma_data_long$variable[grep(&quot;MEK_Q56P&quot;,melanoma_data_long$variable)]=&quot;MEK_Q56P&quot;
+melanoma_data_long$variable[grep(&quot;SOS1_WT&quot;,melanoma_data_long$variable)]=&quot;SOS1_WT&quot;
+ggplot(data = melanoma_data_long,aes(x=log(dose),y=value,color=variable))+geom_point()</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(melanoma_data_long,aes(x=dose,y=value,color=variable))+geom_point(position = position_dodge(width=.01))+scale_x_continuous(trans = &quot;log10&quot;) +cleanup+scale_colour_brewer(palette=&quot;Set2&quot;)+geom_smooth()</code></pre>
+<pre><code>`geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-7-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(melanoma_data_long,aes(dose,value,color=variable))+
+    stat_summary(fun.y=mean,
+               geom=&quot;point&quot;,size=2.5) +
+  scale_x_continuous(trans = &quot;log10&quot;) +
+  stat_summary(fun.data = mean_cl_normal,
+               geom=&quot;errorbar&quot;,
+               width=.01)+
+  xlab(&quot;Vemurafenib Dose (uM)&quot;) +
+  ylab(&quot;Live Cell Fraction&quot;)+
+  scale_color_manual(name=&quot;Cell Line&quot;, labels=c(&quot;\nSkmel-28 SOS1 E846K&quot;,&quot;\nSkmel-28 MEK Q56P&quot;,&quot;\nSkmel-28 SOS1 Wt&quot;),values=c(&quot;#efbc04&quot;,&quot;red&quot;,&quot;#19a4ef&quot;))+
+  cleanup+
+theme(plot.title = element_text(hjust=.5),text = element_text(size=10,face=&quot;bold&quot;),axis.title = element_text(face=&quot;bold&quot;,size=&quot;10&quot;,color=&quot;Black&quot;),axis.text=element_text(face=&quot;bold&quot;,size=&quot;10&quot;,color=&quot;Black&quot;),
+      legend.position = &quot;bottom&quot;)</code></pre>
+<pre><code>Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
+<p><img src="figure/baf3_alkati_transformations.Rmd/unnamed-chunk-7-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>melanoma_data$sos1e846kmean=data.frame(rowMeans(melanoma_data[,c(2:5)],na.rm = T))
+sos1e846kmean=data.frame(rowMeans(melanoma_data[,c(2:5)],na.rm = T))
+melanoma_data$mekq56pmean=data.frame(rowMeans(melanoma_data[,c(6:9)],na.rm = T))
+melanoma_data$sos1wtmean=data.frame(rowMeans(melanoma_data[,c(10:13)],na.rm = T))
+sos1wtmean=data.frame(rowMeans(melanoma_data[,c(10:13)],na.rm = T))
+
+# dose=c(3,2.69897,2.39794,2.09691,1.79588,1.49485,1.19382,1)
+sos1wt=c(0.3431612,0.3592412,0.4586017,0.63938425,0.8648814,1.0462746,0.9195364,1.0000002)
+sos1e846k=c(0.346128,0.421477,0.5529085,0.74714375,0.89843925,1.0010455,0.999104,1)
+mekq56p=c(0.489114,0.566946,0.6174875,0.75007625,0.949546,1.02564,1.050715,1)
+t.test(sos1e846k,sos1wt,paired=T,alternative = &quot;greater&quot;)</code></pre>
+<pre><code>
+    Paired t-test
+
+data:  sos1e846k and sos1wt
+t = 2.2253, df = 7, p-value = 0.0307
+alternative hypothesis: true difference in means is greater than 0
+95 percent confidence interval:
+ 0.006227029         Inf
+sample estimates:
+mean of the differences 
+             0.04189563 </code></pre>
+<pre class="r"><code>t.test(mekq56p,sos1wt,paired=T,alternative = &quot;greater&quot;)</code></pre>
+<pre><code>
+    Paired t-test
+
+data:  mekq56p and sos1wt
+t = 3.6915, df = 7, p-value = 0.003871
+alternative hypothesis: true difference in means is greater than 0
+95 percent confidence interval:
+ 0.04979933        Inf
+sample estimates:
+mean of the differences 
+              0.1023055 </code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.5.2 (2018-12-20)
-Platform: x86_64-apple-darwin15.6.0 (64-bit)
-Running under: macOS Mojave 10.14.3
+<pre><code>R version 4.0.0 (2020-04-24)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS  10.16
 
 Matrix products: default
-BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -799,33 +1425,35 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] bindrcpp_0.2.2    Hmisc_4.2-0       Formula_1.2-3    
- [4] survival_2.43-3   lattice_0.20-38   reshape2_1.4.3   
- [7] doParallel_1.0.14 iterators_1.0.10  foreach_1.4.4    
-[10] tictoc_1.0        dplyr_0.7.8       knitr_1.21       
-[13] ggplot2_3.1.0     ggsignif_0.4.0   
+ [1] Hmisc_4.4-2       Formula_1.2-4     survival_3.1-12   lattice_0.20-41  
+ [5] doParallel_1.0.15 iterators_1.0.12  foreach_1.5.0     tictoc_1.0       
+ [9] dplyr_0.8.5       knitr_1.28        ggplot2_3.3.2     ggsignif_0.6.0   
+[13] reshape2_1.4.4    workflowr_1.6.2  
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.0          assertthat_0.2.0    rprojroot_1.3-2    
- [4] digest_0.6.18       R6_2.3.0            plyr_1.8.4         
- [7] backports_1.1.3     acepack_1.4.1       evaluate_0.12      
-[10] pillar_1.3.1        rlang_0.3.1         lazyeval_0.2.1     
-[13] data.table_1.12.0   rstudioapi_0.9.0    whisker_0.3-2      
-[16] R.utils_2.7.0       R.oo_1.22.0         rpart_4.1-13       
-[19] Matrix_1.2-15       checkmate_1.9.1     rmarkdown_1.11     
-[22] labeling_0.3        splines_3.5.2       stringr_1.3.1      
-[25] foreign_0.8-71      htmlwidgets_1.3     munsell_0.5.0      
-[28] compiler_3.5.2      xfun_0.4            pkgconfig_2.0.2    
-[31] base64enc_0.1-3     htmltools_0.3.6     nnet_7.3-12        
-[34] tidyselect_0.2.5    tibble_2.0.1        gridExtra_2.3      
-[37] htmlTable_1.13.1    workflowr_1.1.1     codetools_0.2-16   
-[40] crayon_1.3.4        withr_2.1.2         R.methodsS3_1.7.1  
-[43] grid_3.5.2          gtable_0.2.0        git2r_0.24.0       
-[46] magrittr_1.5        scales_1.0.0        stringi_1.2.4      
-[49] latticeExtra_0.6-28 RColorBrewer_1.1-2  tools_3.5.2        
-[52] glue_1.3.0          purrr_0.3.0         yaml_2.2.0         
-[55] colorspace_1.4-0    cluster_2.0.7-1     bindr_0.1.1        </code></pre>
+ [1] Rcpp_1.0.4.6        png_0.1-7           assertthat_0.2.1   
+ [4] rprojroot_1.3-2     digest_0.6.25       R6_2.4.1           
+ [7] plyr_1.8.6          backports_1.1.7     evaluate_0.14      
+[10] pillar_1.4.4        rlang_0.4.6         rstudioapi_0.11    
+[13] data.table_1.12.8   whisker_0.4         rpart_4.1-15       
+[16] Matrix_1.2-18       checkmate_2.0.0     rmarkdown_2.1      
+[19] labeling_0.3        splines_4.0.0       stringr_1.4.0      
+[22] foreign_0.8-78      htmlwidgets_1.5.1   munsell_0.5.0      
+[25] compiler_4.0.0      httpuv_1.5.2        xfun_0.13          
+[28] pkgconfig_2.0.3     base64enc_0.1-3     mgcv_1.8-31        
+[31] htmltools_0.4.0     nnet_7.3-13         tidyselect_1.1.0   
+[34] tibble_3.0.1        gridExtra_2.3       htmlTable_2.1.0    
+[37] codetools_0.2-16    crayon_1.3.4        withr_2.2.0        
+[40] later_1.0.0         grid_4.0.0          nlme_3.1-147       
+[43] gtable_0.3.0        lifecycle_0.2.0     git2r_0.27.1       
+[46] magrittr_1.5        scales_1.1.1        stringi_1.4.6      
+[49] farver_2.0.3        fs_1.4.1            promises_1.1.0     
+[52] latticeExtra_0.6-29 ellipsis_0.3.1      vctrs_0.3.0        
+[55] RColorBrewer_1.1-2  tools_4.0.0         glue_1.4.1         
+[58] purrr_0.3.4         jpeg_0.1-8.1        yaml_2.2.1         
+[61] colorspace_1.4-1    cluster_2.1.0      </code></pre>
 </div>
+
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
@@ -838,14 +1466,6 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
-
-<hr>
-<p>
-  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
-  analysis was created with
-  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
-</p>
-<hr>
 
 
 </div>
@@ -864,6 +1484,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
