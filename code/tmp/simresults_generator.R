@@ -46,11 +46,7 @@ simresults_generator=function(alldata_comp,nexperiments,nsims,nsubsamples,genex_
 <<<<<<< HEAD
 
 =======
-<<<<<<< HEAD
-
-=======
 >>>>>>> e1172b5e60517ce9f5d64dfcf0d1a5033a0231fa
->>>>>>> 49937197dd3ab8111d4dbae215ed82d81abcf02b
       p_s_genex_p1=fisher.test(con_tab_sample_genex_pctrl1)
       # p_s_p1_genex$p.value
       # p_s_genex_p1$p.value
