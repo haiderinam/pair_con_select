@@ -39,8 +39,10 @@ output:
 * ###Click [here](alkati_crizotinib_ic50s.html) to see ALK IC50s of the ALK^ATI^ variants that grew out in Ba/F3s.  
 <img src="assets/alkati_transformants_ic50s.png" width="300" height="300"  alt="">
 
-* ###Click [here](alkati_cell_line_tae684_response.html) to see ALK^ATI^ melanoma cell line expression data analysis showing that ALK^ATI^ is does not confer a strong single agent therapeutic dependence.  
-<img src="assets/ccle.png" width="300" height="300"  alt=""> 
+* ###Click [here](alkati_ccle_depmap_sensitivity.html) to see ALK^ATI^ melanoma cell line expression data analysis showing that ALK^ATI^ does not confer a strong single agent therapeutic dependence.  
+<img src="assets/ccle.png" width="300" height="300"  alt="">   
+
+
   
 #### Click [here](https://github.com/pritchardlabatpsu/pair_con_select) to be redirected to the github page that contains all my data.  
 What is in each directory:  
