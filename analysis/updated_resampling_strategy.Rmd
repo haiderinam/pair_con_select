@@ -1,0 +1,249 @@
+---
+title: "updated_resampling_strategy"
+author: "Haider Inam"
+date: "5/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir=rprojroot::find_rstudio_root_file())
+```
+
+```{r}
+library(knitr)
+library(tictoc)
+library(workflowr)
+library(VennDiagram)
+library(dplyr)
+library(foreach)
+library(doParallel)
+library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+library(devtools)
+library(ggsignif)
+library(plotly)
+library(BiocManager)
+library(drc)
+# library(ensembldb) #Loading this with Dplyr commands seems to throw an error in Rmd
+# library(EnsDb.Hsapiens.v86) #Loading this with Dplyr commands seems to throw an error in Rmd
+
+# source("code/contab_maker.R")
+# source("code/alldata_compiler.R")
+# source("code/quadratic_solver.R")
+# source("code/mut_excl_genes_generator.R")
+# source("code/mut_excl_genes_datapoints.R")
+# source("code/simresults_generator.R")
+
+source("../code/contab_maker.R")
+source("../code/alldata_compiler.R")
+source("../code/quadratic_solver.R")
+source("../code/mut_excl_genes_generator.R")
+source("../code/mut_excl_genes_datapoints.R")
+source("../code/simresults_generator.R")
+
+
+######################Cleanup for GGPlot2#########################################
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = "black"),
+        axis.text = element_text(face="bold",color="black",size="11"),
+        text=element_text(size=11,face="bold"),
+        axis.title=element_text(face="bold",size="11"))
+```
+
+
+```{r}
+  nameposctrl1<-'BRAF'
+  #Positive control 1
+  nameposctrl2<-'NRAS'
+  #Oncogene in Question
+  namegene<-'ATI'
+  #Mutation Boolean (Y or N)
+  mtn<-'N'
+  #Name Mutation for Positive Ctrl 1
+  nameposctrl1mt<-'V600E'
+  #Name of Mutation for Positive Ctrl 2
+  nameposctrl2mt<-'Q61L'
+
+# alldata=read.csv("output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
+alldata=read.csv("../output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
+head(alldata)
+```
+
+
+```{r}
+###Not mutation specific generation of counts###
+alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,'N',"N/A","N/A")[[2]]
+head(alldata_comp)
+```
+```{r}
+sum(alldata_comp$Positive_Ctrl2)/length(alldata_comp$Positive_Ctrl1)
+#subsamplesize here is defined as the number of hits of the respective gene, the PC1 or PC2 in this case.
+#How do you downsample the data to a sss of PC1 or genex: the sample command takes in how many rows you wanna randomly sample. For example, there are 96 NRAS hits in the entire dataset and is at a frequency of 27%. So if you wanted it to be 40 instead, you would have to subsample 40/0.27=148 rows of data
+###Probably wanna initialize the resampled dataframe as a preallocated matrix
+# resampled_pc1_cum=matrix(NA,1,7)
+# resampled_pc1_cum=resampled_pc1[1,]
+pc1pc2_pval_all=matrix(NA,1,2)
+pc1goi_pval_all=matrix(NA,1,2)
+for(sss in seq(5,50,by=3)){
+  pc1pc2_pval_cum=NA #of course don't wanna use this number always
+  pc1goi_pval_cum=NA #of course don't wanna use this number always
+
+  for(i in 1:100){
+    # i=1
+    resampled_pc1=alldata_comp[sample(length(alldata_comp$Positive_Ctrl1),sss*length(alldata_comp$Positive_Ctrl1)/sum(alldata_comp$Positive_Ctrl1),replace = T,prob = NULL),]
+    
+    resampled_goi=alldata_comp[sample(length(alldata_comp$Positive_Ctrl1),sss*length(alldata_comp$Positive_Ctrl1)/sum(alldata_comp$genex),replace = T,prob = NULL),]
+  
+    con_tab_sample_pctrl1_pctrl2=contab_maker(resampled_pc1$Positive_Ctrl1,resampled_pc1$Positive_Ctrl2,resampled_pc1)
+    con_tab_sample_pctrl1_goi=contab_maker(resampled_goi$Positive_Ctrl1,resampled_goi$genex,resampled_goi)
+    p_s_p1_p2=fisher.test(con_tab_sample_pctrl1_pctrl2)
+    p_s_p1_goi=fisher.test(con_tab_sample_pctrl1_goi)
+    
+    pc1pc2_pval=p_s_p1_p2$p.value
+    pc1goi_pval=p_s_p1_goi$p.value
+    pc1pc2_pval_cum=c(pc1pc2_pval_cum,pc1pc2_pval)
+    pc1goi_pval_cum=c(pc1goi_pval_cum,pc1goi_pval)
+    
+    # conttab_pc1=resampled_pc1_cum=rbind(resampled_pc1,resampled_pc1_cum)
+  }
+  pc1pc2_pval_cum=na.omit(pc1pc2_pval_cum)
+  pc1goi_pval_cum=na.omit(pc1goi_pval_cum)
+  # class(pc1pc2_pval_cum)
+  pc1pc2_pval_cum=cbind(pc1pc2_pval_cum,sss)
+  pc1goi_pval_cum=cbind(pc1goi_pval_cum,sss)
+  # pc1pc2_pval_cum=as.matrix(pc1pc2_pval_cum)
+  pc1pc2_pval_all=rbind(pc1pc2_pval_all,pc1pc2_pval_cum)
+  pc1goi_pval_all=rbind(pc1goi_pval_all,pc1goi_pval_cum)
+}
+pc1pc2_pval_all=na.omit(pc1pc2_pval_all)
+pc1pc2_pval_all=as.data.frame(pc1pc2_pval_all)
+colnames(pc1pc2_pval_all)=c("pval","sss")
+pc1pc2_pval_all$experiment="pc1pc2"
+
+pc1goi_pval_all=na.omit(pc1goi_pval_all)
+pc1goi_pval_all=as.data.frame(pc1goi_pval_all)
+colnames(pc1goi_pval_all)=c("pval","sss")
+pc1goi_pval_all$experiment="pc1goi"
+simulations_df_comb=rbind(pc1goi_pval_all,pc1pc2_pval_all)
+# for each iteration of the bootstrap, put resampled data in a cont table. Could probably do that outside of the main for-loop for faster computation
+# class(pc1pc2_pval_all$sss)
+ggplot(pc1pc2_pval_all%>%filter(),aes(x=factor(sss),y=pval))+geom_boxplot()+geom_hline(yintercept=0.3,linetype="dashed",color="red")
+ggplot(pc1pc2_pval_all%>%filter(),aes(x=factor(sss),y=pval))+geom_boxplot()+geom_hline(yintercept=0.3,linetype="dashed",color="red")+scale_y_continuous(trans="log10",name="P-value distribution of BRAF vs NRAS")+scale_x_discrete("Subsample Size")+cleanup
+
+ggplot(simulations_df_comb,aes(x=factor(sss),y=pval,fill=experiment))+geom_boxplot()+geom_hline(yintercept=0.3,linetype="dashed",color="red")+scale_y_continuous(trans="log10",name="P-value distribution of BRAF vs NRAS")+scale_x_discrete("Subsample Size")+cleanup+scale_fill_manual(values=c("#FFD92F","#E78AC3"))
+
+# scale_color_manual(values =c("#FFD92F","#E78AC3","#8DA0CB"),name="Mutation")
+
+```
+
+####I coded the following part up for David's idea of simple reasmpling but realized that doing simple resamping gives us a downsampled abundance but preserves the frequency of the positive controls. Therefore, I'm gonna use out simresults_generator as-is without the max-subsamplesize clause and the simresults clause.
+
+```{r}
+sum(alldata_comp$Positive_Ctrl2)/length(alldata_comp$Positive_Ctrl1)
+#subsamplesize here is defined as the number of hits of the respective gene, the PC1 or PC2 in this case.
+#How do you downsample the data to a sss of PC1 or genex: the sample command takes in how many rows you wanna randomly sample. For example, there are 96 NRAS hits in the entire dataset and is at a frequency of 27%. So if you wanted it to be 40 instead, you would have to subsample 40/0.27=148 rows of data
+###Probably wanna initialize the resampled dataframe as a preallocated matrix
+# resampled_pc1_cum=matrix(NA,1,7)
+# resampled_pc1_cum=resampled_pc1[1,]
+pc1pc2_pval_all=matrix(NA,1,2)
+pc1goi_pval_all=matrix(NA,1,2)
+for(sss in seq(5,50,by=3)){
+  pc1pc2_pval_cum=NA #of course don't wanna use this number always
+  pc1goi_pval_cum=NA #of course don't wanna use this number always
+
+  for(i in 1:100){
+    # i=1
+    resampled_pc1=alldata_comp[sample(length(alldata_comp$Positive_Ctrl1),sss*length(alldata_comp$Positive_Ctrl1)/sum(alldata_comp$Positive_Ctrl1),replace = T,prob = NULL),]
+    
+    resampled_goi=alldata_comp[sample(length(alldata_comp$Positive_Ctrl1),sss*length(alldata_comp$Positive_Ctrl1)/sum(alldata_comp$genex),replace = T,prob = NULL),]
+  
+    con_tab_sample_pctrl1_pctrl2=contab_maker(resampled_pc1$Positive_Ctrl1,resampled_pc1$Positive_Ctrl2,resampled_pc1)
+    con_tab_sample_pctrl1_goi=contab_maker(resampled_goi$Positive_Ctrl1,resampled_goi$genex,resampled_goi)
+    p_s_p1_p2=fisher.test(con_tab_sample_pctrl1_pctrl2)
+    p_s_p1_goi=fisher.test(con_tab_sample_pctrl1_goi)
+    
+    pc1pc2_pval=p_s_p1_p2$p.value
+    pc1goi_pval=p_s_p1_goi$p.value
+    pc1pc2_pval_cum=c(pc1pc2_pval_cum,pc1pc2_pval)
+    pc1goi_pval_cum=c(pc1goi_pval_cum,pc1goi_pval)
+    
+    # conttab_pc1=resampled_pc1_cum=rbind(resampled_pc1,resampled_pc1_cum)
+  }
+  pc1pc2_pval_cum=na.omit(pc1pc2_pval_cum)
+  pc1goi_pval_cum=na.omit(pc1goi_pval_cum)
+  # class(pc1pc2_pval_cum)
+  pc1pc2_pval_cum=cbind(pc1pc2_pval_cum,sss)
+  pc1goi_pval_cum=cbind(pc1goi_pval_cum,sss)
+  # pc1pc2_pval_cum=as.matrix(pc1pc2_pval_cum)
+  pc1pc2_pval_all=rbind(pc1pc2_pval_all,pc1pc2_pval_cum)
+  pc1goi_pval_all=rbind(pc1goi_pval_all,pc1goi_pval_cum)
+}
+pc1pc2_pval_all=na.omit(pc1pc2_pval_all)
+pc1pc2_pval_all=as.data.frame(pc1pc2_pval_all)
+colnames(pc1pc2_pval_all)=c("pval","sss")
+pc1pc2_pval_all$experiment="pc1pc2"
+
+pc1goi_pval_all=na.omit(pc1goi_pval_all)
+pc1goi_pval_all=as.data.frame(pc1goi_pval_all)
+colnames(pc1goi_pval_all)=c("pval","sss")
+pc1goi_pval_all$experiment="pc1goi"
+simulations_df_comb=rbind(pc1goi_pval_all,pc1pc2_pval_all)
+# for each iteration of the bootstrap, put resampled data in a cont table. Could probably do that outside of the main for-loop for faster computation
+# class(pc1pc2_pval_all$sss)
+ggplot(pc1pc2_pval_all%>%filter(),aes(x=factor(sss),y=pval))+geom_boxplot()+geom_hline(yintercept=0.3,linetype="dashed",color="red")
+ggplot(pc1pc2_pval_all%>%filter(),aes(x=factor(sss),y=pval))+geom_boxplot()+geom_hline(yintercept=0.3,linetype="dashed",color="red")+scale_y_continuous(trans="log10",name="P-value distribution of BRAF vs NRAS")+scale_x_discrete("Subsample Size")+cleanup
+
+ggplot(simulations_df_comb,aes(x=factor(sss),y=pval,fill=experiment))+geom_boxplot()+geom_hline(yintercept=0.3,linetype="dashed",color="red")+scale_y_continuous(trans="log10",name="P-value distribution of BRAF vs NRAS")+scale_x_discrete("Subsample Size")+cleanup+scale_fill_manual(values=c("#FFD92F","#E78AC3"))
+
+# scale_color_manual(values =c("#FFD92F","#E78AC3","#8DA0CB"),name="Mutation")
+
+```
+Running pairwise comparisons for ALKATI
+```{r}
+nsims=100
+data=simresults_generator(alldata_comp,7,100,20,.11)
+# simresults_data_comp=matrix(NA,1,7)
+simresults_data_comp=data[1,]
+for(nsubsamples in seq(3,20,3)){
+  data=simresults_generator(alldata_comp,7,200,nsubsamples,.11)
+  simresults_data_comp=rbind(simresults_data_comp,data)
+}
+simresults_data_comp=simresults_data_comp[-1,]
+
+ggplot(simresults_data_comp%>%filter(exp_name%in%c("p_s_p1_genex","p_s_p1_p2")),aes(x=factor(subsample_size),y=p_val,fill=exp_name))+geom_boxplot()
+```
+
+Running pairwise comparisons for simulated dataset
+```{r}
+# i=0.9 #goi control gene pair OR
+# k=500 #cohort size
+# l=0.08 #positive control gene pair OR
+
+gene_pair_1=unlist(mut_excl_genes_generator(500,20,0.9,0.08)[1])
+gene_pair_2=unlist(mut_excl_genes_generator(500,20,0.9,0.08)[2])
+alldata_1=mut_excl_genes_datapoints(gene_pair_1)
+alldata_2=mut_excl_genes_datapoints(gene_pair_2)
+alldata_comp_1=alldata_compiler(alldata_1,"gene2","gene3","gene1",'N',"N/A","N/A")[[2]]
+genex_replication_prop_1=alldata_compiler(alldata_1,"gene2","gene3","gene1",'N',"N/A","N/A")[[1]]
+alldata_comp_2=alldata_compiler(alldata_2,"gene2","gene3","gene1",'N',"N/A","N/A")[[2]]
+genex_replication_prop_2=alldata_compiler(alldata_2,"gene2","gene3","gene1",'N',"N/A","N/A")[[1]]
+
+nsubsamples=10
+nsims=100
+simresults_pair1=simresults_generator(alldata_comp_1,7,nsims,nsubsamples,genex_replication_prop_1)
+simresults_pair1$gene_pair=1
+      
+simresults_pair2=simresults_generator(alldata_comp_2,7,nsims,nsubsamples,genex_replication_prop_2)
+simresults_pair2$gene_pair=2
+```
+
+```{r}
+
+```
+

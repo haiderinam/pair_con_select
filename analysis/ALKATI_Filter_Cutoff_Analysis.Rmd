@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "..") #To change the root directory from Analysis to medsproject
+knitr::opts_knit$set(root.dir = "..") #To change the root directory from Analysis to myproject
 ```
 
 
@@ -207,9 +207,11 @@ ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=min_p_val_pc2))+
       xlab("Number of ALK Reads")+ylab("RSEM")+
       # ggtitle("Varying Combinations of Filters Does Not Create \nMutual Exclusivity Between ALK-ATI & BRAF")+
       theme_bw()+
-      theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",color="black",size="26"))
+      theme(plot.title = element_text(hjust=.5),text = element_text(size=11,face="bold"),axis.title = element_text(face="bold",size="11"),axis.text=element_text(face="bold",color="black",size="11"))+
+  scale_x_continuous(expand = c(0,0))+
+  scale_y_continuous(expand = c(0,0))
   
-ggsave("output/fig2b_filtercutoff_atinras.pdf",width = 16,height = 14,units = "in",useDingbats=F)
+ggsave("output/fig2b_filtercutoff_atinras.pdf",width = 4,height = 3,units = "in",useDingbats=F)
 ###Regions with less than 20 patients are shaded gray.
 
 ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+
@@ -221,9 +223,11 @@ ggplot(datapoints,aes(x=alkreads,y=rsem))+geom_tile(aes(fill=tot_alk))+
             axis.line = element_line(colour = "black"))+
       xlab("Number of ALK Reads")+ylab("RSEM")+
       theme_bw()+
-      theme(plot.title = element_text(hjust=.5),text = element_text(size=30,face="bold"),axis.title = element_text(face="bold",size="26"),axis.text=element_text(face="bold",color="black",size="26"))
+      theme(plot.title = element_text(hjust=.5),text = element_text(size=11,face="bold"),axis.title = element_text(face="bold",size="11"),axis.text=element_text(face="bold",color="black",size="11"))+
+  scale_x_continuous(expand = c(0,0))+
+  scale_y_continuous(expand = c(0,0))
 
-  # ggsave("output/fig2b2_filtercutoff_atinras_totalalk.pdf",width = 16,height = 14,units = "in",useDingbats=F)
+  ggsave("output/fig2b2_filtercutoff_atinras_totalalk.pdf",width = 4,height = 3,units = "in",useDingbats=F)
 ```
 
 ####**Heat map for NRAS vs ALKATI with count data**

@@ -92,7 +92,7 @@ ggplot(baf3data2,aes(x=Time,y=doublings,color=type,fill=Infection,shape=infnum))
   scale_colour_brewer(palette="Set2")
 
 #Can also make your own palette and color manually. Obtained from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
-ggsave("output/baf3_alkati_figure_deltaadjusted_doublings.pdf",width = 3, height = 2.25, units = "in",useDingbats=F)
+# ggsave("output/baf3_alkati_figure_deltaadjusted_doublings.pdf",width = 3, height = 2.25, units = "in",useDingbats=F)
 
 # Mean and standard deviation to grow out:
 #Our criteria for cells "growing out" was when they reached two population doublings
@@ -192,7 +192,7 @@ ggplot(brafdata_combined%>%filter(!type%in%"ALKATIMutant"),aes(x=Time,y=doubling
   # ylim(-6,14)+
   scale_colour_brewer(palette="Set2")
 
-ggsave("output/baf3_alkati_figure_deltaadjusted_doublings_updated.pdf",width = 3, height = 2.25, units = "in",useDingbats=F)
+# ggsave("output/baf3_alkati_figure_deltaadjusted_doublings_updated.pdf",width = 3, height = 2.25, units = "in",useDingbats=F)
 ```
 
 
@@ -244,7 +244,7 @@ ggplot(baf3_alkati_elisa,aes(x=Infection_Date,y=Lentivirus_Particles))+
         axis.title = element_text(face="bold",size="10"),
         axis.text=element_text(face="bold",size="10",colour = "black"))+
   scale_y_continuous(trans = "log",breaks=c(1e2,1e4,1e6,1e8),labels = parse(text = c("10^2","10^4","10^6","10^8")))
-ggsave("output/baf3_elisa_barplot.pdf",width = 4,height = 3,units = "in",useDingbats=F)
+# ggsave("output/baf3_elisa_barplot.pdf",width = 4,height = 3,units = "in",useDingbats=F)
 ```
 
 ####Another way of displaying Fig 4a using unn 
@@ -330,6 +330,16 @@ t.test(means$value[means$variable=="Skmel28.AlkAti"],means$value[means$variable=
 ###P-Values: 0.99 for Skmel28, and 0.75 for G361s, showing that the ALKATI distributions were not significantly different.
 
 #Plotting each cell line individually
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        # axis.line = element_line(color = "black"),
+        axis.text = element_text(face="bold",color="black",size="11"),
+        text=element_text(size=11,face="bold"),
+        axis.title=element_text(face="bold",size="11"))
+
 melanoma_data_g361=melanoma_data2%>%filter(variable%in%c("G361.PIG","G361.AlkAti"))
 ggplot(melanoma_data_g361,aes(Dose,value,color=variable))+
   stat_summary(fun.y=mean,
@@ -340,11 +350,11 @@ ggplot(melanoma_data_g361,aes(Dose,value,color=variable))+
                width=.05)+
   xlab("Vemurafenib Dose (uM)") +
   ylab("Live Cell Fraction")+
-  scale_color_manual(name="Cell Line", labels=c("\nG361 PIG","\nG361 ALKATI"),values=c("#19a4ef","#3a1aef"))+
+  scale_color_manual(name="Cell Line", labels=c("\nG361 PIG","\nG361 ALKATI"),values=c("#7B8DBF","#56B893"))+
   cleanup+
 theme(plot.title = element_text(hjust=.5),text = element_text(size=10,face="bold"),axis.title = element_text(face="bold",size="10",color="Black"),axis.text=element_text(face="bold",size="10",color="Black"),
       legend.position = "none")
-# ggsave("output/melanoma_vemurafenib_fig_top.pdf",width = 3, height = 1.5, units = "in",useDingbats=F)
+ggsave("output/melanoma_vemurafenib_fig_top.pdf",width = 3, height = 2.5, units = "in",useDingbats=F)
 
 melanoma_data_skmel28=melanoma_data2%>%filter(variable%in%c("Skmel28.PIG","Skmel28.AlkAti"))
 ggplot(melanoma_data_skmel28,aes(Dose,value,color=variable))+
@@ -356,11 +366,11 @@ ggplot(melanoma_data_skmel28,aes(Dose,value,color=variable))+
                width=.05)+
   xlab("Vemurafenib Dose (uM)") +
   ylab("Live Cell Fraction")+
-  scale_color_manual(name="Cell Line", labels=c("\nSkmel28 PIG","\nSkmel28 ALKATI"),values=c("#efbc04","red"))+
+  scale_color_manual(name="Cell Line", labels=c("\nSkmel28 PIG","\nSkmel28 ALKATI"),values=c("#7B8DBF","#56B893"))+
   cleanup+
 theme(plot.title = element_text(hjust=.5),text = element_text(size=10,face="bold"),axis.title = element_text(face="bold",size="10",color="Black"),axis.text=element_text(face="bold",size="10",color="Black"),
       legend.position = "none")
-# ggsave("output/melanoma_vemurafenib_fig_bottom.pdf",width = 3, height = 1.5, units = "in",useDingbats=F)
+ggsave("output/melanoma_vemurafenib_fig_bottom.pdf",width = 3, height = 2.5, units = "in",useDingbats=F)
 
 ```
 SOS1Wt, SOS1E846K, MEKQ56P Comparisons:

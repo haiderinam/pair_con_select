@@ -26,12 +26,19 @@ library(RColorBrewer)
 library(devtools)
 library(ggsignif)
 
-source("code/contab_maker.R")
-source("code/alldata_compiler.R")
-source("code/quadratic_solver.R")
-source("code/mut_excl_genes_generator.R")
-source("code/mut_excl_genes_datapoints.R")
-source("code/simresults_generator.R")
+# source("code/contab_maker.R")
+# source("code/alldata_compiler.R")
+# source("code/quadratic_solver.R")
+# source("code/mut_excl_genes_generator.R")
+# source("code/mut_excl_genes_datapoints.R")
+# source("code/simresults_generator.R")
+
+source("../code/contab_maker.R")
+source("../code/alldata_compiler.R")
+source("../code/quadratic_solver.R")
+source("../code/mut_excl_genes_generator.R")
+source("../code/mut_excl_genes_datapoints.R")
+source("../code/simresults_generator.R")
 
 ######################Cleanup for GGPlot2#########################################
 cleanup=theme_bw() +
@@ -97,8 +104,11 @@ genex_replication_prop_1=alldata_compiler(alldata_1,"gene2","gene3","gene1",'N',
 alldata_comp_2=alldata_compiler(alldata_2,"gene2","gene3","gene1",'N',"N/A","N/A")[[2]]
 genex_replication_prop_2=alldata_compiler(alldata_2,"gene2","gene3","gene1",'N',"N/A","N/A")[[1]]
 #Number of simulations are the minimum of: subsampling with replacement combinations of incidence of gene pair 1, pair 2, and 10000. 10000 because I don't want to do more than 1k simulations per experiment.
-nsims=min(c(choose(sum(alldata_comp_1$genex)+sum(alldata_comp_1$genex)-1,sum(alldata_comp_1$genex)),
-  choose(sum(alldata_comp_2$genex)+sum(alldata_comp_2$genex)-1,sum(alldata_comp_2$genex)),1000))
+###51121 update: keeping nsims constant at something like 200
+# nsims=min(c(choose(sum(alldata_comp_1$genex)+sum(alldata_comp_1$genex)-1,sum(alldata_comp_1$genex)),
+  # choose(sum(alldata_comp_2$genex)+sum(alldata_comp_2$genex)-1,sum(alldata_comp_2$genex)),1000))
+
+nsims=200
 # nsubsamples=sum(alldata_comp_2$genex) #Verify that this is what it is.    
 
 # Max subsample size is whichever integer is the minimum of:
@@ -123,11 +133,11 @@ nexperiments=7
 #####If Cohort size is greater than gene1total, run simresults_generator for that simulation####
 
     if(cohort_size_vals[k]>gene1_total_vals[j]){
-
-      simresults_pair1=simresults_generator(alldata_comp_1,7)
+###51121:Updated this call to downsample to the abundance and frequency of GOI rather than figuring out the maxsubsamplesize. Also kept nsims as constant###
+      simresults_pair1=simresults_generator(alldata_comp_1,7,nsims,sum(alldata_comp$genex),genex_replication_prop)
       simresults_pair1$gene_pair=1
       
-      simresults_pair2=simresults_generator(alldata_comp_2,7)
+      simresults_pair2=simresults_generator(alldata_comp_2,7,nsims,sum(alldata_comp$genex),genex_replication_prop)
       simresults_pair2$gene_pair=2
       
       simresults=rbind(simresults_pair1,simresults_pair2)
@@ -165,7 +175,8 @@ toc()
 # toc()
 # write.csv(simresults_compiled2,"alkati_simulations_compiled_12219.csv")
 # write.csv(simresults_compiled2,"data/alkati_simulations_compiled_1000_3719.csv")
-write.csv(simresults_compiled2,"data/alkati_simulations_compiled_1000_3721.csv")
+# write.csv(simresults_compiled2,"data/alkati_simulations_compiled_1000_3721.csv")
+write.csv(simresults_compiled2,"data/alkati_simulations_compiled_100_51121.csv")
 # simresults_compiled[[5]]
 #Looking at which conditions didn't yield a maxsimnumber of 1000 revealed that at a subsample size of 1, the max simnum was 35.
 # a=simresults_compiled2%>%
@@ -177,8 +188,10 @@ write.csv(simresults_compiled2,"data/alkati_simulations_compiled_1000_3721.csv")
 
 ##Part 2: Performing pairwise comparisons between gene pairs using KS-test  
 ```{r,warning=F}
-simresults_compiled2=read.csv("data/alkati_simulations_compiled_1000_12319.csv",header = T)
-simresults_compiled2=read.csv("../data/alkati_simulations_compiled_1000_12319.csv",header = T)
+library(dplyr)
+simresults_compiled2=read.csv("../data/alkati_simulations_compiled_200_51121.csv",header = T)
+# simresults_compiled2=read.csv("data/alkati_simulations_compiled_1000_12319.csv",header = T)
+# simresults_compiled2=read.csv("../data/alkati_simulations_compiled_1000_12319.csv",header = T)
 # simresults_compiled2=read.csv("alkati_simulations_compiled_testrun_10000.csv",header = T) 
 # simresults_compiled2=read.csv("alkati_simulations_compiled.csv",header = T)
 simresults_stored=simresults_compiled2
