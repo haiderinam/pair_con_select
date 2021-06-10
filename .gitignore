@@ -14,3 +14,4 @@ data/tcga_brca_expression/*
 data/tcga_luad_expression/*
 data/tcga_skcm_expression/*
 data/alkati_simulations_compiled_1000_12319.csv
+data/depmap_alkati/Data_Raw/CCLE/CCLE_RNAseq_ExonUsageRatio_20180929.gct 

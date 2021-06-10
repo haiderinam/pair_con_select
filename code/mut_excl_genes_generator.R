@@ -27,7 +27,10 @@ mut_excl_genes_generator=function(cohort_size,incidence,or_pair1,or_pair2){
   # gene_pair_1=round(signif(as.numeric(c(a,b,c,d)),1))
   # gene_pair_2=round(signif(as.numeric(c(a2,b2,c2,d2)),1))
 
-  gene_pair_1=round(as.numeric(c(a,b,c,d)))
-  gene_pair_2=round(as.numeric(c(a2,b2,c2,d2)))
+  # gene_pair_1=round(as.numeric(c(a,b,c,d)))
+  # gene_pair_2=round(as.numeric(c(a2,b2,c2,d2)))
+
+  gene_pair_1=(as.numeric(c(a,b,c,d))/cohort_size)
+  gene_pair_2=(as.numeric(c(a2,b2,c2,d2))/cohort_size)
   return(list(gene_pair_1,gene_pair_2))
 }
