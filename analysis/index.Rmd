@@ -9,8 +9,6 @@ output:
 
 # **Pairwise Comparisons of Conditional Selection**  
 
-* ###Click [here](https://haider-inam.shinyapps.io/shinyapp/) to be redirected to the shiny app for pairwise comparisons of conditional selection in real time
-<img src="assets/shiny_app.png" width="600" height="300"  alt="">
 
 * ###Click [here](pairwise_comparisons_conditional_selection_simulated_cohorts.html) to see pairwise comparisons of conditional selection applied to simulated cohorts
 <img src="assets/atisubsamplingsims.png" width="600" height="300"  alt="">
