@@ -13,12 +13,22 @@
 
 <title>Home</title>
 
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -33,12 +43,18 @@ div.section {
 }
 </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -51,32 +67,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -86,10 +77,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -106,40 +93,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -167,7 +127,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -179,7 +139,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -190,10 +150,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -205,7 +178,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -294,7 +266,7 @@ $(document).ready(function () {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jdblischak/workflowr">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -303,7 +275,7 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -332,7 +304,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-03-26
+<strong>Last updated:</strong> 2021-06-14
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -363,16 +335,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcompritchardlabatpsupairwisecomparisonstree53330b917e02764b80bc2f114f251e4c8627c0dftargetblank53330b9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/pritchardlabatpsu/pairwisecomparisons/tree/53330b917e02764b80bc2f114f251e4c8627c0df" target="_blank">53330b9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcompritchardlabatpsupairwisecomparisonstree8520286868eb396ad6ec422da5e52f6fe8f43769targetblank8520286a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/pritchardlabatpsu/pairwisecomparisons/tree/8520286868eb396ad6ec422da5e52f6fe8f43769" target="_blank">8520286</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcompritchardlabatpsupairwisecomparisonstree53330b917e02764b80bc2f114f251e4c8627c0dftargetblank53330b9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcompritchardlabatpsupairwisecomparisonstree8520286868eb396ad6ec422da5e52f6fe8f43769targetblank8520286a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/pritchardlabatpsu/pairwisecomparisons/tree/53330b917e02764b80bc2f114f251e4c8627c0df" target="_blank">53330b9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/pritchardlabatpsu/pairwisecomparisons/tree/8520286868eb396ad6ec422da5e52f6fe8f43769" target="_blank">8520286</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -384,70 +356,12 @@ Ignored files:
     Ignored:    analysis/.RData
     Ignored:    analysis/.Rhistory
     Ignored:    analysis/.Rproj.user/
+    Ignored:    data/depmap_alkati/Data_Raw/CCLE/CCLE_RNAseq_ExonUsageRatio_20180929.gct
     Ignored:    data/skmel28_sos1_mekq56p_vemurafenib.csv.sb-ea24b981-dvFz4V/
-
-Untracked files:
-    Untracked:  analysis/ForYiyun.csv
-    Untracked:  analysis/analysis.Rproj
-    Untracked:  analysis/baf3_alkati_brig.pdf
-    Untracked:  analysis/baf3_alkati_criz.pdf
-    Untracked:  analysis/ks_results_forshiny.csv
-    Untracked:  baf3_alkati_brig.pdf
-    Untracked:  code/README.md
-    Untracked:  code/alldata_compiler.R
-    Untracked:  code/contab_maker.R
-    Untracked:  code/mut_excl_genes_datapoints.R
-    Untracked:  code/mut_excl_genes_generator.R
-    Untracked:  code/quadratic_solver.R
-    Untracked:  code/shinyfunc.R
-    Untracked:  crizotinib_ccle.pdf
-    Untracked:  data/All_Data_V2.csv
-    Untracked:  data/CCLE_NP24.2009_Drug_data_2015.02.24.csv
-    Untracked:  data/alkati_baf3_ic50s_heatmap.csv
-    Untracked:  data/alkati_growthcurvedata_f1174mutants_raw.xlsx
-    Untracked:  data/alkati_growthcurvedata_popdoublings_f1174mutants.csv
-    Untracked:  data/alkati_simulations_compiled_1000_12319.csv
-    Untracked:  data/all_data.csv
-    Untracked:  data/depmap_alkati/
-    Untracked:  data/skmel28_sos1_mekq56p_vemurafenib.csv
-    Untracked:  data/tcga_brca_expression/
-    Untracked:  data/tcga_luad_expression/
-    Untracked:  data/tcga_skcm_expression/
-    Untracked:  data/tmp/
-    Untracked:  output/ alkati_subsamplesize_orval_fig1c.pdf
-    Untracked:  output/alkati_ccle_tae684_plot.pdf
-    Untracked:  output/alkati_filtercutoff_allfilters.csv
-    Untracked:  output/alkati_luad_exonimbalance.pdf
-    Untracked:  output/alkati_mtn_pval_fig2B.pdf
-    Untracked:  output/alkati_skcm_exonimbalance.pdf
-    Untracked:  output/alkati_subsamplesize_pval_fig.pdf
-    Untracked:  output/alkati_subsamplesize_pval_fig1c.pdf
-    Untracked:  output/baf3_alkati_figure_deltaadjusted_doublings.pdf
-    Untracked:  output/baf3_alkati_figure_deltaadjusted_doublings_updated.pdf
-    Untracked:  output/baf3_barplot.pdf
-    Untracked:  output/baf3_elisa_barplot.pdf
-    Untracked:  output/baf3_f1174_figure_deltaadjusted_doublings.pdf
-    Untracked:  output/egfr_luad_exonimbalance.pdf
-    Untracked:  output/fig1c_3719_4.pdf
-    Untracked:  output/fig1c_52219.pdf
-    Untracked:  output/fig2b2_filtercutoff_atinras_totalalk.pdf
-    Untracked:  output/fig2b_filtercutoff_atibraf.pdf
-    Untracked:  output/fig2b_filtercutoff_atinras.pdf
-    Untracked:  output/melanoma_vemurafenib_fig.pdf
-    Untracked:  output/melanoma_vemurafenib_fig_bottom.pdf
-    Untracked:  output/melanoma_vemurafenib_fig_top.pdf
-    Untracked:  output/suppfig1..pdf
-    Untracked:  output/suppfig1_52219.pdf
-    Untracked:  output/tmp/
-    Untracked:  shinyapp/
-    Untracked:  suppfig1..pdf
-    Untracked:  vemurafenib_ccle.pdf
-    Untracked:  vemurafenib_ccle_multiple.pdf
-
-Unstaged changes:
-    Modified:   analysis/ALKATI_Filter_Cutoff_Analysis.Rmd
-    Modified:   analysis/Alkati_ccle_depmap_sensitivity.Rmd
-    Deleted:    analysis/practice.Rmd
+    Ignored:    data/tcga_brca_expression/
+    Ignored:    data/tcga_luad_expression/
+    Ignored:    data/tcga_skcm_expression/
+    Ignored:    output/alkati_filtercutoff_allfilters.csv
 
 </code></pre>
 <p>
@@ -486,6 +400,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/pritchardlabatpsu/pairwisecomparisons/blob/8520286868eb396ad6ec422da5e52f6fe8f43769/analysis/index.Rmd" target="_blank">8520286</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2021-06-14
+</td>
+<td>
+Updated website contents on 061421
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/pritchardlabatpsu/pairwisecomparisons/37e12624fe03a627159c3fc56bba4a30ee46d09b/docs/index.html" target="_blank">37e1262</a>
+</td>
+<td>
+haiderinam
+</td>
+<td>
+2021-03-26
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1397,16 +1345,15 @@ Start workflowr project.
 <div id="pairwise-comparisons-of-conditional-selection" class="section level1">
 <h1><strong>Pairwise Comparisons of Conditional Selection</strong></h1>
 <ul>
-<li><p>###Click <a href="https://haider-inam.shinyapps.io/shinyapp/">here</a> to be redirected to the shiny app for pairwise comparisons of conditional selection in real time <img src="assets/shiny_app.png" width="600" height="300"  alt=""></p></li>
 <li><p>###Click <a href="pairwise_comparisons_conditional_selection_simulated_cohorts.html">here</a> to see pairwise comparisons of conditional selection applied to simulated cohorts <img src="assets/atisubsamplingsims.png" width="600" height="300"  alt=""></p></li>
 <li><p>###Click <a href="alkati_subsampling_simulations.html">here</a> to see subsampling simulations on ALK<sup>ATI</sup> data.<br />
 <img src="assets/alkati_subsampling_simulations.png" width="600" height="300"  alt=""></p></li>
 <li><p>###Click <a href="ALKATI_Filter_Cutoff_Analysis.html">here</a> to see my results on ALK<sup>ATI</sup> filter cutoff analyses.<br />
 <img src="assets/aticutoffs.png" width="400" height="400"  alt=""></p></li>
-<li>###Click <a href="ALK_ExonImbalance_SKCM_Analysis.html">here</a> to see my results on ALK-expression in SKCM.<br />
-</li>
-<li>###Or click <a href="tcga_skcm_data_parser.html">here</a> to see my analysis code for ALK-expression in SKCM.<br />
-<img src="assets/atiskcmexpression.png" width="300" height="300"  alt=""></li>
+<li><p>###Click <a href="ALK_ExonImbalance_SKCM_Analysis.html">here</a> to see my results on ALK-expression in SKCM.<br />
+</p></li>
+<li><p>###Or click <a href="tcga_skcm_data_parser.html">here</a> to see my analysis code for ALK-expression in SKCM.<br />
+<img src="assets/atiskcmexpression.png" width="300" height="300"  alt=""></p></li>
 <li><p>###Click <a href="TCGA_luad_data_parser.html">here</a> to see my results on ALK expression in lung cancer.<br />
 <img src="assets/atiluadexpression.png" width="300" height="300"  alt=""></p></li>
 <li><p>###Click <a href="tcga_luad_data_parser_egfr.html">here</a> to see my results on EGFR expression in lung cancer<br />
@@ -1450,13 +1397,15 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
+
+
 </div>
 
 <script>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -1474,7 +1423,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
