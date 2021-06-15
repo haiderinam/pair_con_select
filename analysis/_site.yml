@@ -1,20 +1,21 @@
-name: "pair_con_select"
-output_dir: "../docs"
+name: pair_con_select
+output_dir: ../docs
 navbar:
-  title: "pair_con_select"
+  title: pair_con_select
   left:
-    - text: "Home"
-      href: index.html
-    - text: "About"
-      href: about.html
-    - text: "License"
-      href: license.html
+  - text: Home
+    href: index.html
+  - text: About
+    href: about.html
+  - text: License
+    href: license.html
   right:
-    - icon: fa-github
-      href: https://github.com/jdblischak/workflowr
+  - icon: fa-github
+    text: Source code
+    href: https://github.com/haiderinam/pairwisecomparisons
 output:
   workflowr::wflow_html:
-    toc: true
-    toc_float: true
+    toc: yes
+    toc_float: yes
     theme: cosmo
     highlight: textmate
