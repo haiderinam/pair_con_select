@@ -11,7 +11,7 @@ output:
 
 
 * ###Click [here](updated_resampling_strategy2.html) to see pairwise comparisons of conditional selection applied to simulated cohorts
-<img src="assets/atisubsamplingsims.png" width="600" height="300"  alt="">
+<img src="assets/atisubsamplingsims.png" width="400" height="300"  alt="">
 
 
 * ###Click [here](alkati_subsampling_simulations.html) to see subsampling simulations on ALK^ATI^ data.  
