@@ -31,19 +31,19 @@ library(BiocManager)
 # library(ensembldb) #Loading this with Dplyr commands seems to throw an error in Rmd
 # library(EnsDb.Hsapiens.v86) #Loading this with Dplyr commands seems to throw an error in Rmd
 
-# source("code/contab_maker.R")
-# source("code/alldata_compiler.R")
-# source("code/quadratic_solver.R")
-# source("code/mut_excl_genes_generator.R")
-# source("code/mut_excl_genes_datapoints.R")
-# source("code/simresults_generator.R")
+source("code/contab_maker.R")
+source("code/alldata_compiler.R")
+source("code/quadratic_solver.R")
+source("code/mut_excl_genes_generator.R")
+source("code/mut_excl_genes_datapoints.R")
+source("code/simresults_generator.R")
 
-source("../code/contab_maker.R")
-source("../code/alldata_compiler.R")
-source("../code/quadratic_solver.R")
-source("../code/mut_excl_genes_generator.R")
-source("../code/mut_excl_genes_datapoints.R")
-source("../code/simresults_generator.R")
+# source("../code/contab_maker.R")
+# source("../code/alldata_compiler.R")
+# source("../code/quadratic_solver.R")
+# source("../code/mut_excl_genes_generator.R")
+# source("../code/mut_excl_genes_datapoints.R")
+# source("../code/simresults_generator.R")
 
 
 ######################Cleanup for GGPlot2#########################################
@@ -72,8 +72,8 @@ cleanup=theme_bw() +
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt<-'Q61L'
 
-# alldata=read.csv("output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
-alldata=read.csv("../output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
+alldata=read.csv("output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
+# alldata=read.csv("../output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
 head(alldata)
 ```
 Contab downsampler function that the next code chunk uses:
@@ -125,10 +125,10 @@ mut_excl_genes_generator2=function(cohort_size,incidence,or_pair1,or_pair2){
   return(list(gene_pair_1,gene_pair_2))
 }
 
-mut_excl_genes_generator2(500,12,.1,.05)
-mut_excl_genes_generator2(500,36,.1,.05)
-mut_excl_genes_generator(500,12,.1,.05)
-mut_excl_genes_generator(500,36,.1,.05)
+# mut_excl_genes_generator2(500,12,.1,.05)
+# mut_excl_genes_generator2(500,36,.1,.05)
+# mut_excl_genes_generator(500,12,.1,.05)
+# mut_excl_genes_generator(500,36,.1,.05)
 
 
 ```
@@ -921,7 +921,7 @@ ggplot(simresults_compiled%>%filter(or1%in%c(.05,.1,.5),cohort_size%in%c(100,300
 
 
 
-```{r}
+```{r,eval=F}
 # simresults_subset=simresults_compiled%>%filter(or2%in%0.01,or1%in%c(0.01,.1,1))
 simresults_subset=unlist(simresults_compiled_alldata)
 
@@ -937,7 +937,7 @@ colnames(simresults_unlisted)=c("cohort_size","incidence","or1","or2","or1_list"
 simresults_unlisted=simresults_unlisted%>%filter(or2%in%0.01,or1%in%c(0.05,.1,1),cohort_size%in%500,incidence%in%c(4,8,12,16,20))
 # library(reshape2)
 a=simresults_unlisted%>%filter(incidence%in%8,or2%in%0.01,or1%in%.05)
-b=unnest(a)
+# b=unnest(a)
 median(b$or2_list)>median(b$or1_list)
 
 library(tidyr)
@@ -985,6 +985,9 @@ ggplot(simresults_melted2,aes(x=factor(incidence),y=OR,fill=Comparison))+facet_w
 plotly=ggplot(simresults_melted2,aes(x=factor(incidence),y=OR,fill=Comparison))+facet_wrap(~or2)+geom_boxplot()+cleanup
 ggplotly(plotly)
 # sort(unique(simresults_unlisted$or2))
+
+#I used the following website to make sure that my Gaussian elimination was working properly
+# https://www.emathhelp.net/calculators/linear-algebra/gauss-jordan-elimination-calculator/?i=%5B%5B1%2C1%2C0%2C0%2C.4836%5D%2C%5B1%2C1%2C1%2C1%2C1%5D%2C%5B0%2C1%2C0%2C-1%2C0%5D%2C%5B1%2C0%2C-0.01%2C0%2C0%5D%5D&reduced=on
 
 ```
 
