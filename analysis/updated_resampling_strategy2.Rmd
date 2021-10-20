@@ -31,19 +31,21 @@ library(BiocManager)
 # library(ensembldb) #Loading this with Dplyr commands seems to throw an error in Rmd
 # library(EnsDb.Hsapiens.v86) #Loading this with Dplyr commands seems to throw an error in Rmd
 
-source("code/contab_maker.R")
-source("code/alldata_compiler.R")
-source("code/quadratic_solver.R")
-source("code/mut_excl_genes_generator.R")
-source("code/mut_excl_genes_datapoints.R")
-source("code/simresults_generator.R")
+# source("code/contab_maker.R")
+# source("code/alldata_compiler.R")
+# source("code/quadratic_solver.R")
+# source("code/mut_excl_genes_generator.R")
+# source("code/mut_excl_genes_datapoints.R")
+# source("code/simresults_generator.R")
 
-# source("../code/contab_maker.R")
-# source("../code/alldata_compiler.R")
-# source("../code/quadratic_solver.R")
-# source("../code/mut_excl_genes_generator.R")
+source("../code/contab_maker.R")
+source("../code/alldata_compiler.R")
+source("../code/quadratic_solver.R")
+source("../code/mut_excl_genes_generator.R")
+source("../code/mut_excl_genes_generator3.R")
 # source("../code/mut_excl_genes_datapoints.R")
-# source("../code/simresults_generator.R")
+
+source("../code/simresults_generator.R")
 
 
 ######################Cleanup for GGPlot2#########################################
@@ -72,8 +74,8 @@ cleanup=theme_bw() +
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt<-'Q61L'
 
-alldata=read.csv("output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
-# alldata=read.csv("../output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
+# alldata=read.csv("output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
+alldata=read.csv("../output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
 head(alldata)
 ```
 Contab downsampler function that the next code chunk uses:
@@ -92,7 +94,7 @@ contab_downsampler<- function(contab,prob) {
 }
 ```
 
-```{r}
+```{r, eval=F}
 mut_excl_genes_generator2=function(cohort_size,incidence,or_pair1,or_pair2){
   # or_pair1=.9
   # or_pair2=.01
@@ -176,7 +178,10 @@ head(alldata_comp)
 ###Calculating Odds ratios and GOI frequencies for the raw data###
 cohort_size=length(alldata_comp$Positive_Ctrl1)
 pc1pc2_contab_counts=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$Positive_Ctrl2,alldata_comp)[2:1, 2:1]
+# pc1pc2_contab_counts=pc1new_pc2_contab
+
 goipc1_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl1,alldata_comp)[2:1, 2:1]
+# goipc1_contab_counts=goinew_pc1_contab
 ###Had to add the 2:1 bits because the contab maker spits out NN YY whereas we wanted YNYN
 goipc2_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl2,alldata_comp)[2:1, 2:1]
 
@@ -351,6 +356,9 @@ ggplot(plotting_df%>%filter(comparison%in%"pc1pc2"),aes(x=or,fill=comparison))+
 
 
 ```
+
+
+
 ```{r}
 # rm(list=ls())
 ###Not mutation specific generation of counts###
