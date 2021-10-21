@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Haider Inam" />
+
+
+<title>pairwisecomparisons_simulateddata</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">pair_con_select</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/haiderinam/pairwisecomparisons">
+    <span class="fas fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">pairwisecomparisons_simulateddata</h1>
+<h4 class="author">Haider Inam</h4>
+<h4 class="date">5/30/2021</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-10-21
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>pair_con_select/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20190211code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20190211)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20190211code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20190211)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcompritchardlabatpsupairwisecomparisonstree69efefbf648dececd2e5c04b6a75432caba461b8targetblank69efefba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/pritchardlabatpsu/pairwisecomparisons/tree/69efefbf648dececd2e5c04b6a75432caba461b8" target="_blank">69efefb</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcompritchardlabatpsupairwisecomparisonstree69efefbf648dececd2e5c04b6a75432caba461b8targetblank69efefba" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/pritchardlabatpsu/pairwisecomparisons/tree/69efefbf648dececd2e5c04b6a75432caba461b8" target="_blank">69efefb</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
+    Ignored:    analysis/.Rproj.user/
+    Ignored:    analysis/Archive/.DS_Store
+    Ignored:    analysis/Archive/shinyapp/.DS_Store
+    Ignored:    code/.DS_Store
+    Ignored:    code/archive/.DS_Store
+    Ignored:    data/.DS_Store
+    Ignored:    data/depmap_alkati/.DS_Store
+    Ignored:    data/depmap_alkati/Data_Raw/.DS_Store
+    Ignored:    data/depmap_alkati/Data_Raw/CCLE/CCLE_RNAseq_ExonUsageRatio_20180929.gct
+    Ignored:    data/tcga_brca_expression/
+    Ignored:    data/tcga_luad_expression/
+    Ignored:    data/tcga_skcm_expression/
+    Ignored:    output/.DS_Store
+    Ignored:    output/alkati_filtercutoff_allfilters.csv
+
+Untracked files:
+    Untracked:  README.html
+    Untracked:  analysis/Archive/ks_results_forshiny.csv
+    Untracked:  analysis/pairwisecomparisons_simulateddata.Rmd
+    Untracked:  data/archive/
+    Untracked:  data/depmap_alkati/archive/
+
+Unstaged changes:
+    Modified:   README.md
+    Modified:   analysis/index.Rmd
+    Deleted:    analysis/ks_results_forshiny.csv
+    Deleted:    analysis/updated_resampling_strategy2.Rmd
+    Deleted:    data/All_Data_V2.csv
+    Deleted:    data/alkati_simulations_compiled_200_51121.csv
+    Deleted:    data/all_data.csv
+    Deleted:    data/depmap_alkati/To_do_depmap.docx
+    Deleted:    data/skmel28_sos1_mekq56p_vemurafenib.csv
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code># library(ensembldb) #Loading this with Dplyr commands seems to throw an error in Rmd
+# library(EnsDb.Hsapiens.v86) #Loading this with Dplyr commands seems to throw an error in Rmd
+# source(&quot;../code/mut_excl_genes_generator3.R&quot;)
+# source(&quot;../code/mut_excl_genes_datapoints.R&quot;)
+
+source(&quot;code/contab_maker.R&quot;)
+source(&quot;code/contab_simulator.R&quot;)
+source(&quot;code/contab_downsampler.R&quot;)
+source(&quot;code/alldata_compiler.R&quot;)
+source(&quot;code/mut_excl_genes_generator.R&quot;)
+
+# source(&quot;../code/contab_maker.R&quot;)
+# source(&quot;../code/contab_simulator.R&quot;)
+# source(&quot;../code/contab_downsampler.R&quot;)
+# source(&quot;../code/alldata_compiler.R&quot;)
+# source(&quot;../code/mut_excl_genes_generator.R&quot;)</code></pre>
+<div id="pairwise-comparisons-using-simulated-genes" class="section level3">
+<h3>Pairwise Comparisons using Simulated Genes</h3>
+<div id="this-is-the-part-of-the-code-where-i-performed-pairwise-comparisons-on-gene-pairs-having-different-abundances-odds-ratios-and-cohort-sizes." class="section level4">
+<h4>This is the part of the code where I performed pairwise comparisons on gene pairs having different abundances, odds ratios, and cohort sizes.</h4>
+<pre class="r"><code># rm(list=ls())
+or_pair1=c(.01,.05,.1,.2,.3,.4,.5,.6,.7,.8,.9,1)
+or_pair2=seq(.01,.2,by=.02)
+incidence=seq(4,36,by=2)
+cohort_size=seq(100,1000,by=200)
+
+# or_pair1=c(.01,.05)
+# or_pair2=seq(.01,.1,by=.05)
+# incidence=seq(4,36,by=20)
+# cohort_size=seq(100,1000,by=400)
+
+    # or_pair1=.05
+    # or_pair2=.01
+    # incidence=12
+    # cohort_size=500
+    # i=1
+    # j=1
+    # k=1
+    # l=1
+
+true_or_vals=or_pair1
+cohort_size_vals=cohort_size
+gene1_total_vals=incidence
+
+simresults_compiled_alldata=as.list(length(or_pair2)*length(or_pair1)*length(incidence)*length(cohort_size))
+simresults_compiled=matrix(,length(or_pair2)*length(or_pair1)*length(incidence)*length(cohort_size),ncol=16)
+ct=1
+for(j in 1:length(incidence)){
+  tic()
+for(l in 1:length(or_pair2)){
+  for(k in 1:length(cohort_size_vals)){
+    for(i in 1:length(true_or_vals)){
+gene_pair_1=unlist(mut_excl_genes_generator(cohort_size[k],incidence[j],or_pair1[i],or_pair2[l])[1])
+gene_pair_1_table=rbind(c(gene_pair_1[1],gene_pair_1[2]),c(gene_pair_1[3],gene_pair_1[4])) ###make sure these are the right indices
+gene_pair_2=unlist(mut_excl_genes_generator(cohort_size[k],incidence[j],or_pair1[i],or_pair2[l])[2])
+gene_pair_2_table=rbind(c(gene_pair_2[1],gene_pair_2[2]),c(gene_pair_2[3],gene_pair_2[4]))
+# alldata_1=mut_excl_genes_datapoints(gene_pair_1)
+# 
+# alldata_2=mut_excl_genes_datapoints(gene_pair_2)
+# alldata_comp_1=alldata_compiler(alldata_1,&quot;gene2&quot;,&quot;gene3&quot;,&quot;gene1&quot;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[2]]
+# 
+# genex_replication_prop_1=alldata_compiler(alldata_1,&quot;gene2&quot;,&quot;gene3&quot;,&quot;gene1&quot;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[1]]
+# alldata_comp_2=alldata_compiler(alldata_2,&quot;gene2&quot;,&quot;gene3&quot;,&quot;gene1&quot;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[2]]
+# genex_replication_prop_2=alldata_compiler(alldata_2,&quot;gene2&quot;,&quot;gene3&quot;,&quot;gene1&quot;,&#39;N&#39;,&quot;N/A&quot;,&quot;N/A&quot;)[[1]]
+
+
+###Calculating Odds ratios and GOI frequencies for the raw data###
+# cohort_size_curr=length(alldata_comp$Positive_Ctrl1)
+cohort_size_curr=cohort_size[k]
+# pc1pc2_contab_counts=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$Positive_Ctrl2,alldata_comp)[2:1, 2:1]
+pc1pc2_contab_counts=gene_pair_2_table
+# goipc1_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl1,alldata_comp)[2:1, 2:1]
+goipc1_contab_counts=gene_pair_1_table
+
+
+# goipc2_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl2,alldata_comp)[2:1, 2:1]
+# pc1pc2_contab_probabilities=pc1pc2_contab_counts/cohort_size_curr
+# goipc1_contab_probabilities=goipc1_contab_counts/cohort_size_curr
+pc1pc2_contab_probabilities=pc1pc2_contab_counts
+goipc1_contab_probabilities=goipc1_contab_counts
+# goipc2_contab_probabilities=goipc2_contab_counts/cohort_size
+
+or_pc1pc2=pc1pc2_contab_probabilities[1,1]*pc1pc2_contab_probabilities[2,2]/(pc1pc2_contab_probabilities[1,2]*pc1pc2_contab_probabilities[2,1])
+or_goipc1=goipc1_contab_probabilities[1,1]*goipc1_contab_probabilities[2,2]/(goipc1_contab_probabilities[1,2]*goipc1_contab_probabilities[2,1])
+# or_goipc2=goipc2_contab_probabilities[1,1]*goipc2_contab_probabilities[2,2]/(goipc2_contab_probabilities[1,2]*goipc2_contab_probabilities[2,1])
+
+goi_freq=goipc1_contab_probabilities[1,1]+goipc1_contab_probabilities[1,2]
+# goi_freq=.01
+# class(goi_freq)
+
+###
+
+###Downsampling PC1 to the probability of GOI without changing ORs###
+###The function below converts contingency table data to a new contingency table in which the data is downsampled to the desired frequency, aka the frequency of the GOI in this case###
+pc1new_pc2_contab=contab_downsampler(pc1pc2_contab_probabilities,goi_freq)
+goinew_pc1_contab=contab_downsampler(goipc1_contab_probabilities,goi_freq)
+# goinew_pc2_contab=contab_downsampler(goipc2_contab_probabilities,goi_freq)
+###original contab:
+# head(pc1pc2_contab_probabilities) 
+###downsampled contab:
+# head(pc1new_pc2_contab) 
+
+pc1rawpc2_contabs_sims=contab_simulator(pc1pc2_contab_probabilities,1000,cohort_size_curr)
+pc1pc2_contabs_sims=contab_simulator(pc1new_pc2_contab,1000,cohort_size_curr)
+goipc1_contabs_sims=contab_simulator(goinew_pc1_contab,1000,cohort_size_curr)
+# goipc2_contabs_sims=contab_simulator(goinew_pc2_contab,1000,cohort_size)
+# head(pc1pc2_contabs_sims) #each row in this dataset is a new contab
+pc1rawpc2_contabs_sims=data.frame(pc1rawpc2_contabs_sims)
+  pc1rawpc2_contabs_sims=pc1rawpc2_contabs_sims%&gt;%
+  mutate(or=p11*p00/(p10*p01))
+
+pc1pc2_contabs_sims=data.frame(pc1pc2_contabs_sims)
+  pc1pc2_contabs_sims=pc1pc2_contabs_sims%&gt;%
+  mutate(or=p11*p00/(p10*p01))
+  
+goipc1_contabs_sims=data.frame(goipc1_contabs_sims)
+  goipc1_contabs_sims=goipc1_contabs_sims%&gt;%
+  mutate(or=p11*p00/(p10*p01))
+  
+
+  
+# goipc2_contabs_sims=data.frame(goipc2_contabs_sims)
+#   goipc2_contabs_sims=goipc2_contabs_sims%&gt;%
+#   mutate(or=p11*p00/(p10*p01))
+pc1rawpc2_contabs_sims$comparison=&quot;pc1rawpc2&quot;
+pc1pc2_contabs_sims$comparison=&quot;pc1pc2&quot;
+goipc1_contabs_sims$comparison=&quot;goipc1&quot;
+# goipc2_contabs_sims$comparison=&quot;goipc2&quot;
+or_median_raw=quantile(pc1rawpc2_contabs_sims$or,na.rm = T)[3]
+or_uq_raw=quantile(pc1rawpc2_contabs_sims$or,na.rm = T)[4]
+or_median_downsampled=quantile(pc1pc2_contabs_sims$or,na.rm = T)[3]
+or_uq_downsampled=quantile(pc1pc2_contabs_sims$or,na.rm = T)[4]
+
+
+
+pc1rawpc2_contabs_sims=pc1rawpc2_contabs_sims%&gt;%
+  mutate(isgreater_raw_median=case_when(or&gt;=or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or&gt;or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or&gt;or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or&gt;or_uq_downsampled~1,
+                             TRUE~0)
+         )
+pc1pc2_contabs_sims=pc1pc2_contabs_sims%&gt;%
+  mutate(isgreater_raw_median=case_when(or&gt;=or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or&gt;or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or&gt;or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or&gt;or_uq_downsampled~1,
+                             TRUE~0)
+         )
+goipc1_contabs_sims=goipc1_contabs_sims%&gt;%
+  mutate(isgreater_raw_median=case_when(or&gt;or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or&gt;or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or&gt;or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or&gt;or_uq_downsampled~1,
+                             TRUE~0)
+         )
+# pc1pc2_contabs_sims=pc1pc2_contabs_sims%&gt;%
+#   mutate(isgreater=case_when(or&gt;=or_pc1pc2~1,
+#                              TRUE~0))
+# goipc1_contabs_sims=goipc1_contabs_sims%&gt;%
+#   mutate(isgreater=case_when(or&gt;=or_pc1pc2~1,
+#                              TRUE~0))
+# goipc2_contabs_sims=goipc2_contabs_sims%&gt;%
+#   mutate(isgreater=case_when(or&gt;=or_pc1pc2~1,
+#                              TRUE~0))
+pc1rawpc2_isgreater_raw_median=sum(pc1rawpc2_contabs_sims$isgreater_raw_median)
+pc1rawpc2_isgreater_raw_uq=sum(pc1rawpc2_contabs_sims$isgreater_raw_uq)
+pc1rawpc2_isgreater_median=sum(pc1rawpc2_contabs_sims$isgreater_median)
+pc1rawpc2_isgreater_uq=sum(pc1rawpc2_contabs_sims$isgreater_uq)
+
+pc1pc2_isgreater_raw_median=sum(pc1pc2_contabs_sims$isgreater_raw_median)
+pc1pc2_isgreater_raw_uq=sum(pc1pc2_contabs_sims$isgreater_raw_uq)
+pc1pc2_isgreater_median=sum(pc1pc2_contabs_sims$isgreater_median)
+pc1pc2_isgreater_uq=sum(pc1pc2_contabs_sims$isgreater_uq)
+
+goipc1_isgreater_raw_median=sum(goipc1_contabs_sims$isgreater_raw_median)
+goipc1_isgreater_raw_uq=sum(goipc1_contabs_sims$isgreater_raw_uq)
+goipc1_isgreater_median=sum(goipc1_contabs_sims$isgreater_median)
+goipc1_isgreater_uq=sum(goipc1_contabs_sims$isgreater_uq)
+
+
+# pc1rawpc2_isgreater=sum(pc1rawpc2_contabs_sims$isgreater)
+# pc1pc2_isgreater=sum(pc1pc2_contabs_sims$isgreater)
+# goipc1_isgreater=sum(goipc1_contabs_sims$isgreater)
+
+simresults=c(cohort_size[k],
+             incidence[j],
+             or_pair1[i],
+             or_pair2[l],
+             pc1rawpc2_isgreater_raw_median,
+             pc1rawpc2_isgreater_raw_uq,
+             pc1rawpc2_isgreater_median,
+             pc1rawpc2_isgreater_uq,
+             pc1pc2_isgreater_raw_median,
+             pc1pc2_isgreater_raw_uq,
+             pc1pc2_isgreater_median,
+             pc1pc2_isgreater_uq,
+             goipc1_isgreater_raw_median,
+             goipc1_isgreater_raw_uq,
+             goipc1_isgreater_median,
+             goipc1_isgreater_uq)
+
+simresults_alldata=c(cohort_size[k],
+             incidence[j],
+             or_pair1[i],
+             or_pair2[l],
+    list(goipc1_contabs_sims$or),
+    list(pc1pc2_contabs_sims$or))
+
+######Comment out the following section if you wish to not gather all the 1,000 Odds ratios for each simulation####
+simresults_compiled_alldata[[ct]]=simresults_alldata
+# a=simresults_compiled_alldata[[1]]
+
+simresults_compiled[ct,]=simresults
+
+ct=ct+1
+    }
+  }
+}
+  toc()
+}</code></pre>
+<pre><code>12.996 sec elapsed
+10.755 sec elapsed
+12.917 sec elapsed
+11.37 sec elapsed
+9.556 sec elapsed
+9.618 sec elapsed
+8.819 sec elapsed
+8.47 sec elapsed
+8.485 sec elapsed
+8.326 sec elapsed
+8.582 sec elapsed
+8.46 sec elapsed
+9.803 sec elapsed
+9.421 sec elapsed
+9.728 sec elapsed
+9.299 sec elapsed
+9.627 sec elapsed</code></pre>
+<pre class="r"><code>simresults_compiled=data.frame(simresults_compiled)
+colnames(simresults_compiled)=c(&quot;cohort_size&quot;,
+                                &quot;incidence&quot;,
+                                &quot;or1&quot;,
+                                &quot;or2&quot;,
+                                &quot;pc1rawpc2_isgreater_raw_median&quot;,
+                                &quot;pc1rawpc2_isgreater_raw_uq&quot;,
+                                &quot;pc1rawpc2_isgreater_median&quot;,
+                                &quot;pc1rawpc2_isgreater_uq&quot;,
+                                &quot;pc1pc2_isgreater_raw_median&quot;,
+                                &quot;pc1pc2_isgreater_raw_uq&quot;,
+                                &quot;pc1pc2_isgreater_median&quot;,
+                                &quot;pc1pc2_isgreater_uq&quot;,
+                                &quot;goipc1_isgreater_raw_median&quot;,
+                                &quot;goipc1_isgreater_raw_uq&quot;,
+                                &quot;goipc1_isgreater_median&quot;,
+                                &quot;goipc1_isgreater_uq&quot;)
+simresults_compiled$delta_median=simresults_compiled$goipc1_isgreater_raw_median-simresults_compiled$goipc1_isgreater_median
+simresults_compiled$delta_uq=simresults_compiled$goipc1_isgreater_raw_uq-simresults_compiled$goipc1_isgreater_uq
+
+simresults_compiled=simresults_compiled%&gt;%
+  mutate(fp_corrected_95=case_when(
+    goipc1_isgreater_raw_uq&lt;950~-1,
+     (goipc1_isgreater_raw_uq&gt;=950&amp;(goipc1_isgreater_raw_uq-delta_uq)&lt;=950)~1,
+    TRUE~0),
+    fp_corrected_99=case_when(
+      goipc1_isgreater_raw_uq&lt;990~-1,
+    (goipc1_isgreater_raw_uq&gt;=990&amp;(goipc1_isgreater_raw_uq-delta_uq)&lt;=990)~1,
+    TRUE~0))
+
+# simresults_compiled$goipc1_isgreater_percent=simresults_compiled$goipc1_isgreater*100/1000
+simresults_subset=simresults_compiled%&gt;%filter(cohort_size%in%500)</code></pre>
+</div>
+</div>
+<div id="here-i-am-plotting-the-score-obtained-for-all-simulations.-the-score-is-defined-as-the-percentage-of-goi-vs-pc1-trials-that-fall-in-the-median-of-the-odds-ratios-of-the-frequency-corrected-pc1-vs-pc2-simulations." class="section level3">
+<h3>Here I am plotting the score obtained for all simulations. The score is defined as the percentage of GOI vs PC1 trials that fall in the median of the odds ratios of the frequency corrected PC1 vs PC2 simulations.</h3>
+<pre class="r"><code>ggplot(simresults_compiled%&gt;%filter(or1&lt;=.4),aes(x=incidence,y=or2))+geom_tile(aes(fill=goipc1_isgreater_median/10))+facet_grid(cohort_size~or1)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="here-i-am-plotting-the-score-obtained-for-all-simulations.-the-score-is-defined-as-the-percentage-of-goi-vs-pc1-trials-that-fall-in-the-upper-quartile-of-the-odds-ratios-of-the-frequency-corrected-pc1-vs-pc2-simulations.-i.e.-it-is-a-less-stringent-test" class="section level3">
+<h3>Here I am plotting the score obtained for all simulations. The score is defined as the percentage of GOI vs PC1 trials that fall in the upper quartile of the odds ratios of the frequency corrected PC1 vs PC2 simulations. i.e. it is a less stringent test</h3>
+<pre class="r"><code>ggplot(simresults_compiled%&gt;%filter(or1&lt;=.4),aes(x=incidence,y=or2))+geom_tile(aes(fill=goipc1_isgreater_uq/10))+facet_grid(cohort_size~or1)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Percent succesful trials&quot;)</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="a-few-more-ways-to-look-at-the-plots-above" class="section level3">
+<h3>A few more ways to look at the plots above:</h3>
+<pre class="r"><code>ggplot(simresults_compiled%&gt;%filter(or1&lt;=.4,cohort_size%in%500),aes(x=incidence,y=or2))+geom_tile(aes(fill=goipc1_isgreater_median/10))+facet_wrap(~or1)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(simresults_compiled%&gt;%filter(or1&lt;=.4,cohort_size%in%500),aes(x=incidence,y=or2))+geom_tile(aes(fill=goipc1_isgreater_median/10))+facet_wrap(~or1,ncol=6)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(simresults_compiled%&gt;%filter(or1%in%c(.05,0.1,.5),cohort_size%in%500),aes(x=incidence,y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=goipc1_isgreater_median/10))+facet_wrap(~or1,ncol=6)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)+scale_x_continuous(expand = c(0,0),name=&quot;Incidence&quot;)+
+  scale_y_continuous(expand = c(0,0),name=&quot;Odds ratio of PC1vsPC2&quot;)+ggtitle(&quot;Odds ratio of GOIvsPC1&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-8-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;score_heatmap.pdf&quot;,width=8,heigh=3,units=&quot;in&quot;,useDingbats=F)
+
+ggplot(simresults_compiled%&gt;%filter(or1%in%c(.05,0.1,.5),cohort_size%in%c(100,500,900)),aes(x=incidence,y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=goipc1_isgreater_median/10))+facet_grid(cohort_size~or1)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)+scale_x_continuous(expand = c(0,0),name=&quot;Incidence&quot;)+
+  scale_y_continuous(expand = c(0,0),name=&quot;Odds ratio of PC1vsPC2&quot;)+ggtitle(&quot;Odds ratio of GOIvsPC1&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-8-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;score_heatmap_supplement.pdf&quot;,width=8,heigh=7,units=&quot;in&quot;,useDingbats=F)
+
+ggplot(simresults_compiled%&gt;%filter(incidence%in%c(6,16,26,36),cohort_size%in%c(100,300,500,900)),aes(x=factor(or1),y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=goipc1_isgreater_uq/10))+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)+scale_x_discrete(expand = c(0,0),name=&quot;Odds ratio of GOI and PC1&quot;)+facet_grid(cohort_size~incidence)+
+  scale_y_continuous(expand = c(0,0),name=&quot;Odds ratio of PC1 and PC2&quot;)+theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-8-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(simresults_compiled%&gt;%filter(incidence%in%c(6,16,26,36),cohort_size%in%500),aes(x=factor(or1),y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=goipc1_isgreater_uq/10))+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)+scale_x_discrete(expand = c(0,0),name=&quot;Odds ratio of GOI and PC1&quot;)+facet_wrap(~incidence,ncol=4)+
+  scale_y_continuous(expand = c(0,0),name=&quot;Odds ratio of PC1 and PC2&quot;)+theme(plot.title = element_text(hjust = 0.5),axis.text.x=element_text(angle=90,hjust=.5,vjust=.5),axis.text=element_text(face=&quot;bold&quot;,size=&quot;9&quot;,color=&quot;black&quot;))</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-8-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;score_heatmap_bestoption1.pdf&quot;,width=8,heigh=2.5,units=&quot;in&quot;,useDingbats=F)
+# sort(unique(simresults_compiled$or2))
+
+ggplot(simresults_compiled%&gt;%filter(cohort_size%in%500),aes(x=factor(or1),y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=goipc1_isgreater_median/10))+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)+scale_x_discrete(expand = c(0,0),name=&quot;Odds ratio of GOI and PC1&quot;)+
+  scale_y_continuous(expand = c(0,0),name=&quot;Odds ratio of PC1 and PC2&quot;)+theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-8-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;score_heatmap_bestoption.pdf&quot;,width=4,heigh=3,units=&quot;in&quot;,useDingbats=F)</code></pre>
+</div>
+<div id="here-i-am-plotting-how-the-score-worsens-as-we-get-a-worse-positive-control-gene-pair-worse-in-this-case-means-having-a-higher-odds-ratio" class="section level3">
+<h3>Here, I am plotting how the score worsens as we get a worse positive control gene pair (worse in this case means having a higher odds ratio)</h3>
+<pre class="r"><code>ggplot(simresults_compiled%&gt;%filter(or2%in%.05,cohort_size%in%c(500)),aes(x=factor(or1),y=goipc1_isgreater_median/10))+geom_boxplot()+scale_x_discrete(name=&quot;Odds ratio of PC1vsPC2&quot;)+
+  scale_y_continuous(name=&quot;Score&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))+cleanup</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;score_plot.pdf&quot;,width=8,heigh=3,units=&quot;in&quot;,useDingbats=F)</code></pre>
+</div>
+<div id="here-i-am-looking-at-whether-frequency-correction-of-the-positive-control-genes-is-in-fact-a-more-fair-test-of-a-comparison-with-gene-of-interest-than-no-frequency-correction.-i.e.-does-it-matter-if-the-positive-control-genes-are-downsampled-to-the-frequency-of-the-gene-of-interest-answer-yes.-if-the-positive-control-genes-were-present-at-a-lower-frequency-it-would-be-tougher-to-tell-pc1-vs-pc2-apart-from-goi-vs-pc1." class="section level3">
+<h3>Here, I am looking at whether frequency correction of the positive control genes is in fact a more fair test of a comparison with gene of interest than no frequency correction. i.e. does it matter if the positive control genes are downsampled to the frequency of the gene of interest? Answer: yes. If the positive control genes were present at a lower frequency, it would be tougher to tell PC1 vs PC2 apart from GOI vs PC1.</h3>
+<pre class="r"><code>ggplot(simresults_compiled%&gt;%filter(or1&lt;=.7,or1&gt;=.2),aes(x=incidence,y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=fp_corrected_95))+facet_grid(cohort_size~or1)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,high =&quot;blue&quot;,name=&quot;Regions where downsampling helps&quot;)</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(simresults_compiled%&gt;%filter(or1&lt;=.7,or1&gt;=.2),aes(x=incidence,y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=fp_corrected_99))+facet_grid(cohort_size~or1)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,high =&quot;blue&quot;,name=&quot;Regions where downsampling helps&quot;)</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-11-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="the-following-plots-went-in-fig-1c-1d-and-fig-s2" class="section level3">
+<h3>The following plots went in Fig 1C, 1D, and Fig S2</h3>
+<pre class="r"><code>ggplot(simresults_compiled%&gt;%filter(cohort_size%in%500),aes(x=factor(or1),y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=goipc1_isgreater_uq/10))+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)+scale_x_discrete(expand = c(0,0),name=&quot;Odds ratio of GOI and PC1&quot;)+
+  scale_y_continuous(expand = c(0,0),name=&quot;Odds ratio of PC1 and PC2&quot;)+theme(plot.title = element_text(hjust = 0.5))+theme(plot.title = element_text(hjust = 0.5),axis.text.x=element_text(angle=90,hjust=.5,vjust=.5),axis.text=element_text(face=&quot;bold&quot;,size=&quot;9&quot;,color=&quot;black&quot;))</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;score_heatmap_bestoption.pdf&quot;,width=4,heigh=3,units=&quot;in&quot;,useDingbats=F)
+
+ggplot(simresults_compiled%&gt;%filter(or1%in%c(.05,.3,.6),incidence%in%c(4,8,12,16,20,24,28,32,36),cohort_size%in%500),aes(x=factor(incidence),y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=goipc1_isgreater_median/10))+facet_wrap(~or1,ncol=6)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)+scale_x_discrete(expand = c(0,0),name=&quot;Incidence&quot;)+
+  scale_y_continuous(expand = c(0,0),name=&quot;Odds ratio of PC1 and PC2&quot;)+theme(strip.text=element_blank(),plot.title = element_text(hjust = 0.5),axis.text.x=element_text(angle=90,hjust=.5,vjust=.5),axis.text=element_text(face=&quot;bold&quot;,size=&quot;9&quot;,color=&quot;black&quot;),legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;score_heatmap_bestoption1.pdf&quot;,width=6,heigh=2.5,units=&quot;in&quot;,useDingbats=F)
+
+ggplot(simresults_compiled%&gt;%filter(or1%in%c(.1,.2,.5),incidence%in%c(4,8,12,16,20,24,28,32,36),cohort_size%in%500),aes(x=factor(incidence),y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=goipc1_isgreater_raw_median/10))+facet_wrap(~or1,ncol=6)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)+scale_x_discrete(expand = c(0,0),name=&quot;Incidence&quot;)+
+  scale_y_continuous(expand = c(0,0),name=&quot;Odds ratio of PC1 and PC2&quot;)+theme(strip.text=element_blank(),plot.title = element_text(hjust = 0.5),axis.text.x=element_text(angle=90,hjust=.5,vjust=.5),axis.text=element_text(face=&quot;bold&quot;,size=&quot;9&quot;,color=&quot;black&quot;),legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-12-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;score_heatmap_bestoption1.pdf&quot;,width=6,heigh=2.5,units=&quot;in&quot;,useDingbats=F)
+
+ggplot(simresults_compiled%&gt;%filter(cohort_size%in%500,incidence%in%c(4,8,12,16,20,24,28,32,36)),aes(x=factor(incidence),y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=goipc1_isgreater_raw_median/10))+facet_wrap(~or1,ncol=4)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)+scale_x_discrete(expand = c(0,0),name=&quot;Incidence&quot;)+
+  scale_y_continuous(expand = c(0,0),name=&quot;Odds ratio of PC1 and PC2&quot;)+theme(plot.title = element_text(hjust = 0.5),axis.text.x=element_text(angle=90,hjust=.5,vjust=.5),axis.text=element_text(face=&quot;bold&quot;,size=&quot;9&quot;,color=&quot;black&quot;),legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-12-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&quot;score_heatmap_bestoption1_supplement.pdf&quot;,width=6,heigh=6,units=&quot;in&quot;,useDingbats=F)
+
+ggplot(simresults_compiled%&gt;%filter(or1%in%c(.05,.1,.5),cohort_size%in%c(100,300,500)),aes(x=incidence,y=or2))+geom_tile(color=&quot;black&quot;,aes(fill=goipc1_isgreater_median/10))+facet_grid(cohort_size~or1)+scale_fill_gradient2(low =&quot;red&quot; ,mid =&quot;white&quot;,midpoint=50,high =&quot;blue&quot;,name=&quot;Score&quot;)+scale_x_discrete(expand = c(0,0),name=&quot;Incidence&quot;)+
+  scale_y_continuous(expand = c(0,0),name=&quot;Odds ratio of PC1 and PC2&quot;)</code></pre>
+<p><img src="figure/pairwisecomparisons_simulateddata.Rmd/unnamed-chunk-12-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># a=simresults_compiled%&gt;%filter(cohort_size%in%500,or1%in%.7,or2%in%.05,incidence%in%)</code></pre>
+<pre class="r"><code># simresults_subset=simresults_compiled%&gt;%filter(or2%in%0.01,or1%in%c(0.01,.1,1))
+simresults_subset=unlist(simresults_compiled_alldata)
+
+simresults_unlisted=data.frame(unlist(lapply(simresults_compiled_alldata,&#39;[[&#39;,1)),
+             unlist(lapply(simresults_compiled_alldata,&#39;[[&#39;,2)),
+             unlist(lapply(simresults_compiled_alldata,&#39;[[&#39;,3)),
+             unlist(lapply(simresults_compiled_alldata,&#39;[[&#39;,4)))
+simresults_unlisted$list1=(lapply(simresults_compiled_alldata,&#39;[[&#39;,5))
+simresults_unlisted$list2=(lapply(simresults_compiled_alldata,&#39;[[&#39;,6))
+
+colnames(simresults_unlisted)=c(&quot;cohort_size&quot;,&quot;incidence&quot;,&quot;or1&quot;,&quot;or2&quot;,&quot;or1_list&quot;,&quot;or2_list&quot;)
+
+simresults_unlisted=simresults_unlisted%&gt;%filter(or2%in%0.01,or1%in%c(0.05,.1,1),cohort_size%in%500,incidence%in%c(4,8,12,16,20))
+# library(reshape2)
+a=simresults_unlisted%&gt;%filter(incidence%in%8,or2%in%0.01,or1%in%.05)
+# b=unnest(a)
+median(b$or2_list)&gt;median(b$or1_list)
+
+# library(tidyr)
+simresults_melted=unnest(simresults_unlisted)
+simresults_melted2=melt(simresults_melted,
+                        id.vars = c(&quot;cohort_size&quot;,&quot;or1&quot;,&quot;or2&quot;,&quot;incidence&quot;),
+                        measure.vars =c(&quot;or1_list&quot;,&quot;or2_list&quot;),
+                        variable.name = &quot;Comparison&quot;,
+                        value.name = &quot;OR&quot;
+                        )
+ggplot(simresults_melted2,aes(x=factor(incidence),y=OR,fill=Comparison))+facet_wrap(~or1)+geom_boxplot()+scale_y_continuous(trans=&quot;log2&quot;)+cleanup
+
+plotly=ggplot(simresults_melted2,aes(x=factor(incidence),y=OR,fill=Comparison))+facet_wrap(~or1)+geom_boxplot()+cleanup
+ggplotly(plotly)
+
+
+
+
+simresults_unlisted=data.frame(unlist(lapply(simresults_compiled_alldata,&#39;[[&#39;,1)),
+             unlist(lapply(simresults_compiled_alldata,&#39;[[&#39;,2)),
+             unlist(lapply(simresults_compiled_alldata,&#39;[[&#39;,3)),
+             unlist(lapply(simresults_compiled_alldata,&#39;[[&#39;,4)))
+simresults_unlisted$list1=(lapply(simresults_compiled_alldata,&#39;[[&#39;,5))
+simresults_unlisted$list2=(lapply(simresults_compiled_alldata,&#39;[[&#39;,6))
+
+colnames(simresults_unlisted)=c(&quot;cohort_size&quot;,&quot;incidence&quot;,&quot;or1&quot;,&quot;or2&quot;,&quot;or1_list&quot;,&quot;or2_list&quot;)
+simresults_unlisted=simresults_unlisted%&gt;%filter(or1%in%.5,or2%in%c(0.05,.11,.19),cohort_size%in%500,incidence%in%c(4,8,12,16,20))
+
+simresults_melted=unnest(simresults_unlisted)
+simresults_melted2=melt(simresults_melted,
+                        id.vars = c(&quot;cohort_size&quot;,&quot;or1&quot;,&quot;or2&quot;,&quot;incidence&quot;),
+                        measure.vars =c(&quot;or1_list&quot;,&quot;or2_list&quot;),
+                        variable.name = &quot;Comparison&quot;,
+                        value.name = &quot;OR&quot;
+                        )
+
+ggplot(simresults_melted2,aes(x=factor(incidence),y=OR,fill=Comparison))+facet_wrap(~or2)+geom_boxplot()+scale_y_continuous(trans=&quot;log2&quot;)+cleanup
+
+plotly=ggplot(simresults_melted2,aes(x=factor(incidence),y=OR,fill=Comparison))+facet_wrap(~or2)+geom_boxplot()+cleanup
+ggplotly(plotly)
+# sort(unique(simresults_unlisted$or2))
+
+#I used the following website to make sure that my Gaussian elimination was working properly
+# https://www.emathhelp.net/calculators/linear-algebra/gauss-jordan-elimination-calculator/?i=%5B%5B1%2C1%2C0%2C0%2C.4836%5D%2C%5B1%2C1%2C1%2C1%2C1%5D%2C%5B0%2C1%2C0%2C-1%2C0%5D%2C%5B1%2C0%2C-0.01%2C0%2C0%5D%5D&amp;reduced=on</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.0 (2020-04-24)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS  10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] parallel  grid      stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] BiocManager_1.30.10 plotly_4.9.2.1      ggsignif_0.6.0     
+ [4] devtools_2.3.0      usethis_1.6.1       RColorBrewer_1.1-2 
+ [7] reshape2_1.4.4      ggplot2_3.3.3       doParallel_1.0.15  
+[10] iterators_1.0.12    foreach_1.5.0       dplyr_1.0.6        
+[13] VennDiagram_1.6.20  futile.logger_1.4.3 workflowr_1.6.2    
+[16] tictoc_1.0          knitr_1.28         
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.4.6         tidyr_1.1.3          prettyunits_1.1.1   
+ [4] ps_1.3.3             assertthat_0.2.1     rprojroot_1.3-2     
+ [7] digest_0.6.25        utf8_1.1.4           R6_2.4.1            
+[10] plyr_1.8.6           futile.options_1.0.1 backports_1.1.7     
+[13] evaluate_0.14        httr_1.4.2           pillar_1.6.1        
+[16] rlang_0.4.11         lazyeval_0.2.2       data.table_1.12.8   
+[19] callr_3.7.0          rmarkdown_2.8        labeling_0.3        
+[22] desc_1.2.0           stringr_1.4.0        htmlwidgets_1.5.1   
+[25] munsell_0.5.0        compiler_4.0.0       httpuv_1.5.2        
+[28] xfun_0.22            pkgconfig_2.0.3      pkgbuild_1.0.8      
+[31] htmltools_0.4.0      tidyselect_1.1.0     tibble_3.1.2        
+[34] codetools_0.2-16     viridisLite_0.3.0    fansi_0.4.1         
+[37] crayon_1.4.1         withr_2.4.2          later_1.0.0         
+[40] jsonlite_1.7.2       gtable_0.3.0         lifecycle_1.0.0     
+[43] DBI_1.1.0            git2r_0.27.1         magrittr_2.0.1      
+[46] formatR_1.7          scales_1.1.1         cli_2.5.0           
+[49] stringi_1.4.6        farver_2.0.3         fs_1.4.1            
+[52] promises_1.1.0       remotes_2.1.1        testthat_2.3.2      
+[55] ellipsis_0.3.2       generics_0.0.2       vctrs_0.3.8         
+[58] lambda.r_1.2.4       tools_4.0.0          glue_1.4.1          
+[61] purrr_0.3.4          processx_3.5.2       pkgload_1.0.2       
+[64] yaml_2.2.1           colorspace_1.4-1     sessioninfo_1.1.1   
+[67] memoise_1.1.0       </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 ---
-title: "updated_resampling_strategy2"
+title: "pairwisecomparisons_simulateddata"
 author: "Haider Inam"
 date: "5/30/2021"
 output: html_document
@@ -353,15 +353,6 @@ ggplot(simresults_compiled%>%filter(or1%in%c(.05,0.1,.5),cohort_size%in%c(100,50
 
 # ggsave("score_heatmap_supplement.pdf",width=8,heigh=7,units="in",useDingbats=F)
 
-
-ggplot(simresults_compiled%>%filter(or2%in%.05,cohort_size%in%c(500)),aes(x=factor(or1),y=goipc1_isgreater_median/10))+geom_boxplot()+scale_x_discrete(name="Odds ratio of PC1vsPC2")+
-  scale_y_continuous(name="Score")+
-  theme(plot.title = element_text(hjust = 0.5))+cleanup
-
-# ggsave("score_plot.pdf",width=8,heigh=3,units="in",useDingbats=F)
-
-
-
 ggplot(simresults_compiled%>%filter(incidence%in%c(6,16,26,36),cohort_size%in%c(100,300,500,900)),aes(x=factor(or1),y=or2))+geom_tile(color="black",aes(fill=goipc1_isgreater_uq/10))+scale_fill_gradient2(low ="red" ,mid ="white",midpoint=50,high ="blue",name="Score")+scale_x_discrete(expand = c(0,0),name="Odds ratio of GOI and PC1")+facet_grid(cohort_size~incidence)+
   scale_y_continuous(expand = c(0,0),name="Odds ratio of PC1 and PC2")+theme(plot.title = element_text(hjust = 0.5))
 
@@ -373,7 +364,24 @@ ggplot(simresults_compiled%>%filter(incidence%in%c(6,16,26,36),cohort_size%in%50
 ggplot(simresults_compiled%>%filter(cohort_size%in%500),aes(x=factor(or1),y=or2))+geom_tile(color="black",aes(fill=goipc1_isgreater_median/10))+scale_fill_gradient2(low ="red" ,mid ="white",midpoint=50,high ="blue",name="Score")+scale_x_discrete(expand = c(0,0),name="Odds ratio of GOI and PC1")+
   scale_y_continuous(expand = c(0,0),name="Odds ratio of PC1 and PC2")+theme(plot.title = element_text(hjust = 0.5))
 # ggsave("score_heatmap_bestoption.pdf",width=4,heigh=3,units="in",useDingbats=F)
+```
+   
+### Here, I am plotting how the score worsens as we get a worse positive control gene pair (worse in this case means having a higher odds ratio)
+```{r}
 
+ggplot(simresults_compiled%>%filter(or2%in%.05,cohort_size%in%c(500)),aes(x=factor(or1),y=goipc1_isgreater_median/10))+geom_boxplot()+scale_x_discrete(name="Odds ratio of PC1vsPC2")+
+  scale_y_continuous(name="Score")+
+  theme(plot.title = element_text(hjust = 0.5))+cleanup
+
+# ggsave("score_plot.pdf",width=8,heigh=3,units="in",useDingbats=F)
+
+
+
+
+```
+  
+
+```{r, eval=F, include=F}
 ggplot(simresults_compiled%>%filter(or1%in%.3,or2%in%.09),aes(x=incidence/cohort_size,y=goipc1_isgreater_median/10))+geom_point()
 ggplot(simresults_compiled%>%filter(or1%in%.1,or2%in%.05,cohort_size%in%500),aes(x=incidence,y=goipc1_isgreater_median/10))+geom_point()
   # scale_fill_gradient2(low ="red" ,mid ="white",midpoint=50,high ="blue",name="Score")+scale_x_discrete(expand = c(0,0),name="Odds ratio of GOI and PC1")+
@@ -384,8 +392,7 @@ ggplot(simresults_compiled%>%filter(cohort_size%in%c(100,300,500)),aes(x=inciden
   theme(plot.title = element_text(hjust = 0.5))
 
 ```
-  
-  
+    
 ### Here, I am looking at whether frequency correction of the positive control genes is in fact a more fair test of a comparison with gene of interest than no frequency correction. i.e. does it matter if the positive control genes are downsampled to the frequency of the gene of interest? Answer: yes. If the positive control genes were present at a lower frequency, it would be tougher to tell PC1 vs PC2 apart from GOI vs PC1.
 ```{r}
 ggplot(simresults_compiled%>%filter(or1<=.7,or1>=.2),aes(x=incidence,y=or2))+geom_tile(color="black",aes(fill=fp_corrected_95))+facet_grid(cohort_size~or1)+scale_fill_gradient2(low ="red" ,mid ="white",high ="blue",name="Regions where downsampling helps")
@@ -395,8 +402,8 @@ ggplot(simresults_compiled%>%filter(or1<=.7,or1>=.2),aes(x=incidence,y=or2))+geo
 
 
 
-
-Choosing plots for putting in paper
+  
+### The following plots went in Fig 1C, 1D, and Fig S2
 ```{r}
 ggplot(simresults_compiled%>%filter(cohort_size%in%500),aes(x=factor(or1),y=or2))+geom_tile(color="black",aes(fill=goipc1_isgreater_uq/10))+scale_fill_gradient2(low ="red" ,mid ="white",midpoint=50,high ="blue",name="Score")+scale_x_discrete(expand = c(0,0),name="Odds ratio of GOI and PC1")+
   scale_y_continuous(expand = c(0,0),name="Odds ratio of PC1 and PC2")+theme(plot.title = element_text(hjust = 0.5))+theme(plot.title = element_text(hjust = 0.5),axis.text.x=element_text(angle=90,hjust=.5,vjust=.5),axis.text=element_text(face="bold",size="9",color="black"))

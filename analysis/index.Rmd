@@ -10,7 +10,7 @@ output:
 # **Pairwise Comparisons of Conditional Selection**  
 
 
-* ###Click [here](updated_resampling_strategy2.html) to see pairwise comparisons of conditional selection applied to simulated cohorts
+* ###Click [here](pairwisecomparisons_simulateddata.html) to see pairwise comparisons of conditional selection applied to simulated cohorts
 <img src="assets/atisubsamplingsims.png" width="400" height="300"  alt="">
 
 
