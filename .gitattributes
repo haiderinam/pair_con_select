@@ -1,13 +1,10 @@
-data/all_data.csv filter=lfs diff=lfs merge=lfs -text
-data/ALKATI_ccle.csv filter=lfs diff=lfs merge=lfs -text
-data/All_Data_V2.csv filter=lfs diff=lfs merge=lfs -text
 data/CCLE_NP24.2009_Drug_data_2015.02.24.csv filter=lfs diff=lfs merge=lfs -text
 data/alkati_baf3_ic50s_heatmap.csv filter=lfs diff=lfs merge=lfs -text
 data/alkati_growthcurvedata.csv filter=lfs diff=lfs merge=lfs -text
 data/alkati_growthcurvedata_popdoublings.csv filter=lfs diff=lfs merge=lfs -text
 data/alkati_growthcurvedata_popdoublings_f1174mutants.csv filter=lfs diff=lfs merge=lfs -text
 data/alkati_melanoma_vemurafenib_figure_data.csv filter=lfs diff=lfs merge=lfs -text
-data/archive/alkati_simulations_compiled_1000_12319.csv filter=lfs diff=lfs merge=lfs -text
+data/archive/alkati_simulutions_compiled_1000_12319.csv filter=lfs diff=lfs merge=lfs -text
 data/skmel28_sos1_mekq56p_vemurafenib.csv filter=lfs diff=lfs merge=lfs -text
 data/depmap_alkati/Data_Raw/CCLE/rpkm.txt filter=lfs diff=lfs merge=lfs -text
 data/depmap_alkati/Data_Raw/CCLE/rsem.txt filter=lfs diff=lfs merge=lfs -text
@@ -56,5 +53,9 @@ data/depmap_alkati/Data_Raw/CCLE/CCLE_RNAseq_ExonUsageRatio_20180929.gct filter=
 data/depmap_alkati/Data_Raw/CCLE/CCLE_RNAseq_rsem_genes_tpm_20180929.txt filter=lfs diff=lfs merge=lfs -text
 data/depmap_alkati/Data_Raw/CCLE/CCLE_RNAseq_genes_counts_20180929.gct filter=lfs diff=lfs merge=lfs -text
 data/depmap_alkati/Data_Raw/CCLE/CCLE_DepMap_18q3_maf_20180718.txt filter=lfs diff=lfs merge=lfs -text
-data/alkati_simulations_compiled_200_51121.csv filter=lfs diff=lfs merge=lfs -text
-data/archive/alkati_simulations_compiled_200_51121.csv filter=lfs diff=lfs merge=lfs -text
+data/archive/alkati_simulations_compiled_200_51121.csv.zip filter=lfs diff=lfs merge=lfs -text
+data/depmap_alkati/Data_Raw/CCLE/*.zip filter=lfs diff=lfs merge=lfs -text
+data/depmap_alkati/Data_Raw/CCLE/CCLE_DepMap_18q3_maf_20180718.txt.zip filter=lfs diff=lfs merge=lfs -text
+data/depmap_alkati/Data_Raw/CCLE/CCLE_RNAseq_ExonUsageRatio_20180929.gct.zip filter=lfs diff=lfs merge=lfs -text
+data/depmap_alkati/Data_Raw/CCLE/CCLE_RNAseq_genes_counts_20180929.gct.zip filter=lfs diff=lfs merge=lfs -text
+data/depmap_alkati/Data_Raw/CCLE/CCLE_RNAseq_rsem_genes_tpm_20180929.txt.zip filter=lfs diff=lfs merge=lfs -text
