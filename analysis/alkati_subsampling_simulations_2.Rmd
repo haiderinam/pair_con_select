@@ -1,0 +1,457 @@
+---
+title: "alkati_subsampling_simulations_2"
+author: "Haider Inam"
+date: "10/21/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir=rprojroot::find_rstudio_root_file())
+```
+
+
+```{r,include=F}
+# rm(list=ls())
+#Loading required packages
+library(knitr)
+library(tictoc)
+library(workflowr)
+library(VennDiagram)
+library(dplyr)
+library(foreach)
+library(doParallel)
+library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+library(devtools)
+library(ggsignif)
+library(plotly)
+library(BiocManager)
+######################Cleanup for GGPlot2#########################################
+cleanup=theme_bw() +
+  theme(plot.title = element_text(hjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_blank(),
+        # axis.line = element_line(color = "black"),
+        axis.text = element_text(face="bold",color="black",size="11"),
+        text=element_text(size=11,face="bold"),
+        axis.title=element_text(face="bold",size="11"))
+```
+
+```{r}
+
+source("code/contab_maker.R")
+source("code/contab_simulator.R")
+source("code/contab_downsampler.R")
+source("code/alldata_compiler.R")
+source("code/mut_excl_genes_generator.R")
+
+# source("../code/contab_maker.R")
+# source("../code/contab_simulator.R")
+# source("../code/contab_downsampler.R")
+# source("../code/alldata_compiler.R")
+# source("../code/mut_excl_genes_generator.R")
+
+
+```
+  
+  
+### Section 1: Pairwise Comparison of ALKATI BRAF vs BRAF NRAS (next section compares ALKATI NRAS vs BRAF NRAS)
+```{r}
+  nameposctrl1<-'BRAF'
+  #Positive control 1
+  nameposctrl2<-'NRAS'
+  #Oncogene in Question
+  namegene<-'ATI'
+  #Mutation Boolean (Y or N)
+  mtn<-'N'
+  #Name Mutation for Positive Ctrl 1
+  nameposctrl1mt<-'V600E'
+  #Name of Mutation for Positive Ctrl 2
+  nameposctrl2mt<-'Q61L'
+
+alldata=read.csv("output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
+# alldata=read.csv("../output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
+head(alldata)
+```
+
+
+```{r}
+# rm(list=ls())
+###Not mutation specific generation of counts###
+alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,'N',"N/A","N/A")[[2]]
+head(alldata_comp)
+
+###Calculating Odds ratios and GOI frequencies for the raw data###
+cohort_size=length(alldata_comp$Positive_Ctrl1)
+pc1pc2_contab_counts=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$Positive_Ctrl2,alldata_comp)[2:1, 2:1]
+# pc1pc2_contab_counts=pc1new_pc2_contab
+
+goipc1_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl1,alldata_comp)[2:1, 2:1]
+# goipc1_contab_counts=goinew_pc1_contab
+###Had to add the 2:1 bits because the contab maker spits out NN YY whereas we wanted YNYN
+goipc2_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl2,alldata_comp)[2:1, 2:1]
+# pc1pc2_contab_counts=gene_pair_2_table
+# goipc1_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl1,alldata_comp)[2:1, 2:1]
+# goipc1_contab_counts=gene_pair_1_table
+
+cohort_size_curr=cohort_size
+# goipc2_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl2,alldata_comp)[2:1, 2:1]
+pc1pc2_contab_probabilities=pc1pc2_contab_counts/cohort_size_curr
+goipc1_contab_probabilities=goipc1_contab_counts/cohort_size_curr
+goipc2_contab_probabilities=goipc2_contab_counts/cohort_size_curr
+# pc1pc2_contab_probabilities=pc1pc2_contab_counts
+# goipc1_contab_probabilities=goipc1_contab_counts
+# goipc2_contab_probabilities=goipc2_contab_counts/cohort_size
+
+or_pc1pc2=pc1pc2_contab_probabilities[1,1]*pc1pc2_contab_probabilities[2,2]/(pc1pc2_contab_probabilities[1,2]*pc1pc2_contab_probabilities[2,1])
+or_goipc1=goipc1_contab_probabilities[1,1]*goipc1_contab_probabilities[2,2]/(goipc1_contab_probabilities[1,2]*goipc1_contab_probabilities[2,1])
+or_goipc2=goipc2_contab_probabilities[1,1]*goipc2_contab_probabilities[2,2]/(goipc2_contab_probabilities[1,2]*goipc2_contab_probabilities[2,1])
+
+goi_freq=goipc1_contab_probabilities[1,1]+goipc1_contab_probabilities[1,2]
+# goi_freq=.25
+# class(goi_freq)
+
+###
+
+###Downsampling PC1 to the probability of GOI without changing ORs###
+###The function below converts contingency table data to a new contingency table in which the data is downsampled to the desired frequency, aka the frequency of the GOI in this case###
+pc1new_pc2_contab=contab_downsampler(pc1pc2_contab_probabilities,goi_freq)
+goinew_pc1_contab=contab_downsampler(goipc1_contab_probabilities,goi_freq)
+goinew_pc2_contab=contab_downsampler(goipc2_contab_probabilities,goi_freq)
+##original contab:
+head(pc1pc2_contab_probabilities)
+###downsampled contab:
+head(pc1new_pc2_contab)
+
+pc1rawpc2_contabs_sims=contab_simulator(pc1pc2_contab_probabilities,1000,cohort_size_curr)
+pc1pc2_contabs_sims=contab_simulator(pc1new_pc2_contab,1000,cohort_size_curr)
+goipc1_contabs_sims=contab_simulator(goinew_pc1_contab,1000,cohort_size_curr)
+goipc2_contabs_sims=contab_simulator(goinew_pc2_contab,1000,cohort_size_curr)
+# goipc2_contabs_sims=contab_simulator(goinew_pc2_contab,1000,cohort_size)
+# head(pc1pc2_contabs_sims) #each row in this dataset is a new contab
+pc1rawpc2_contabs_sims=data.frame(pc1rawpc2_contabs_sims)
+  pc1rawpc2_contabs_sims=pc1rawpc2_contabs_sims%>%
+  mutate(or=p11*p00/(p10*p01))
+
+pc1pc2_contabs_sims=data.frame(pc1pc2_contabs_sims)
+  pc1pc2_contabs_sims=pc1pc2_contabs_sims%>%
+  mutate(or=p11*p00/(p10*p01))
+  
+goipc1_contabs_sims=data.frame(goipc1_contabs_sims)
+  goipc1_contabs_sims=goipc1_contabs_sims%>%
+  mutate(or=p11*p00/(p10*p01))
+  
+goipc2_contabs_sims=data.frame(goipc2_contabs_sims)
+goipc2_contabs_sims=goipc2_contabs_sims%>%
+mutate(or=p11*p00/(p10*p01))
+  
+# goipc2_contabs_sims=data.frame(goipc2_contabs_sims)
+#   goipc2_contabs_sims=goipc2_contabs_sims%>%
+#   mutate(or=p11*p00/(p10*p01))
+pc1rawpc2_contabs_sims$comparison="pc1rawpc2"
+pc1pc2_contabs_sims$comparison="pc1pc2"
+goipc1_contabs_sims$comparison="goipc1"
+goipc2_contabs_sims$comparison="goipc2"
+or_median_raw=quantile(pc1rawpc2_contabs_sims$or,na.rm = T)[3]
+or_uq_raw=quantile(pc1rawpc2_contabs_sims$or,na.rm = T)[4]
+or_median_downsampled=quantile(pc1pc2_contabs_sims$or,na.rm = T)[3]
+or_uq_downsampled=quantile(pc1pc2_contabs_sims$or,na.rm = T)[4]
+
+pc1rawpc2_contabs_sims=pc1rawpc2_contabs_sims%>%
+  mutate(isgreater_raw_median=case_when(or>or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or>or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or>or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or>or_uq_downsampled~1,
+                             TRUE~0)
+         )
+pc1pc2_contabs_sims=pc1pc2_contabs_sims%>%
+  mutate(isgreater_raw_median=case_when(or>or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or>or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or>or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or>or_uq_downsampled~1,
+                             TRUE~0)
+         )
+goipc1_contabs_sims=goipc1_contabs_sims%>%
+  mutate(isgreater_raw_median=case_when(or>or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or>or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or>or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or>or_uq_downsampled~1,
+                             TRUE~0)
+         )
+
+goipc2_contabs_sims=goipc2_contabs_sims%>%
+  mutate(isgreater_raw_median=case_when(or>or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or>or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or>or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or>or_uq_downsampled~1,
+                             TRUE~0)
+         )
+# pc1pc2_contabs_sims=pc1pc2_contabs_sims%>%
+#   mutate(isgreater=case_when(or>=or_pc1pc2~1,
+#                              TRUE~0))
+# goipc1_contabs_sims=goipc1_contabs_sims%>%
+#   mutate(isgreater=case_when(or>=or_pc1pc2~1,
+#                              TRUE~0))
+# goipc2_contabs_sims=goipc2_contabs_sims%>%
+#   mutate(isgreater=case_when(or>=or_pc1pc2~1,
+#                              TRUE~0))
+pc1rawpc2_isgreater_raw_median=sum(pc1rawpc2_contabs_sims$isgreater_raw_median)
+pc1rawpc2_isgreater_raw_uq=sum(pc1rawpc2_contabs_sims$isgreater_raw_uq)
+pc1rawpc2_isgreater_median=sum(pc1rawpc2_contabs_sims$isgreater_median)
+pc1rawpc2_isgreater_uq=sum(pc1rawpc2_contabs_sims$isgreater_uq)
+
+pc1pc2_isgreater_raw_median=sum(pc1pc2_contabs_sims$isgreater_raw_median)
+pc1pc2_isgreater_raw_uq=sum(pc1pc2_contabs_sims$isgreater_raw_uq)
+pc1pc2_isgreater_median=sum(pc1pc2_contabs_sims$isgreater_median)
+pc1pc2_isgreater_uq=sum(pc1pc2_contabs_sims$isgreater_uq)
+
+goipc1_isgreater_raw_median=sum(goipc1_contabs_sims$isgreater_raw_median)
+goipc1_isgreater_raw_uq=sum(goipc1_contabs_sims$isgreater_raw_uq)
+goipc1_isgreater_median=sum(goipc1_contabs_sims$isgreater_median)
+goipc1_isgreater_uq=sum(goipc1_contabs_sims$isgreater_uq)
+
+
+plotting_df=rbind(pc1pc2_contabs_sims,goipc1_contabs_sims,goipc2_contabs_sims)
+# plotting_df=rbind(pc1pc2_contabs_sims,goipc1_contabs_sims)
+# 
+
+
+ggplot(plotting_df,aes(x=(or),fill=comparison))+
+  geom_histogram(bins=40,alpha=0.55,position="identity")+
+  # geom_histogram(bins=50,alpha=0.55)+
+  scale_y_continuous(expand=c(0,0),name="Count")+
+  scale_x_continuous(expand=c(0,0),trans="log10",name="Odds Ratio")+
+  scale_fill_brewer(palette="Set2")+
+  # geom_vline(xintercept = or_pc1pc2)+
+  cleanup
+
+ggplot(plotting_df,aes(y=(or),x=comparison),fill=factor(comparison))+
+  geom_boxplot()+
+  scale_y_continuous(name="Odds Ratio",trans="log10")+
+  scale_x_discrete(name="")+
+  scale_fill_brewer(palette="Set2")+
+  geom_hline(yintercept = or_uq_downsampled,linetype="dashed")+
+  cleanup+
+  theme(legend.position = "none",
+        axis.ticks.x = element_blank())
+
+# ggsave("paircon_boxplot.pdf",width = 3,height=2,units="in",useDingbats=F)
+```
+  
+    
+### Section 1 Conclusion: ALKATI vs BRAF has no overlap with BRAF vs NRAS, i.e. 100% of the BRAF NRAS simulations lie outside of the ALKATI BRAF regime.
+
+
+### Section 2: Pairwise Comparison of ALKATI NRAS vs BRAF NRAS (the previous section compared ALKATI BRAS vs BRAF NRAS)
+```{r}
+  nameposctrl1<-'NRAS'
+  #Positive control 1
+  nameposctrl2<-'BRAF'
+  #Oncogene in Question
+  namegene<-'ATI'
+  #Mutation Boolean (Y or N)
+  mtn<-'N'
+  #Name Mutation for Positive Ctrl 1
+  nameposctrl1mt<-'Q61L'
+  #Name of Mutation for Positive Ctrl 2
+  nameposctrl2mt<-'V600E'
+
+alldata=read.csv("output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
+# alldata=read.csv("../output/all_data_skcm.csv",sep=",",header=T,stringsAsFactors=F)
+head(alldata)
+```
+
+
+
+```{r}
+# rm(list=ls())
+###Not mutation specific generation of counts###
+alldata_comp=alldata_compiler(alldata,nameposctrl1,nameposctrl2,namegene,'N',"N/A","N/A")[[2]]
+head(alldata_comp)
+
+###Calculating Odds ratios and GOI frequencies for the raw data###
+cohort_size=length(alldata_comp$Positive_Ctrl1)
+pc1pc2_contab_counts=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$Positive_Ctrl2,alldata_comp)[2:1, 2:1]
+# pc1pc2_contab_counts=pc1new_pc2_contab
+
+goipc1_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl1,alldata_comp)[2:1, 2:1]
+# goipc1_contab_counts=goinew_pc1_contab
+###Had to add the 2:1 bits because the contab maker spits out NN YY whereas we wanted YNYN
+goipc2_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl2,alldata_comp)[2:1, 2:1]
+# pc1pc2_contab_counts=gene_pair_2_table
+# goipc1_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl1,alldata_comp)[2:1, 2:1]
+# goipc1_contab_counts=gene_pair_1_table
+
+cohort_size_curr=cohort_size
+# goipc2_contab_counts=contab_maker(alldata_comp$genex,alldata_comp$Positive_Ctrl2,alldata_comp)[2:1, 2:1]
+pc1pc2_contab_probabilities=pc1pc2_contab_counts/cohort_size_curr
+goipc1_contab_probabilities=goipc1_contab_counts/cohort_size_curr
+goipc2_contab_probabilities=goipc2_contab_counts/cohort_size_curr
+# pc1pc2_contab_probabilities=pc1pc2_contab_counts
+# goipc1_contab_probabilities=goipc1_contab_counts
+# goipc2_contab_probabilities=goipc2_contab_counts/cohort_size
+
+or_pc1pc2=pc1pc2_contab_probabilities[1,1]*pc1pc2_contab_probabilities[2,2]/(pc1pc2_contab_probabilities[1,2]*pc1pc2_contab_probabilities[2,1])
+or_goipc1=goipc1_contab_probabilities[1,1]*goipc1_contab_probabilities[2,2]/(goipc1_contab_probabilities[1,2]*goipc1_contab_probabilities[2,1])
+or_goipc2=goipc2_contab_probabilities[1,1]*goipc2_contab_probabilities[2,2]/(goipc2_contab_probabilities[1,2]*goipc2_contab_probabilities[2,1])
+
+goi_freq=goipc1_contab_probabilities[1,1]+goipc1_contab_probabilities[1,2]
+# goi_freq=.25
+# class(goi_freq)
+
+###
+
+###Downsampling PC1 to the probability of GOI without changing ORs###
+###The function below converts contingency table data to a new contingency table in which the data is downsampled to the desired frequency, aka the frequency of the GOI in this case###
+pc1new_pc2_contab=contab_downsampler(pc1pc2_contab_probabilities,goi_freq)
+goinew_pc1_contab=contab_downsampler(goipc1_contab_probabilities,goi_freq)
+goinew_pc2_contab=contab_downsampler(goipc2_contab_probabilities,goi_freq)
+##original contab:
+head(pc1pc2_contab_probabilities)
+###downsampled contab:
+head(pc1new_pc2_contab)
+
+pc1rawpc2_contabs_sims=contab_simulator(pc1pc2_contab_probabilities,1000,cohort_size_curr)
+pc1pc2_contabs_sims=contab_simulator(pc1new_pc2_contab,1000,cohort_size_curr)
+goipc1_contabs_sims=contab_simulator(goinew_pc1_contab,1000,cohort_size_curr)
+goipc2_contabs_sims=contab_simulator(goinew_pc2_contab,1000,cohort_size_curr)
+# goipc2_contabs_sims=contab_simulator(goinew_pc2_contab,1000,cohort_size)
+# head(pc1pc2_contabs_sims) #each row in this dataset is a new contab
+pc1rawpc2_contabs_sims=data.frame(pc1rawpc2_contabs_sims)
+  pc1rawpc2_contabs_sims=pc1rawpc2_contabs_sims%>%
+  mutate(or=p11*p00/(p10*p01))
+
+pc1pc2_contabs_sims=data.frame(pc1pc2_contabs_sims)
+  pc1pc2_contabs_sims=pc1pc2_contabs_sims%>%
+  mutate(or=p11*p00/(p10*p01))
+  
+goipc1_contabs_sims=data.frame(goipc1_contabs_sims)
+  goipc1_contabs_sims=goipc1_contabs_sims%>%
+  mutate(or=p11*p00/(p10*p01))
+  
+goipc2_contabs_sims=data.frame(goipc2_contabs_sims)
+goipc2_contabs_sims=goipc2_contabs_sims%>%
+mutate(or=p11*p00/(p10*p01))
+  
+# goipc2_contabs_sims=data.frame(goipc2_contabs_sims)
+#   goipc2_contabs_sims=goipc2_contabs_sims%>%
+#   mutate(or=p11*p00/(p10*p01))
+pc1rawpc2_contabs_sims$comparison="pc1rawpc2"
+pc1pc2_contabs_sims$comparison="pc1pc2"
+goipc1_contabs_sims$comparison="goipc1"
+goipc2_contabs_sims$comparison="goipc2"
+or_median_raw=quantile(pc1rawpc2_contabs_sims$or,na.rm = T)[3]
+or_uq_raw=quantile(pc1rawpc2_contabs_sims$or,na.rm = T)[4]
+or_median_downsampled=quantile(pc1pc2_contabs_sims$or,na.rm = T)[3]
+or_uq_downsampled=quantile(pc1pc2_contabs_sims$or,na.rm = T)[4]
+
+pc1rawpc2_contabs_sims=pc1rawpc2_contabs_sims%>%
+  mutate(isgreater_raw_median=case_when(or>or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or>or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or>or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or>or_uq_downsampled~1,
+                             TRUE~0)
+         )
+pc1pc2_contabs_sims=pc1pc2_contabs_sims%>%
+  mutate(isgreater_raw_median=case_when(or>or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or>or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or>or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or>or_uq_downsampled~1,
+                             TRUE~0)
+         )
+goipc1_contabs_sims=goipc1_contabs_sims%>%
+  mutate(isgreater_raw_median=case_when(or>or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or>or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or>or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or>or_uq_downsampled~1,
+                             TRUE~0)
+         )
+
+goipc2_contabs_sims=goipc2_contabs_sims%>%
+  mutate(isgreater_raw_median=case_when(or>or_median_raw~1,
+                             TRUE~0),
+         isgreater_raw_uq=case_when(or>or_uq_raw~1,
+                             TRUE~0),
+         isgreater_median=case_when(or>or_median_downsampled~1,
+                             TRUE~0),
+         isgreater_uq=case_when(or>or_uq_downsampled~1,
+                             TRUE~0)
+         )
+# pc1pc2_contabs_sims=pc1pc2_contabs_sims%>%
+#   mutate(isgreater=case_when(or>=or_pc1pc2~1,
+#                              TRUE~0))
+# goipc1_contabs_sims=goipc1_contabs_sims%>%
+#   mutate(isgreater=case_when(or>=or_pc1pc2~1,
+#                              TRUE~0))
+# goipc2_contabs_sims=goipc2_contabs_sims%>%
+#   mutate(isgreater=case_when(or>=or_pc1pc2~1,
+#                              TRUE~0))
+pc1rawpc2_isgreater_raw_median=sum(pc1rawpc2_contabs_sims$isgreater_raw_median)
+pc1rawpc2_isgreater_raw_uq=sum(pc1rawpc2_contabs_sims$isgreater_raw_uq)
+pc1rawpc2_isgreater_median=sum(pc1rawpc2_contabs_sims$isgreater_median)
+pc1rawpc2_isgreater_uq=sum(pc1rawpc2_contabs_sims$isgreater_uq)
+
+pc1pc2_isgreater_raw_median=sum(pc1pc2_contabs_sims$isgreater_raw_median)
+pc1pc2_isgreater_raw_uq=sum(pc1pc2_contabs_sims$isgreater_raw_uq)
+pc1pc2_isgreater_median=sum(pc1pc2_contabs_sims$isgreater_median)
+pc1pc2_isgreater_uq=sum(pc1pc2_contabs_sims$isgreater_uq)
+
+goipc1_isgreater_raw_median=sum(goipc1_contabs_sims$isgreater_raw_median)
+goipc1_isgreater_raw_uq=sum(goipc1_contabs_sims$isgreater_raw_uq)
+goipc1_isgreater_median=sum(goipc1_contabs_sims$isgreater_median)
+goipc1_isgreater_uq=sum(goipc1_contabs_sims$isgreater_uq)
+
+
+plotting_df=rbind(pc1pc2_contabs_sims,goipc1_contabs_sims,goipc2_contabs_sims)
+# plotting_df=rbind(pc1pc2_contabs_sims,goipc1_contabs_sims)
+# 
+
+
+ggplot(plotting_df,aes(x=(or),fill=comparison))+
+  geom_histogram(bins=40,alpha=0.55,position="identity")+
+  # geom_histogram(bins=50,alpha=0.55)+
+  scale_y_continuous(expand=c(0,0),name="Count")+
+  scale_x_continuous(expand=c(0,0),trans="log10",name="Odds Ratio")+
+  scale_fill_brewer(palette="Set2")+
+  # geom_vline(xintercept = or_pc1pc2)+
+  cleanup
+
+ggplot(plotting_df,aes(y=(or),x=comparison),fill=factor(comparison))+
+  geom_boxplot()+
+  scale_y_continuous(name="Odds Ratio",trans="log10")+
+  scale_x_discrete(name="")+
+  scale_fill_brewer(palette="Set2")+
+  geom_hline(yintercept = or_uq_downsampled,linetype="dashed")+
+  cleanup+
+  theme(legend.position = "none",
+        axis.ticks.x = element_blank())
+
+# ggsave("paircon_boxplot.pdf",width = 3,height=2,units="in",useDingbats=F)
+```
+  
+    
+### Section 2 Conclusion: ALKATI vs NRAS has no overlap with BRAF vs NRAS, i.e. 100% of the BRAF NRAS simulations lie outside of the ALKATI BRAF regime.
