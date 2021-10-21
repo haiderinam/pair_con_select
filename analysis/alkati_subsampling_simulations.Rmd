@@ -28,8 +28,8 @@ library(extrafont)
 source("code/contab_maker.R")
 source("code/alldata_compiler.R")
 source("code/quadratic_solver.R")
-source("code/mut_excl_genes_generator.R")
-source("code/mut_excl_genes_datapoints.R")
+# source("code/mut_excl_genes_generator.R")
+# source("code/mut_excl_genes_datapoints.R")
 source("code/simresults_generator.R")
 
 ######################Cleanup for GGPlot2#########################################
